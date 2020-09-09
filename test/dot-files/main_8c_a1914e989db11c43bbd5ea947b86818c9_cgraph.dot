@@ -1,0 +1,19 @@
+digraph "BOOT_Init"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="BOOT_Init",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="MCU_SystemResetStatus",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mcu_8c.html#a2c1d1f0c12b31c10f4c6da3d6620f2a0",tooltip="Gets system reset status. "];
+  Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="COM_StartupInfo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$com_8h.html#a83dbba20990b5ab84da232f8419d1315",tooltip="COM_StartupInfo prints some startup related informations (time & date). "];
+  Node0 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="DIAG_Handler",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$group__API__DIAG.html#ga29e922af6b4c0f5c07d4d5b48b48d156",tooltip="DIAG_Handler provides generic error handling, based on diagnosis group.This function calls the handle..."];
+  Node0 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="RTC_getTime",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$rtc_8c.html#a1a6c518bfabf1187db2d330ed6e9d636",tooltip="gets RTC time "];
+  Node0 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="RTC_getDate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$rtc_8c.html#a432399abca2147611a2123349ec54a12",tooltip="gets RTC date "];
+  Node0 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="MCU_GetDeviceID",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mcu_8c.html#abe9ce7ce94ce132936a0076f88a7513e",tooltip="Get unique device ID. "];
+}

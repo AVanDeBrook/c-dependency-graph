@@ -1,0 +1,22 @@
+digraph "ENG_TSK_Engine"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node256 [label="ENG_TSK_Engine",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node256 -> Node257 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node257 [label="DATA_Init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$database_8c.html#a53aea05e18356a09628ae8ada8be07cc",tooltip="Initialization of database manager. "];
+  Node256 -> Node258 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node258 [label="ENG_PostOSInit",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$enginetask__cfg_8c.html#a350ee03273afead080e4697940d12750",tooltip="reads non-volatile memory and initializes the sys module "];
+  Node256 -> Node303 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node303 [label="diag_calc_runtime_stats",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$runtime__stats__light_8c.html#a025023a48e69f56d567377830ecaa7bc",tooltip="Update the runtime stats. "];
+  Node303 -> Node304 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node304 [label="OS_getOSSysTick",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a4c29aeb605d624ed4979a48ebde8b7f3",tooltip="returns OS based system tick value. "];
+  Node256 -> Node304 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node256 -> Node305 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node305 [label="DATA_Task",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$database_8c.html#a1585d5c7665504898be0371c5c6295b9",tooltip="trigger of database manager "];
+  Node305 -> Node304 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node256 -> Node307 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node307 [label="DIAG_SysMon",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$diag_8c.html#af5b8cf38b93979152c6d3d64c6340b03",tooltip="overall system monitoring "];
+  Node307 -> Node304 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

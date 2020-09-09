@@ -1,0 +1,15 @@
+digraph "CANS_GetSignalData"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node64 [label="CANS_GetSignalData",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node64 -> Node65 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node65 [label="CANS_GetBitmask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$cansignal_8c.html#a7d95cbf333bab22f926b97262b20a283",tooltip="generates bitfield, which masks the bits where the actual signal (defined by its bitlength) is locate..."];
+  Node64 -> Node66 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node66 [label="MATH_swapBytes_uint16_t",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$foxmath_8c.html#a562273a0fc361c4baef9bfb28b97a475",tooltip="Swap bytes of uint16_t value. "];
+  Node64 -> Node67 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node67 [label="MATH_swapBytes_uint32_t",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$foxmath_8c.html#ac35ec6779edc72106ec9ebb3b8d51deb",tooltip="Swap bytes of uint32_t value. "];
+  Node64 -> Node68 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node68 [label="MATH_swapBytes_uint64_t",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$foxmath_8c.html#a0d87eebf1c5255c594210eacb8cbf6e1",tooltip="Swap bytes of uint64_t value. "];
+}

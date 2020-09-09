@@ -1,0 +1,9 @@
+digraph "HAL_UART_TxCpltCallback"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node6 [label="HAL_UART_TxCpltCallback",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="UART_IntTx",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$uart_8c.html#a4bc35f7b6e2bd8b6b857e21bd7c5b2d1",tooltip="UART_IntTx is responsible for handling send requests. "];
+}

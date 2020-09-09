@@ -1,0 +1,11 @@
+digraph "LTC_SetPortExpanderDirection_TI"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node396 [label="LTC_SetPortExpanderDirection_TI",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node396 -> Node397 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node397 [label="DB_ReadBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$database_8c.html#a94356e609a13e483fa0c15465e154f34",tooltip="Reads a datablock in database by value. "];
+  Node396 -> Node398 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node398 [label="LTC_TX",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$ltc_8c.html#a66092dc4eb5b34b11d37701763836c41",tooltip="sends command and data to the LTC daisy-chain. "];
+}

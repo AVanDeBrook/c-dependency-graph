@@ -1,0 +1,15 @@
+digraph "SOF_Calculate"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node83 [label="SOF_Calculate",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node83 -> Node84 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node84 [label="SOF_CalculateVoltageBased",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$sox_8c.html#a4d7771af9f115c53f3e77e7d5b0df463",tooltip="calculates the SoF from voltage data (i.e., minimum and maximum voltage) "];
+  Node83 -> Node85 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node85 [label="SOF_CalculateSocBased",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$sox_8c.html#a913e17a7e9b083d35294c5bc5636d8b1",tooltip="calculates the SoF from SoC data (i.e., minimum and maximum SoC of cells, both values are equal in ca..."];
+  Node83 -> Node86 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node86 [label="SOF_CalculateTemperature\lBased",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$sox_8c.html#a9c59909102b5a6995dab987a99ca7441",tooltip="calculates the SoF from temperature data (i.e., minimum and maximum temperature of cells) ..."];
+  Node83 -> Node87 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node87 [label="SOF_MinimumOfThreeSofValues",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$sox_8c.html#a27285bee12976039b9a07aa8912efd0f",tooltip="get the minimum current values of all variants of SoF calculation "];
+}

@@ -1,0 +1,9 @@
+digraph "SOF_MinimumOfThreeSofValues"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node156 [label="SOF_MinimumOfThreeSofValues",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node156 -> Node157 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node157 [label="SOF_MinimumOfThreeValues",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$sox_8c.html#a56b4fa991373e5b1e3fd9aa70d8046b8",tooltip="calculates minimum of three values "];
+}

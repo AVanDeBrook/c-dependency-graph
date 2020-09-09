@@ -1,0 +1,22 @@
+digraph "EEPR_InitChannelData"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node223 [label="EEPR_InitChannelData",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node223 -> Node224 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node224 [label="EEPR_ReadChannelData",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$eepr_8c.html#a7f5c064d10a65e3caae373059e6d30e3",tooltip="copys the data of one channel from eeprom into the bkpsrams "];
+  Node223 -> Node248 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node248 [label="EEPR_FormatCheck",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$eepr__cfg_8c.html#a201f101dd5a4b7654bc741474223d572"];
+  Node223 -> Node249 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node249 [label="EEPR_SetDefaultValue",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$eepr__cfg_8c.html#af9c4f7773244cbd5552ed3ca5cdd4ae5"];
+  Node249 -> Node252 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node252 [label="EEPR_SetChDirtyFlag",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$eepr__cfg_8c.html#a62ad4bbac7d8b92d7481346b31cf187d",tooltip="sets a dirty flag to indicate that the data of a channel have been changed "];
+  Node223 -> Node253 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node253 [label="EEPR_BackupChannelData2Eepr",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$eepr_8c.html#a7c5a68313b315c4d1fe54f8207a3fcc5",tooltip="copys the data of one channel from bkpsram into the eeprom "];
+  Node223 -> Node252 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node223 -> Node255 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node255 [label="EEPR_RefreshChannelData",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$eepr_8c.html#a8fe6b93853b3ce21a335df080d464b67",tooltip="handles the data exchange between eeprom and bkpsram checks if the bkpsram data are valid..."];
+  Node255 -> Node253 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node255 -> Node224 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

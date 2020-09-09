@@ -1,0 +1,13 @@
+digraph "CANS_PeriodicTransmit"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node158 [label="CANS_PeriodicTransmit",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node158 -> Node159 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node159 [label="CANS_ComposeMessage",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$cansignal_8c.html#aa3c553a69a0c9228e72689f26125653c"];
+  Node158 -> Node165 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node165 [label="CANS_AddMessage",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$cansignal_8c.html#adb60a8b0d120756bd93f7fce78a7d4fc",tooltip="Add message to transmit buffer, message will be transmitted shortly after. "];
+  Node158 -> Node169 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node169 [label="DIAG_checkEvent",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$diag_8c.html#a9e06aacb2ff6bcf9245e2b3a283857bc",tooltip="DIAG_checkEvent provides a simple interface to check an event for E_OK. "];
+}

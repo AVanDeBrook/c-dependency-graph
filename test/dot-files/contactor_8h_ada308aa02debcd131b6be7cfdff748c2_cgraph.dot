@@ -1,0 +1,9 @@
+digraph "CONT_SetStateRequest"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node73 [label="CONT_SetStateRequest",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node73 -> Node74 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node74 [label="CONT_CheckStateRequest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$contactor_8c.html#a2d058a2544cc6ec8f43566f21541404f",tooltip="checks the state requests that are made. "];
+}

@@ -1,0 +1,19 @@
+digraph "EEPR_BackupChannelData2Eepr"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="EEPR_BackupChannelData2Eepr",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="EEPR_GetChWriteTime",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$eepr_8c.html#aeaffe20963e63e157b7a75cb1dc871f3",tooltip="calculates the maximum readtime for a specific channel "];
+  Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="EEPR_SetStateRequest",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$eepr_8c.html#aefac79ed7e71cac9d3211a712fad2461",tooltip="requests a state to be handled by the statetrigger "];
+  Node0 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="EEPR_Trigger",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$eepr_8c.html#af4db18407693f62fa9a7375faf679f0b",tooltip="cyclic trigger of EEPROM State Machine, trigger cycle: 1ms trigger timer in units of 1ms ..."];
+  Node0 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 [label="EEPR_GetState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$eepr_8c.html#a6f557dc8e24353ebbece6b57485501ca",tooltip="returns actual state of EEPROM state machine "];
+  Node0 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node22 [label="OS_taskDelay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a87781ff3be1393092ba68c39c05393a2",tooltip="Delay in millisecond. "];
+  Node0 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node23 [label="EEPR_RemoveChDirtyFlag",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$eepr__cfg_8c.html#a5f92c515fa55d80886bd904624fe1343",tooltip="removes the dirty flag to indicate that the eeprom was actualized "];
+}

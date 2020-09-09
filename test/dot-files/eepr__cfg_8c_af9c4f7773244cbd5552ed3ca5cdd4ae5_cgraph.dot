@@ -1,0 +1,13 @@
+digraph "EEPR_SetDefaultValue"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node100 [label="EEPR_SetDefaultValue",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node100 -> Node101 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 [label="RTC_getUnixTime",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$rtc_8c.html#a0ad67615f5978667da4d8f3f6e79244e"];
+  Node100 -> Node105 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node105 [label="EEPR_CalcChecksum",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$eepr__cfg_8c.html#ab14595ae571d9012a9650b3e2da964a5"];
+  Node100 -> Node106 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node106 [label="EEPR_SetChDirtyFlag",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$eepr__cfg_8c.html#a62ad4bbac7d8b92d7481346b31cf187d",tooltip="sets a dirty flag to indicate that the data of a channel have been changed "];
+}

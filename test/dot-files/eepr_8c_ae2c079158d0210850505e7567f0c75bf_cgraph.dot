@@ -1,0 +1,22 @@
+digraph "EEPR_Init"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node181 [label="EEPR_Init",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node181 -> Node182 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node182 [label="EEPR_SetStateRequest",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$eepr_8c.html#aefac79ed7e71cac9d3211a712fad2461",tooltip="requests a state to be handled by the statetrigger "];
+  Node181 -> Node186 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node186 [label="EEPR_GetState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$eepr_8c.html#a6f557dc8e24353ebbece6b57485501ca",tooltip="returns actual state of EEPROM state machine "];
+  Node181 -> Node187 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node187 [label="EEPR_Trigger",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$eepr_8c.html#af4db18407693f62fa9a7375faf679f0b",tooltip="cyclic trigger of EEPROM State Machine, trigger cycle: 1ms trigger timer in units of 1ms ..."];
+  Node181 -> Node202 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node202 [label="OS_taskDelay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a87781ff3be1393092ba68c39c05393a2",tooltip="Delay in millisecond. "];
+  Node181 -> Node203 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node203 [label="EEPR_RemoveChReadReqFlag",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$eepr__cfg_8c.html#a1c207a23800530fe229f788ac6cb87eb"];
+  Node181 -> Node204 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node204 [label="EEPR_InitChannelData",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$eepr_8c.html#a75ad38a70e241b1332c0c4d8e965a1e1",tooltip="Updates the EEPROM data if bkpsram data are valid, otherwise uses the valid EEPROM data to update Bkp..."];
+  Node204 -> Node209 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node209 [label="EEPR_SetDefaultValue",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$eepr__cfg_8c.html#af9c4f7773244cbd5552ed3ca5cdd4ae5"];
+  Node181 -> Node209 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

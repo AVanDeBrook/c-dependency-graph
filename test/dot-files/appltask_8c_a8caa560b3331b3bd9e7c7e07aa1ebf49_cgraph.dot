@@ -1,0 +1,16 @@
+digraph "APPL_TSK_Cyclic_10ms"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node138 [label="APPL_TSK_Cyclic_10ms",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node138 -> Node139 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node139 [label="OS_taskDelayUntil",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a0f45ac2d8141fb57e8aece8c1c9e3cd6",tooltip="Delay a task until a specified time. "];
+  Node138 -> Node140 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node140 [label="OS_getOSSysTick",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a4c29aeb605d624ed4979a48ebde8b7f3",tooltip="returns OS based system tick value. "];
+  Node138 -> Node141 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node141 [label="APPL_Cyclic_10ms",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$group__API__OS.html#gaa93963e368289a593eba35a466035972",tooltip="user application task 10 milliseconds "];
+  Node138 -> Node192 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node192 [label="diag_calc_runtime_stats",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$runtime__stats__light_8c.html#a025023a48e69f56d567377830ecaa7bc",tooltip="Update the runtime stats. "];
+  Node192 -> Node140 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

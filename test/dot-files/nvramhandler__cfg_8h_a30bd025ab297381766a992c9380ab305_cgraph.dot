@@ -1,0 +1,15 @@
+digraph "NVM_setSOC"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node54 [label="NVM_setSOC",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node54 -> Node55 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node55 [label="MCU_DisableINT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mcu_8c.html#aa7a3020dbc1fb1110a8c41a2989f25b0",tooltip="disables interrupts and returns prior state (enabled or disabled) "];
+  Node54 -> Node56 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 [label="RTC_getUnixTime",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$rtc_8c.html#a0ad67615f5978667da4d8f3f6e79244e"];
+  Node54 -> Node60 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node60 [label="EEPR_CalcChecksum",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$eepr__cfg_8c.html#ab14595ae571d9012a9650b3e2da964a5"];
+  Node54 -> Node61 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node61 [label="MCU_RestoreINT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mcu_8c.html#a74382aca8f0a3c77df269579204ee9b1",tooltip="restores interrupts to given state (enable or disable) "];
+}

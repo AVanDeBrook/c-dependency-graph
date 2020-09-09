@@ -1,0 +1,16 @@
+digraph "ENG_TSK_Cyclic_10ms"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node240 [label="ENG_TSK_Cyclic_10ms",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node240 -> Node241 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node241 [label="OS_taskDelayUntil",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a0f45ac2d8141fb57e8aece8c1c9e3cd6",tooltip="Delay a task until a specified time. "];
+  Node240 -> Node242 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node242 [label="OS_getOSSysTick",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a4c29aeb605d624ed4979a48ebde8b7f3",tooltip="returns OS based system tick value. "];
+  Node240 -> Node243 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node243 [label="ENG_Cyclic_10ms",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$enginetask__cfg_8c.html#a1f6cbe018939219ba618b92aceb2ed86",tooltip="Task for system- and bmscontrol and SOX algorithms. "];
+  Node240 -> Node301 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node301 [label="diag_calc_runtime_stats",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$runtime__stats__light_8c.html#a025023a48e69f56d567377830ecaa7bc",tooltip="Update the runtime stats. "];
+  Node301 -> Node242 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

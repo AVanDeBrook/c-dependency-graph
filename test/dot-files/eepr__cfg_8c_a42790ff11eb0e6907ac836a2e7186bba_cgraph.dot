@@ -1,0 +1,9 @@
+digraph "SPI_SendData"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node117 [label="SPI_SendData",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node117 -> Node118 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node118 [label="IO_WritePin",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$io_8c.html#a1709c6b36be8ee2ebaf5e076300b6a93",tooltip="Sets the state of a pin. "];
+}

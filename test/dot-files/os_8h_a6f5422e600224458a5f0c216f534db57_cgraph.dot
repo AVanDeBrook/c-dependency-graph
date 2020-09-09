@@ -1,0 +1,21 @@
+digraph "OS_TaskInit"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node186 [label="OS_TaskInit",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node186 -> Node187 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node187 [label="ENG_CreateQueues",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$enginetask_8c.html#ac2f41a91ed525e3792d44b13baab99e3",tooltip="creates queues, called before scheduler start "];
+  Node186 -> Node188 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node188 [label="ENG_CreateMutex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$enginetask_8c.html#ae356447f195edd7e3bdf2fc317f49e46",tooltip="creates mutexes, called before scheduler start "];
+  Node186 -> Node189 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node189 [label="ENG_CreateEvent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$enginetask_8c.html#a2c6c4b8deea1c0fe0595434d8079d091",tooltip="creates events, called before scheduler start "];
+  Node186 -> Node190 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node190 [label="ENG_CreateTask",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$enginetask_8c.html#adca639aff16795100f1976d22a1d099d",tooltip="creates cyclic tasks, called before scheduler start "];
+  Node186 -> Node379 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node379 [label="APPL_CreateMutex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$appltask_8c.html#a6fa44ea750012fc37aa15130e9a60957",tooltip="creates mutexes, called before scheduler start "];
+  Node186 -> Node380 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node380 [label="APPL_CreateEvent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$appltask_8c.html#a3ac355e656e45203b36403b94143dbdd",tooltip="creates mutex, called before scheduler start "];
+  Node186 -> Node381 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node381 [label="APPL_CreateTask",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$appltask_8c.html#a850dd1b4a8624221ab29afb4ae0efa41",tooltip="creates cyclic tasks, called before scheduler start "];
+}

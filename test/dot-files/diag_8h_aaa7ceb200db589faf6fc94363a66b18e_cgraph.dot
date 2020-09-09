@@ -1,0 +1,11 @@
+digraph "DIAG_Init"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node30 [label="DIAG_Init",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node30 -> Node31 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31 [label="DIAG_Reset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$diag_8c.html#afc7031ef9824f27600e308670d16c0d6",tooltip="DIAG_Reset resets/initializes all needed structures/buffers. "];
+  Node30 -> Node32 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32 [label="DIAG_Handler",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$group__API__DIAG.html#ga29e922af6b4c0f5c07d4d5b48b48d156",tooltip="DIAG_Handler provides generic error handling, based on diagnosis group.This function calls the handle..."];
+}

@@ -1,0 +1,11 @@
+digraph "BMS_CheckTemperatures"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node71 [label="BMS_CheckTemperatures",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node71 -> Node72 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node72 [label="BMS_GetBatterySystemState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$bms_8c.html#ab900910af6e3c584a5e3650018fe4ed7",tooltip="Returns current battery system state (charging/discharging, resting or in relaxation phase) ..."];
+  Node71 -> Node73 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node73 [label="DIAG_Handler",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$group__API__DIAG.html#ga29e922af6b4c0f5c07d4d5b48b48d156",tooltip="DIAG_Handler provides generic error handling, based on diagnosis group.This function calls the handle..."];
+}

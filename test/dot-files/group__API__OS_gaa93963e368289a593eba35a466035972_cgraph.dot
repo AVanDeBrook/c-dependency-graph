@@ -1,0 +1,20 @@
+digraph "APPL_Cyclic_10ms"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node26 [label="APPL_Cyclic_10ms",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node26 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node27 [label="DIAG_SysMonNotify",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$diag_8c.html#a7970909aa22bb87427a96c694fbab0e4",tooltip="DIAG_SysMonNotify has to be called in every function using the system monitoring. ..."];
+  Node26 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 [label="CANS_MainFunction",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$cansignal_8c.html#a71e4775d942e6f8392927858d08c2c15"];
+  Node29 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node26 -> Node54 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node54 [label="LED_Ctrl",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$led_8c.html#abfc5f852a22844ea0501fad65ed890b7",tooltip="controls the debug LED blinking frequency "];
+  Node26 -> Node57 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node57 [label="SOC_Calculation",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$sox_8c.html#abed0813a1b1b3be9b72b4fd759e49177",tooltip="integrates current over time to calculate SOC. "];
+  Node26 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node70 [label="SOF_Calculation",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$sox_8c.html#a0d3de2460654bee13c74c4f0a92df751",tooltip="triggers SOF calculation "];
+  Node26 -> Node77 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node77 [label="ALGO_MonitorExecutionTime",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$algo_8c.html#a53b5f1045b50af05fd3315d0045c206d",tooltip="monitors the calculation duration of the different algorithms. "];
+}

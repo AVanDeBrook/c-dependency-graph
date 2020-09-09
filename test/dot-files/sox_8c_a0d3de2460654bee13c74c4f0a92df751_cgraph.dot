@@ -1,0 +1,13 @@
+digraph "SOF_Calculation"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node132 [label="SOF_Calculation",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node132 -> Node133 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node133 [label="DB_ReadBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$database_8c.html#a94356e609a13e483fa0c15465e154f34",tooltip="Reads a datablock in database by value. "];
+  Node132 -> Node134 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node134 [label="SOF_Calculate",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$sox_8c.html#a3e5305429d2dd4dc69820314f40a4b07",tooltip="calculates State of function which means how much current can be delivered by battery to stay in safe..."];
+  Node132 -> Node140 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node140 [label="DB_WriteBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$database_8c.html#ab4d337e13c53dbdab695980576d33fb0",tooltip="Stores a datablock in database. "];
+}

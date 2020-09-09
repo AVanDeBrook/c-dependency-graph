@@ -1,0 +1,16 @@
+digraph "APPL_Cyclic_100ms"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node8 [label="APPL_Cyclic_100ms",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node8 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="DIAG_SysMonNotify",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$diag_8c.html#a7970909aa22bb87427a96c694fbab0e4",tooltip="DIAG_SysMonNotify has to be called in every function using the system monitoring. ..."];
+  Node8 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="BAL_Trigger",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$bal_8c.html#ac47a87986efae1622a9faa1e1f3c5e4b",tooltip="trigger function for the BAL driver state machine. "];
+  Node11 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="DB_ReadBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$database_8c.html#a94356e609a13e483fa0c15465e154f34",tooltip="Reads a datablock in database by value. "];
+  Node8 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="ALGO_MainFunction",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$algo_8c.html#a4e741993fded0d4aa051dbb41de77001",tooltip="handles the call of different algorithm functions when cycle time has expired. "];
+  Node8 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

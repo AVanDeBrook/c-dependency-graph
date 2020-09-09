@@ -1,0 +1,13 @@
+digraph "LTC_SetStateRequest"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node407 [label="LTC_SetStateRequest",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node407 -> Node408 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node408 [label="OS_TaskEnter_Critical",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a5573d7c2221a3f3b9cfe5c109603b441",tooltip="Enter Critical interface function for use in FreeRTOS-Tasks and FreeRTOS-ISR. "];
+  Node407 -> Node409 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node409 [label="LTC_CheckStateRequest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ltc_8c.html#a59d83a728308a82bca1b6b1e8c442fee",tooltip="checks the state requests that are made. "];
+  Node407 -> Node410 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node410 [label="OS_TaskExit_Critical",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a7e5b7892152952d2109c89baa0add1a8",tooltip="Exit Critical interface function for use in FreeRTOS-Tasks and FreeRTOS-ISR. "];
+}

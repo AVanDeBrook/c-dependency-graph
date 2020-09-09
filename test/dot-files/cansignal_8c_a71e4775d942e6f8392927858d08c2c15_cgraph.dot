@@ -1,0 +1,15 @@
+digraph "CANS_MainFunction"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node96 [label="CANS_MainFunction",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node96 -> Node97 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node97 [label="CANS_PeriodicReceive",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$cansignal_8c.html#aee4ed4a68e69e2b5c9b197b6d491d88e"];
+  Node96 -> Node105 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node105 [label="CANS_CheckCanTiming",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$cansignal_8c.html#ad7dc2fc23723da5905c2a71247ff3f1c",tooltip="Checks if the CAN messages come in the specified time window. "];
+  Node96 -> Node114 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node114 [label="CANS_PeriodicTransmit",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$cansignal_8c.html#a0f084eaaab6753114dc99ac3e3b6fe60"];
+  Node96 -> Node122 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node122 [label="DIAG_SysMonNotify",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$diag_8c.html#a7970909aa22bb87427a96c694fbab0e4",tooltip="DIAG_SysMonNotify has to be called in every function using the system monitoring. ..."];
+}

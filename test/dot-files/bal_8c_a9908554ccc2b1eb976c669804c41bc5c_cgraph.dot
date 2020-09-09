@@ -1,0 +1,13 @@
+digraph "BAL_Activate_Balancing_Voltage"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="BAL_Activate_Balancing\l_Voltage",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="DB_ReadBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$database_8c.html#a94356e609a13e483fa0c15465e154f34",tooltip="Reads a datablock in database by value. "];
+  Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="OS_getOSSysTick",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a4c29aeb605d624ed4979a48ebde8b7f3",tooltip="returns OS based system tick value. "];
+  Node0 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="DB_WriteBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$database_8c.html#ab4d337e13c53dbdab695980576d33fb0",tooltip="Stores a datablock in database. "];
+}

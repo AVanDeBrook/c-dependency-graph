@@ -1,0 +1,13 @@
+digraph "EEPR_SetStateRequest"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node205 [label="EEPR_SetStateRequest",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node205 -> Node206 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node206 [label="OS_TaskEnter_Critical",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a5573d7c2221a3f3b9cfe5c109603b441",tooltip="Enter Critical interface function for use in FreeRTOS-Tasks and FreeRTOS-ISR. "];
+  Node205 -> Node207 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node207 [label="EEPR_CheckStateRequest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$eepr_8c.html#aab7b97a818e044d5be21a00339c77f91",tooltip="checks if the transition from one state to another one is allowed "];
+  Node205 -> Node208 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node208 [label="OS_TaskExit_Critical",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a7e5b7892152952d2109c89baa0add1a8",tooltip="Exit Critical interface function for use in FreeRTOS-Tasks and FreeRTOS-ISR. "];
+}

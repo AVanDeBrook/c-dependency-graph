@@ -1,0 +1,15 @@
+digraph "LTC_SaveVoltages"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node272 [label="LTC_SaveVoltages",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node272 -> Node273 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node273 [label="PL_CheckVoltageMinMax",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$slaveplausibility_8c.html#a63e221e6fcbd44ab9f591925fcc21659",tooltip="Cell voltage plausibility check. "];
+  Node272 -> Node274 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node274 [label="PL_CheckVoltageSpread",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$slaveplausibility_8c.html#ad4acce36458a3b14a416401e6698c1f4",tooltip="Cell voltage spread plausibility check. "];
+  Node272 -> Node275 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node275 [label="DIAG_checkEvent",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$diag_8c.html#a9e06aacb2ff6bcf9245e2b3a283857bc",tooltip="DIAG_checkEvent provides a simple interface to check an event for E_OK. "];
+  Node272 -> Node280 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node280 [label="DB_WriteBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$database_8c.html#ab4d337e13c53dbdab695980576d33fb0",tooltip="Stores a datablock in database. "];
+}

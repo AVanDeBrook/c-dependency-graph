@@ -1,0 +1,27 @@
+digraph "CONT_Trigger"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node94 [label="CONT_Trigger",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node94 -> Node95 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node95 [label="CONT_IsReentry",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$contactor_8c.html#afaea9ba10853d13eb7024671e7c7b8e4",tooltip="checks reentry of CONT state machine trigger function "];
+  Node94 -> Node96 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node96 [label="DIAG_SysMonNotify",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$diag_8c.html#a7970909aa22bb87427a96c694fbab0e4",tooltip="DIAG_SysMonNotify has to be called in every function using the system monitoring. ..."];
+  Node94 -> Node98 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node98 [label="CONT_CheckAllContactorsFeedback",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$contactor_8c.html#a37e4af4889f2dedc139dc27ad170ccb1",tooltip="checks the feedback of all the contactors "];
+  Node94 -> Node107 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node107 [label="prnt",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$contactor_8c.html#a48b68dff70a1a4ddff0d10e41a20fb6f"];
+  Node94 -> Node108 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node108 [label="CONT_TransferStateRequest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$contactor_8c.html#a232f0f791751cad851411972418eba31",tooltip="transfers the current state request to the state machine. "];
+  Node94 -> Node109 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node109 [label="CONT_SaveContStateToDatabase",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$contactor_8c.html#a0a848564b98880618013ef7d32586974"];
+  Node94 -> Node111 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node111 [label="CONT_SaveContSubStateToDatabase",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$contactor_8c.html#ac83b5353c4da840b0aac92bd7f6c17e3"];
+  Node94 -> Node112 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node112 [label="CONT_NewStandbyRequestExists",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$contactor_8c.html#ab3b82db59fd67a3de09d94ab0f539dd2",tooltip="checks if there is new Standby request "];
+  Node112 -> Node108 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node94 -> Node113 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node113 [label="CONT_NewErrorRequestExists",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$contactor_8c.html#aa4a013e83b973e0cc2e717a5f670c556",tooltip="checks if there is new Error request "];
+  Node113 -> Node108 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

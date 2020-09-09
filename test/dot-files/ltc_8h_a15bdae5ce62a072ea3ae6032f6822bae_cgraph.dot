@@ -1,0 +1,13 @@
+digraph "LTC_SaveTemperatures"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node27 [label="LTC_SaveTemperatures",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node27 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 [label="PL_CheckTempMinMax",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$slaveplausibility_8c.html#a57d373250f2302a9ed691fe1827a4299",tooltip="Cell temperature plausibility check. "];
+  Node27 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 [label="DIAG_checkEvent",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$diag_8c.html#a9e06aacb2ff6bcf9245e2b3a283857bc",tooltip="DIAG_checkEvent provides a simple interface to check an event for E_OK. "];
+  Node27 -> Node34 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node34 [label="DB_WriteBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$database_8c.html#ab4d337e13c53dbdab695980576d33fb0",tooltip="Stores a datablock in database. "];
+}

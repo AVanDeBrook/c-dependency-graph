@@ -1,0 +1,9 @@
+digraph "UART_vWrite_intbuf"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node30 [label="UART_vWrite_intbuf",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node30 -> Node31 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31 [label="UART_txbuf_copy_length",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$uart_8c.html#ac9d357d2e9e72b2a937e061c2ab8c81e",tooltip="UART_txbuf_copy_length is a helper function. "];
+}

@@ -1,0 +1,17 @@
+digraph "ENG_Cyclic_100ms"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="ENG_Cyclic_100ms",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="EEPR_DataHandler",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$eepr_8c.html#a5bfde115a51356a0144fcad8daea1eb8",tooltip="handles Data, checks validity, provides automatic backup in case of data corruption, dependent on dirtyflags "];
+  Node0 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="ADC_Ctrl",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$adc_8c.html#ae0b9ae6e4ef2dbf771dcc0ea30901ae2",tooltip="determines which kind of measurements are made by the ADCs and stores result in database. "];
+  Node0 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="NVRAM_dataHandler",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$nvramhandler_8c.html#a3fa2951a918272f6556e3a0ec1bab491"];
+  Node0 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="HW_update",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$hwinfo_8c.html#a8fc82b4bfc8b154e1e0d64fb1fcaaae0",tooltip="updates coin cell votlage and mcu temperature "];
+  Node0 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 [label="ISO_MeasureInsulation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$isoguard_8h.html#ae5c6c833d0736a156a6a80817f88cd01",tooltip="Interface function which delivers the actual signal measurement (dutycyle) and writes the result in t..."];
+}

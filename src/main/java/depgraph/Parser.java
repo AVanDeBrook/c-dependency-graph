@@ -8,11 +8,11 @@ public class Parser {
 		manager = new Manager();
 	}
 	
-	public void parse(String singleFileContents) {
+	public Module parse(String singleFileContents) {
 		// TODO parse
 		Module module = new Module();
 		Node node = new Node();
 		module.addNode(node);
-		manager.collectModule(module);
+		return module;
 	}
 }

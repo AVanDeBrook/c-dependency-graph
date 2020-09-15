@@ -8,15 +8,16 @@ public class Manipulator {
 		manager = new Manager();
 	}
 
-	public void manipulate(Graph graph) {
-
+	public Graph manipulate(Graph graph) {
+		// TODO
+		return graph;
 	}
 
 	public void removeConnection() {
-
+		// TODO
 	}
 
 	public void addConnection() {
-
+		// TODO
 	}
 }

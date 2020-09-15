@@ -8,10 +8,6 @@ public class Manager {
 	private static Reader reader;
 	private static Parser parser;
 	private static Manipulator manipulator;
-
-	private String singleFile = null;
-	private String directory = null;
-	private List<String> fileContents = null;
 	private Graph graph;
 
 	public static void main(String[] args) {
@@ -36,56 +32,27 @@ public class Manager {
 	}
 
 	/**
-	 * Method used by Configurator to provide the file location to Reader
+	 * Method used by Configurator to provide the file location
 	 * 
-	 * @param the location of a single DOT file to read
+	 * @param boolean isSingleFile - true if location is a single file, false if
+	 *                location is a directory
+	 * @param String  location - the location of a single DOT file or a directory
+	 *                containing DOT file(s)
 	 */
-	public void provideSingleFile(String location) {
-		singleFile = location;
-		reader.readSingleFile(location);
-	}
-
-	/**
-	 * Method used by Configurator to provide a directory to Reader
-	 * 
-	 * @param the directory containing DOT files to read
-	 */
-	public void provideDirectory(String location) {
-		directory = location;
-		reader.readDirectory(location);
-	}
-
-	/**
-	 * Method used by Reader to provide file contents to Parser
-	 * 
-	 * @param a list of strings, each of which represent the contents of one file to
-	 *          be parsed
-	 */
-	public void provideFileContents(List<String> contents) {
-		fileContents = contents;
+	public void start(boolean isSingleFile, String location) {
+		List<String> fileContents = null;
+		if (isSingleFile) {
+			fileContents = reader.readSingleFile(location);
+		} else {
+			fileContents = reader.readDirectory(location);
+		}
+		if (fileContents == null || fileContents.isEmpty()) {
+			return;
+		}
 		graph = new Graph();
 		for (String singleFile : fileContents) {
-			parser.parse(singleFile);
+			graph.addModule(parser.parse(singleFile));
 		}
-		manipulator.manipulate(graph);
-	}
-
-	/**
-	 * Method used by Parser to provide Module to Graph
-	 * 
-	 * @param a module containing nodes
-	 */
-	public void collectModule(Module module) {
-		graph.addModule(module);
-	}
-
-	/**
-	 * Method used by Configurator to clear stored values to begin process again
-	 * with a new set of files
-	 */
-	public void clearForNewProcess() {
-		singleFile = null;
-		directory = null;
-		fileContents = null;
+		graph = manipulator.manipulate(graph);
 	}
 }

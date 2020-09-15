@@ -14,22 +14,30 @@ public class Reader {
 	}
 
 	/**
-	 * Method used by Manager to store the contents of a single file at a given
-	 * location in a String
+	 * Method used to get the contents of a single DOT file at a given location as a
+	 * String
 	 * 
 	 * @param the location of a single DOT file to read
+	 * @return a list containing one string, the contents of the file
 	 */
-	public void readSingleFile(String location) {
+	public List<String> readSingleFile(String location) {
 		List<String> fileContents = null;
 		String singleFileContents = null;
 		// TODO read contents of single DOT file
 		fileContents.add(singleFileContents);
-		manager.provideFileContents(fileContents);
+		return fileContents;
 	}
 
-	public void readDirectory(String location) {
+	/**
+	 * Method used to get the contents of all DOT files in a given directory as a
+	 * list of Strings (one string = one file)
+	 * 
+	 * @param the location of a single DOT file to read
+	 * @return a list of strings, each string representing the contents of one file
+	 */
+	public List<String> readDirectory(String location) {
 		List<String> fileContents = null;
 		// TODO read contents of all DOT files in directory
-		manager.provideFileContents(fileContents);
+		return fileContents;
 	}
 }

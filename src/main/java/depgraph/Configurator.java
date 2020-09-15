@@ -7,7 +7,7 @@ public class Configurator {
 	public Configurator() {
 		manager = new Manager();
 		// TODO get location of single file or directory from command line
-		manager.provideSingleFile("C:\\dummy\\location.DOT");
-		manager.provideDirectory("C:\\dummy\\location");
+		manager.start(true, "C:\\dummy\\location\\single\\file.DOT");
+		manager.start(false, "C:\\dummy\\location\\directory");
 	}
 }

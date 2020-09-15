@@ -4,6 +4,9 @@
 # Gradle build directory
 build
 
+# Gradle bin directory
+bin
+
 # Eclipse Workspace
 .ws
 
@@ -15,3 +18,8 @@ build
 
 # Java JAR files
 **/*.jar
+
+# RedHat Java Extension
+.settings
+.classpath
+.project

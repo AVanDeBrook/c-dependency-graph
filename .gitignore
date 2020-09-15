@@ -1,0 +1,17 @@
+# Gradle config directory
+.gradle
+
+# Gradle build directory
+build
+
+# Eclipse Workspace
+.ws
+
+# VSCode Workspace
+.vscode
+
+# Java Class files
+**/*.class
+
+# Java JAR files
+**/*.jar

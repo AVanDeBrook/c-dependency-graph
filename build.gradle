@@ -16,9 +16,9 @@ mainClassName = 'depgraph.Manager'
 
 test {
     useJUnitPlatform()
-
     testLogging {
-        events "passed", "failed", "skipped"
-
+        exceptionFormat "full"
+        events "started", "skipped", "passed", "failed"
+        showStandardStreams true
     }
 }

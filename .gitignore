@@ -1,0 +1,25 @@
+# Gradle config directory
+.gradle
+
+# Gradle build directory
+build
+
+# Gradle bin directory
+bin
+
+# Eclipse Workspace
+.ws
+
+# VSCode Workspace
+.vscode
+
+# Java Class files
+**/*.class
+
+# Java JAR files
+**/*.jar
+
+# RedHat Java Extension
+.settings
+.classpath
+.project

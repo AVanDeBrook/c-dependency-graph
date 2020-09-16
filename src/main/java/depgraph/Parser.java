@@ -12,8 +12,10 @@ public class Parser {
 		System.out.println("Parser parsing single file...");
 		// TODO parse
 		Module module = new Module();
-		Node node = new Node();
-		module.addNode(node);
+		Node node1 = new Node();
+		module.addNode(node1);
+		Node node2 = new Node();
+		module.addNode(node2);
 		return module;
 	}
 }

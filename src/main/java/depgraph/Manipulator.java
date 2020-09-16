@@ -1,5 +1,7 @@
 package depgraph;
 
+import java.util.List;
+
 public class Manipulator {
 
 	Manager manager;
@@ -9,7 +11,10 @@ public class Manipulator {
 	}
 
 	public Graph manipulate(Graph graph) {
+		System.out.println("Manipulator manipulating graph...");
 		// TODO
+		removeConnection();
+		addConnection();
 		return graph;
 	}
 

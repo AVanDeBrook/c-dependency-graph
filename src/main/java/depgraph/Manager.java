@@ -22,17 +22,17 @@ public class Manager {
 		reader = new Reader();
 		parser = new Parser();
 		manipulator = new Manipulator();
+
+		configurator.provideLocation();
 	}
 
-	/**
-	 * Constructor
-	 */
 	public Manager() {
 
 	}
 
 	/**
-	 * Method used by Configurator to provide the file location
+	 * Method used by Configurator to provide the file location and kick off the
+	 * process
 	 * 
 	 * @param boolean isSingleFile - true if location is a single file, false if
 	 *                location is a directory
@@ -40,19 +40,28 @@ public class Manager {
 	 *                containing DOT file(s)
 	 */
 	public void start(boolean isSingleFile, String location) {
-		List<String> fileContents = null;
-		if (isSingleFile) {
-			fileContents = reader.readSingleFile(location);
-		} else {
-			fileContents = reader.readDirectory(location);
-		}
-		if (fileContents == null || fileContents.isEmpty()) {
+		if (location == null) {
 			return;
 		}
-		graph = new Graph();
-		for (String singleFile : fileContents) {
-			graph.addModule(parser.parse(singleFile));
+
+		List<String> files = null;
+		if (isSingleFile) {
+			files = reader.readSingleFile(location);
+		} else {
+			files = reader.readDirectory(location);
 		}
+		if (files == null || files.isEmpty()) {
+			return;
+		}
+
+		graph = new Graph();
+		for (String singleFile : files) {
+			Module module = parser.parse(singleFile);
+			graph.addModule(module);
+		}
+
 		graph = manipulator.manipulate(graph);
+
+		// TODO continue flow
 	}
 }

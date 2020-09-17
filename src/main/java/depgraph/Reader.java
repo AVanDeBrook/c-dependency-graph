@@ -1,12 +1,11 @@
 package depgraph;
 
+import java.io.BufferedReader;
+import java.io.*;
+import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Reader {
 
@@ -18,43 +17,55 @@ public class Reader {
 
 	/**
 	 * Method used to get the contents of a single DOT file at a given location
-	 * 
-	 * @param location - the path of a single DOT file to read
+	 *
+	 * @param the path of a single DOT file to read
 	 * @return a list containing one string, the contents of the file
 	 */
-	public List<String> readSingleFile(String location) {
+	public List<String> readSingleFile(String filePath) {
 		System.out.println("Reader reading single file...");
-		List<String> files = new ArrayList<String>();
-
-		StringBuilder contentBuilder = new StringBuilder();
-
-		try (Stream<String> stream = Files.lines(Paths.get(location), StandardCharsets.UTF_8)) {
-			stream.forEach(s -> contentBuilder.append(s).append("\n"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		String singlefile = contentBuilder.toString();
-
-		files.add(singlefile);
-		return files;
+		List<String> filesList = new ArrayList<String>();
+		filesList.add(read(filePath));
+		return filesList;
 	}
 
 	/**
 	 * Method used to get the contents of all DOT files in a given directory as a
 	 * list of Strings (one string = one file)
-	 * 
-	 * @param the location of a single DOT file to read
+	 *
+	 * @param a directory containing DOT files
 	 * @return a list of strings, each string representing the contents of one file
 	 */
-	public List<String> readDirectory(String location) {
+	public List<String> readDirectory(String directory) {
 		System.out.println("Reader reading files from directory...");
-		List<String> files = new ArrayList<String>();
-		// TODO read contents of all DOT files in directory
-		String singleFile1 = "dummy file contents 1";
-		String singleFile2 = "dummy file contents 2";
-		files.add(singleFile1);
-		files.add(singleFile2);
-		return files;
+		List<String> filesList = new ArrayList<String>();
+		File folder = new File(directory);
+		File[] filesInDir = folder.listFiles();
+		for (File file : filesInDir) {
+			String filePath = file.toString();
+			int index = filePath.lastIndexOf('.');
+			if (index > 0) {
+				String extension = filePath.substring(index + 1);
+				if (file.isFile() && extension.equals("dot")) {
+					filesList.add(read(filePath));
+				}
+			}
+		}
+		return filesList;
 	}
+
+	public String read(String filePath) {
+		StringBuilder stringBuild = new StringBuilder();
+		File file = new File(filePath);
+		String line;
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			while ((line = reader.readLine()) != null)
+				stringBuild.append(line);
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return stringBuild.toString();
+	}
+
 }

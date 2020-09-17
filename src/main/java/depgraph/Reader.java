@@ -1,7 +1,12 @@
 package depgraph;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Reader {
 
@@ -20,9 +25,18 @@ public class Reader {
 	public List<String> readSingleFile(String location) {
 		System.out.println("Reader reading single file...");
 		List<String> files = new ArrayList<String>();
-		// TODO read contents of single DOT file
-		String singleFile = "dummy file contents";
-		files.add(singleFile);
+
+		StringBuilder contentBuilder = new StringBuilder();
+
+		try (Stream<String> stream = Files.lines(Paths.get(location), StandardCharsets.UTF_8)) {
+			stream.forEach(s -> contentBuilder.append(s).append("\n"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		String singlefile = contentBuilder.toString();
+
+		files.add(singlefile);
 		return files;
 	}
 

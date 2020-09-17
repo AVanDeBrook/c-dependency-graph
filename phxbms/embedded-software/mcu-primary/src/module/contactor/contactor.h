@@ -347,7 +347,7 @@ extern CONT_POWER_LINE_e CONT_GetActivePowerLine(void);
  *
  * @details This function is used to make a state request to the state machine,e.g, start voltage
  *          measurement, read result of voltage measurement, re-initialization.
- *          It calls CONT_CheckStateRequest() to check if the request is valid. The state request
+ *          It calls cont_CheckStateRequest() to check if the request is valid. The state request
  *          is rejected if is not valid. The result of the check is returned immediately, so that
  *          the requester can act in case it made a non-valid state request.
  *

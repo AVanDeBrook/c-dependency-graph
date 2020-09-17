@@ -8,7 +8,7 @@ public class Manager {
 	private static Reader reader;
 	private static Parser parser;
 	private static Manipulator manipulator;
-	private Graph graph;
+	private static Graph graph;
 
 	public static void main(String[] args) {
 		if (args.length != 0) {
@@ -23,7 +23,7 @@ public class Manager {
 		parser = new Parser();
 		manipulator = new Manipulator();
 
-		configurator.provideLocation();
+		start();
 	}
 
 	public Manager() {
@@ -33,25 +33,13 @@ public class Manager {
 	/**
 	 * Method used by Configurator to provide the file location and kick off the
 	 * process
-	 * 
-	 * @param boolean isSingleFile - true if location is a single file, false if
-	 *                location is a directory
-	 * @param String  location - the location of a single DOT file or a directory
-	 *                containing DOT file(s)
 	 */
-	public void start(boolean isSingleFile, String location) {
-		if (location == null) {
-			return;
-		}
-
+	public static void start() {
 		List<String> files = null;
-		if (isSingleFile) {
-			files = reader.readSingleFile(location);
+		if (configurator.isDirectory()) {
+			files = reader.readDirectory(configurator.getDirectory());
 		} else {
-			files = reader.readDirectory(location);
-		}
-		if (files == null || files.isEmpty()) {
-			return;
+			files = reader.readSingleFile(configurator.getFilePath());
 		}
 
 		graph = new Graph();

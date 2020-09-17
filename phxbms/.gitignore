@@ -1,0 +1,36 @@
+# eclipse generated directories
+/*[wW]orkspace*
+/*[pP]ackages*
+/.ws/
+/*eclipse*
+/qa-chain/
+
+# ignore complete build directory
+/build/
+
+# ignore complete director for log figures
+log_disp_figs/ 
+
+# ignore distdirectory
+/phxbms/
+
+# compiled python files
+*.pyc
+
+# log files from build steps
+*.log
+*.vt
+log.*
+
+# waf related temporary files and directories
+waf*-*-*
+.lock-waf_*
+
+# other
+*.zip
+*.gz
+*.bz2
+
+# ignore some git files
+*.patch
+*.diff

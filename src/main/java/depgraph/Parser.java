@@ -2,10 +2,8 @@ package depgraph;
 
 public class Parser {
 
-	Manager manager;
-
 	public Parser() {
-		manager = new Manager();
+		
 	}
 
 	public Module parse(String singleFileContents) {

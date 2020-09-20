@@ -480,7 +480,7 @@ void BMS_Trigger(void) {
                 }
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
             } else if (bms_state.substate == BMS_CHECK_CONTACTOR_NORMAL_STATE) {
-                contstate = CONT_GetState();
+                contstate = CNT_GetState();
                 if (contstate == CONT_STATEMACH_NORMAL) {
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.state = BMS_STATEMACH_NORMAL;
@@ -588,7 +588,7 @@ void BMS_Trigger(void) {
                 }
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
             } else if (bms_state.substate == BMS_CHECK_CONTACTOR_CHARGE_STATE) {
-                contstate = CONT_GetState();
+                contstate = CNT_GetState();
                 if (contstate == CONT_STATEMACH_CHARGE) {
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.state = BMS_STATEMACH_CHARGE;
@@ -698,7 +698,7 @@ void BMS_Trigger(void) {
                 }
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
             } else if (bms_state.substate == BMS_CHECK_CONTACTOR_ENGINE_STATE) {
-                contstate = CONT_GetState();
+                contstate = CNT_GetState();
                 if (contstate == CONT_STATEMACH_ENGINE) {
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.state = BMS_STATEMACH_ENGINE;
@@ -1100,7 +1100,7 @@ static void bms_CheckCurrent(void) {
     DIAG_CH_ID_e batsys_discharge_limit_diag_mol = DIAG_CH_OVERCURRENT_DISCHARGE_PL0_MOL;
 
     /* get active power line */
-    CONT_POWER_LINE_e powerline = CONT_GetActivePowerLine();
+    CONT_POWER_LINE_e powerline = CNT_GetActivePowerLine();
 
     /* set limits for batterysystem according to current power line */
     if (powerline == CONT_POWER_LINE_0) {

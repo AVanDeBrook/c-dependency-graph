@@ -211,14 +211,14 @@ typedef struct {
  *
  * @return  retVal (type: STD_RETURN_TYPE_e)
  */
-extern STD_RETURN_TYPE_e CONT_Init(void);
+extern STD_RETURN_TYPE_e CNT_Init(void);
 
 /**
  * @brief   Checks if the current limitations are violated
  *
  * @return  E_OK if the current limitations are NOT violated, else E_NOT_OK (type: STD_RETURN_TYPE_e)
  */
-extern STD_RETURN_TYPE_e CONT_CheckPrecharge(CONT_WHICH_POWERLINE_e caller);
+extern STD_RETURN_TYPE_e CNT_CheckPrecharge(CONT_WHICH_POWERLINE_e caller);
 
 /**
  * Function to check fuse state. Fuse state can only be checked if at least
@@ -228,7 +228,7 @@ extern STD_RETURN_TYPE_e CONT_CheckPrecharge(CONT_WHICH_POWERLINE_e caller);
  * @return  Returns E_OK if fuse is intact, and E_NOT_OK if fuse is tripped.
  *
  */
-extern STD_RETURN_TYPE_e CONT_CheckFuse(CONT_WHICH_POWERLINE_e caller);
+extern STD_RETURN_TYPE_e CNT_CheckFuse(CONT_WHICH_POWERLINE_e caller);
 
 /**
  * @brief   Reads the feedback pins of all contactors and updates the contactors_cfg[] array with
@@ -236,14 +236,14 @@ extern STD_RETURN_TYPE_e CONT_CheckFuse(CONT_WHICH_POWERLINE_e caller);
  *
  * @return  Returns E_OK if all feedbacks could be acquired (type: STD_RETURN_TYPE_e)
  */
-extern STD_RETURN_TYPE_e CONT_AcquireContactorFeedbacks(void);
+extern STD_RETURN_TYPE_e CNT_AcquireContactorFeedbacks(void);
 
 /**
- * @brief   Alias of CONT_AcquireContactorFeedbacks().
+ * @brief   Alias of CNT_AcquireContactorFeedbacks().
  *
  * @return  Returns E_OK if all feedbacks could be acquired (type: STD_RETURN_TYPE_e)
  */
-extern STD_RETURN_TYPE_e CONT_CONT_GetAllContactorFeedbacks(void);
+extern STD_RETURN_TYPE_e CNT_GetAllContactorFeedbacks(void);
 
 /**
  * @brief   Reads the feedback pin of one contactor and returns its current value
@@ -257,7 +257,7 @@ extern STD_RETURN_TYPE_e CONT_CONT_GetAllContactorFeedbacks(void);
  *
  * @return  measuredContactorState (type: CONT_ELECTRICAL_STATE_TYPE_e)
  */
-extern CONT_ELECTRICAL_STATE_TYPE_e CONT_GetOneContactorFeedback(CONT_NAMES_e contactor);
+extern CONT_ELECTRICAL_STATE_TYPE_e CNT_GetOneContactorFeedback(CONT_NAMES_e contactor);
 
 /**
  * @brief   Gets the latest value (TRUE, FALSE) the contactors were set to.
@@ -266,7 +266,7 @@ extern CONT_ELECTRICAL_STATE_TYPE_e CONT_GetOneContactorFeedback(CONT_NAMES_e co
  *
  * @return  returns CONT_SWITCH_OFF or CONT_SWITCH_ON
  */
-extern CONT_ELECTRICAL_STATE_TYPE_e CONT_GetContactorSetValue(CONT_NAMES_e contactor);
+extern CONT_ELECTRICAL_STATE_TYPE_e CNT_GetContactorSetValue(CONT_NAMES_e contactor);
 
 /**
  * @brief   Sets the contactor state to its requested state, if the contactor is at that time not
@@ -285,7 +285,7 @@ extern CONT_ELECTRICAL_STATE_TYPE_e CONT_GetContactorSetValue(CONT_NAMES_e conta
  *
  * @return  retVal (type: STD_RETURN_TYPE_e)
  */
-extern STD_RETURN_TYPE_e CONT_SetContactorState(CONT_NAMES_e contactor, CONT_ELECTRICAL_STATE_TYPE_e requestedContactorState);
+extern STD_RETURN_TYPE_e CNT_SetContactorState(CONT_NAMES_e contactor, CONT_ELECTRICAL_STATE_TYPE_e requestedContactorState);
 
 /**
  * @brief   Sets the latching type contactor state to its requested state, if the contactor is at 
@@ -303,7 +303,7 @@ extern STD_RETURN_TYPE_e CONT_SetContactorState(CONT_NAMES_e contactor, CONT_ELE
  *
  * @return  retVal (type: STD_RETURN_TYPE_e)
  */
-extern STD_RETURN_TYPE_e CONT_SetContactorState_pulse(CONT_NAMES_e contactor);
+extern STD_RETURN_TYPE_e CNT_SetContactorState_pulse(CONT_NAMES_e contactor);
 
 /**
  * @brief   Iterates over the contactor array and switches all contactors off
@@ -311,7 +311,7 @@ extern STD_RETURN_TYPE_e CONT_SetContactorState_pulse(CONT_NAMES_e contactor);
  * @return  E_OK if all contactors were opened, E_NOT_OK if not all contactors could be opened
  *          (type: STD_RETURN_TYPE_e)
  */
-extern STD_RETURN_TYPE_e CONT_SwitchAllContactorsOff(void);
+extern STD_RETURN_TYPE_e CNT_SwitchAllContactorsOff(void);
 
 
 /**
@@ -321,7 +321,7 @@ extern STD_RETURN_TYPE_e CONT_SwitchAllContactorsOff(void);
  *
  * @return  current state, taken from #CONT_STATEMACH_e
  */
-extern  CONT_STATEMACH_e CONT_GetState(void);
+extern  CONT_STATEMACH_e CNT_GetState(void);
 
 /**
  * @brief   Gets the initialization state.
@@ -330,7 +330,7 @@ extern  CONT_STATEMACH_e CONT_GetState(void);
  *
  * @return  #E_OK if initialized, otherwise #E_NOT_OK
  */
-STD_RETURN_TYPE_e CONT_GetInitializationState(void);
+STD_RETURN_TYPE_e CNT_GetInitializationState(void);
 
 /**
  * @brief Returns the active power line.
@@ -339,7 +339,7 @@ STD_RETURN_TYPE_e CONT_GetInitializationState(void);
  *
  * @return value of #cont_state.activePowerLine
  */
-extern CONT_POWER_LINE_e CONT_GetActivePowerLine(void);
+extern CONT_POWER_LINE_e CNT_GetActivePowerLine(void);
 
 
 /**
@@ -347,7 +347,7 @@ extern CONT_POWER_LINE_e CONT_GetActivePowerLine(void);
  *
  * @details This function is used to make a state request to the state machine,e.g, start voltage
  *          measurement, read result of voltage measurement, re-initialization.
- *          It calls cont_CheckStateRequest() to check if the request is valid. The state request
+ *          It calls cnt_CheckStateRequest() to check if the request is valid. The state request
  *          is rejected if is not valid. The result of the check is returned immediately, so that
  *          the requester can act in case it made a non-valid state request.
  *

@@ -98,15 +98,15 @@ static BAL_STATE_s bal_state = {
 
 /*================== Function Prototypes ==================================*/
 
-static BAL_RETURN_TYPE_e BAL_CheckStateRequest(BAL_STATE_REQUEST_e statereq);
-static BAL_STATE_REQUEST_e BAL_GetStateRequest(void);
-static BAL_STATE_REQUEST_e BAL_TransferStateRequest(void);
-static uint8_t BAL_CheckReEntrance(void);
+static BAL_RETURN_TYPE_e bal_CheckStateRequest(BAL_STATE_REQUEST_e statereq);
+static BAL_STATE_REQUEST_e bal_GetStateRequest(void);
+static BAL_STATE_REQUEST_e bal_TransferStateRequest(void);
+static uint8_t bal_CheckReEntrance(void);
 
-static void BAL_Init(void);
-static void BAL_Deactivate(void);
+static void bal_Init(void);
+static void bal_Deactivate(void);
 #if BALANCING_VOLTAGE_BASED == TRUE
-static uint8_t BAL_Activate_Balancing_Voltage(void);
+static uint8_t bal_Activate_Balancing_Voltage(void);
 #else
 static uint8_t BAL_Check_Imbalances(void);
 static void BAL_Compute_Imbalances(void);
@@ -115,13 +115,13 @@ static void BAL_Activate_Balancing_History(void);
 
 
 /*================== Function Implementations =============================*/
-static void BAL_Init(void) {
+static void bal_Init(void) {
     DB_ReadBlock(&bal_balancing, DATA_BLOCK_ID_BALANCING_CONTROL_VALUES);
     bal_balancing.enable_balancing = 0;
     DB_WriteBlock(&bal_balancing, DATA_BLOCK_ID_BALANCING_CONTROL_VALUES);
 }
 
-static void BAL_Deactivate(void) {
+static void bal_Deactivate(void) {
     uint16_t i;
 
     DB_ReadBlock(&bal_balancing, DATA_BLOCK_ID_BALANCING_CONTROL_VALUES);
@@ -141,7 +141,7 @@ static void BAL_Deactivate(void) {
 
 #if BALANCING_VOLTAGE_BASED == TRUE
 
-static uint8_t BAL_Activate_Balancing_Voltage(void) {
+static uint8_t bal_Activate_Balancing_Voltage(void) {
     uint32_t i = 0;
     uint16_t min = 0;
     uint8_t finished = TRUE;
@@ -275,7 +275,7 @@ static void BAL_Activate_Balancing_History(void) {
  * @return  retval  0 if no further instance of the function is active, 0xff else
  *
  */
-static uint8_t BAL_CheckReEntrance(void) {
+static uint8_t bal_CheckReEntrance(void) {
     uint8_t retval = 0;
 
     taskENTER_CRITICAL();
@@ -298,7 +298,7 @@ static uint8_t BAL_CheckReEntrance(void) {
  *
  * @return  retval  current state request, taken from BAL_STATE_REQUEST_e
  */
-static BAL_STATE_REQUEST_e BAL_GetStateRequest(void) {
+static BAL_STATE_REQUEST_e bal_GetStateRequest(void) {
     BAL_STATE_REQUEST_e retval = BAL_STATE_NO_REQUEST;
 
     taskENTER_CRITICAL();
@@ -328,7 +328,7 @@ STD_RETURN_TYPE_e BAL_GetInitializationState(void) {
  * @return  retVal          current state request, taken from BAL_STATE_REQUEST_e
  *
  */
-static BAL_STATE_REQUEST_e BAL_TransferStateRequest(void) {
+static BAL_STATE_REQUEST_e bal_TransferStateRequest(void) {
     BAL_STATE_REQUEST_e retval = BAL_STATE_NO_REQUEST;
 
     taskENTER_CRITICAL();
@@ -344,7 +344,7 @@ BAL_RETURN_TYPE_e BAL_SetStateRequest(BAL_STATE_REQUEST_e statereq) {
     BAL_RETURN_TYPE_e retVal = BAL_STATE_NO_REQUEST;
 
     taskENTER_CRITICAL();
-    retVal = BAL_CheckStateRequest(statereq);
+    retVal = bal_CheckStateRequest(statereq);
 
     if (retVal == BAL_OK) {
             bal_state.statereq   = statereq;
@@ -366,7 +366,7 @@ BAL_RETURN_TYPE_e BAL_SetStateRequest(BAL_STATE_REQUEST_e statereq) {
  *
  * @return              result of the state request that was made, taken from BAL_RETURN_TYPE_e
  */
-static BAL_RETURN_TYPE_e BAL_CheckStateRequest(BAL_STATE_REQUEST_e statereq) {
+static BAL_RETURN_TYPE_e bal_CheckStateRequest(BAL_STATE_REQUEST_e statereq) {
     if (statereq == BAL_STATE_ERROR_REQUEST) {
         return BAL_OK;
     }
@@ -405,7 +405,7 @@ void BAL_Trigger(void) {
     uint8_t finished = FALSE;
 
     /* Check re-entrance of function */
-    if (BAL_CheckReEntrance()) {
+    if (bal_CheckReEntrance()) {
         return;
     }
 
@@ -420,7 +420,7 @@ void BAL_Trigger(void) {
         /****************************UNINITIALIZED***********************************/
         case BAL_STATEMACH_UNINITIALIZED:
             /* waiting for Initialization Request */
-            statereq = BAL_TransferStateRequest();
+            statereq = bal_TransferStateRequest();
             if (statereq == BAL_STATE_INIT_REQUEST) {
                 BAL_SAVELASTSTATES();
                 bal_state.timer = BAL_STATEMACH_SHORTTIME_100MS;
@@ -438,7 +438,7 @@ void BAL_Trigger(void) {
         case BAL_STATEMACH_INITIALIZATION:
 
             BAL_SAVELASTSTATES();
-            BAL_Init();
+            bal_Init();
 
             bal_state.timer = BAL_STATEMACH_SHORTTIME_100MS;
             bal_state.state = BAL_STATEMACH_INITIALIZED;
@@ -465,7 +465,7 @@ void BAL_Trigger(void) {
             if (bal_state.substate == BAL_ENTRY) {
                 if (bal_state.balancing_global_allowed == FALSE) {
                     if (bal_state.active == TRUE) {
-                        BAL_Deactivate();
+                        bal_Deactivate();
                     }
                     bal_state.active = FALSE;
                     bal_state.substate = BAL_ENTRY;
@@ -477,7 +477,7 @@ void BAL_Trigger(void) {
                 break;
             } else if (bal_state.substate == BAL_CHECK_IMBALANCES) {
                 if (bal_state.active == TRUE) {
-                    BAL_Deactivate();
+                    bal_Deactivate();
                 }
                 if (BAL_Check_Imbalances() == TRUE) {
                     bal_state.state = BAL_STATEMACH_BALANCE;
@@ -508,7 +508,7 @@ void BAL_Trigger(void) {
                 if (bal_state.substate == BAL_ENTRY) {
                     if (bal_state.balancing_global_allowed == FALSE) {
                         if (bal_state.active == TRUE) {
-                            BAL_Deactivate();
+                            bal_Deactivate();
                         }
                         bal_state.active = FALSE;
                         bal_state.substate = BAL_STATEMACH_CHECK_BALANCING;
@@ -525,7 +525,7 @@ void BAL_Trigger(void) {
                         BAL_Check_Imbalances() == FALSE ||
                         bal_state.balancing_global_allowed == FALSE) {
                         if (bal_state.active == TRUE) {
-                            BAL_Deactivate();
+                            bal_Deactivate();
                         }
                         bal_state.state = BAL_STATEMACH_CHECK_BALANCING;
                         bal_state.substate = BAL_ENTRY;
@@ -543,7 +543,7 @@ void BAL_Trigger(void) {
         case BAL_STATEMACH_CHECK_BALANCING:
             BAL_SAVELASTSTATES();
 
-            statereq = BAL_TransferStateRequest();
+            statereq = bal_TransferStateRequest();
             if (statereq == BAL_STATE_NOBALANCING_REQUEST) {
                 bal_state.balancing_allowed = FALSE;
             }
@@ -554,7 +554,7 @@ void BAL_Trigger(void) {
             bal_state.timer = BAL_STATEMACH_SHORTTIME_100MS;
 
             if (bal_state.balancing_allowed == FALSE || bal_state.balancing_global_allowed == FALSE) {
-                BAL_Deactivate();
+                bal_Deactivate();
                 bal_state.active = FALSE;
             } else {
                 if (BMS_GetBatterySystemState() == BMS_AT_REST) {
@@ -570,7 +570,7 @@ void BAL_Trigger(void) {
             BAL_SAVELASTSTATES();
 
             /* Check if balancing is still allowed */
-            statereq = BAL_TransferStateRequest();
+            statereq = bal_TransferStateRequest();
             if (statereq == BAL_STATE_NOBALANCING_REQUEST) {
                 bal_state.balancing_allowed = FALSE;
             }
@@ -580,7 +580,7 @@ void BAL_Trigger(void) {
 
             if (bal_state.balancing_global_allowed == FALSE) {
                 if (bal_state.active == TRUE) {
-                    BAL_Deactivate();
+                    bal_Deactivate();
                 }
                 bal_state.active = FALSE;
                 bal_state.state = BAL_STATEMACH_CHECK_BALANCING;
@@ -592,7 +592,7 @@ void BAL_Trigger(void) {
             if (bal_state.substate == BAL_ENTRY) {
                 if (bal_state.balancing_allowed == FALSE) {
                     if (bal_state.active == TRUE) {
-                        BAL_Deactivate();
+                        bal_Deactivate();
                     }
                     bal_state.active = FALSE;
                     bal_state.state = BAL_STATEMACH_CHECK_BALANCING;
@@ -608,7 +608,7 @@ void BAL_Trigger(void) {
                 if (bal_minmax.voltage_min <= BAL_LOWER_VOLTAGE_LIMIT_MV ||
                         bal_minmax.temperature_max >= BAL_UPPER_TEMPERATURE_LIMIT_DEG) {
                     if (bal_state.active == TRUE) {
-                        BAL_Deactivate();
+                        bal_Deactivate();
                     }
                     bal_state.state = BAL_STATEMACH_CHECK_BALANCING;
                     bal_state.substate = BAL_ENTRY;
@@ -622,7 +622,7 @@ void BAL_Trigger(void) {
                     bal_state.substate = BAL_ACTIVATE_BALANCING;
                 } else {
                     if (bal_state.active == TRUE) {
-                        BAL_Deactivate();
+                        bal_Deactivate();
                     }
                     bal_state.state = BAL_STATEMACH_CHECK_BALANCING;
                     bal_state.substate = BAL_ENTRY;
@@ -632,13 +632,13 @@ void BAL_Trigger(void) {
             } else if (bal_state.substate == BAL_ACTIVATE_BALANCING) {
                 if (bal_state.balancing_allowed == FALSE) {
                     if (bal_state.active == TRUE) {
-                        BAL_Deactivate();
+                        bal_Deactivate();
                     }
                     bal_state.active = FALSE;
                     bal_state.state = BAL_STATEMACH_CHECK_BALANCING;
                     bal_state.substate = BAL_ENTRY;
                 } else {
-                    finished = BAL_Activate_Balancing_Voltage();
+                    finished = bal_Activate_Balancing_Voltage();
                     if (finished == TRUE) {
                         bal_state.balancing_threshold = BAL_THRESHOLD_MV + BAL_HYSTERESIS_MV;
                         bal_state.state = BAL_STATEMACH_CHECK_BALANCING;

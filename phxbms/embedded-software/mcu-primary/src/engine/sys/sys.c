@@ -353,7 +353,7 @@ void SYS_Trigger(void) {
                 sys_state.InitCounter = 0;
                 break;
             } else if (sys_state.substate == SYS_WAIT_INITIALIZATION_CONT) {
-                contstate = CONT_GetInitializationState();
+                contstate = CNT_GetInitializationState();
                 if (contstate == E_OK) {
                     sys_state.timer = SYS_STATEMACH_SHORTTIME_MS;
                     sys_state.state = SYS_STATEMACH_INITIALIZE_BALANCING;

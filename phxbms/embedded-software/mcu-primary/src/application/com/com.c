@@ -375,7 +375,7 @@ uint8_t COM_testMode_Decoder(void) {
             /* Close contactor */
                 printf("Contactor %d", contNumber);
 
-                CONT_SetContactorState(contNumber, CONT_SWITCH_ON);
+                CNT_SetContactorState(contNumber, CONT_SWITCH_ON);
 
                 printf(" enabled\r\n");
                 com_tickcount = OS_getOSSysTick();
@@ -395,7 +395,7 @@ uint8_t COM_testMode_Decoder(void) {
             /* Open contactor */
                 printf("Contactor %d", contNumber);
 
-                CONT_SetContactorState(contNumber, CONT_SWITCH_OFF);
+                CNT_SetContactorState(contNumber, CONT_SWITCH_OFF);
 
                 printf(" disabled\r\n");
                 com_tickcount = OS_getOSSysTick();

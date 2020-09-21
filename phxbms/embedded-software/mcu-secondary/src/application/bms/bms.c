@@ -90,16 +90,16 @@ static DATA_BLOCK_MINMAX_s bms_tab_minmax;
 
 /*================== Function Prototypes ==================================*/
 
-static BMS_RETURN_TYPE_e BMS_CheckStateRequest(BMS_STATE_REQUEST_e statereq);
-static BMS_STATE_REQUEST_e BMS_GetStateRequest(void);
-static BMS_STATE_REQUEST_e BMS_TransferStateRequest(void);
-static uint8_t BMS_CheckReEntrance(void);
-static uint8_t BMS_CheckCANRequests(void);
-static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void);
-static void BMS_GetMeasurementValues(void);
-static void BMS_CheckVoltages(void);
-static void BMS_CheckTemperatures(void);
-static void BMS_CheckSlaveTemperatures(void);
+static BMS_RETURN_TYPE_e bms_CheckStateRequest(BMS_STATE_REQUEST_e statereq);
+static BMS_STATE_REQUEST_e bms_GetStateRequest(void);
+static BMS_STATE_REQUEST_e bms_TransferStateRequest(void);
+static uint8_t bms_CheckReEntrance(void);
+static uint8_t bms_CheckCANRequests(void);
+static STD_RETURN_TYPE_e bms_CheckAnyErrorFlagSet(void);
+static void bms_GetMeasurementValues(void);
+static void bms_CheckVoltages(void);
+static void bms_CheckTemperatures(void);
+static void bms_CheckSlaveTemperatures(void);
 /*================== Function Implementations =============================*/
 
 /**
@@ -112,7 +112,7 @@ static void BMS_CheckSlaveTemperatures(void);
  *
  * @return  retval  0 if no further instance of the function is active, 0xff else
  */
-static uint8_t BMS_CheckReEntrance(void) {
+static uint8_t bms_CheckReEntrance(void) {
     uint8_t retval = 0;
     OS_TaskEnter_Critical();
     if (!bms_state.triggerentry) {
@@ -131,7 +131,7 @@ static uint8_t BMS_CheckReEntrance(void) {
  *
  * @return  current state request, taken from BMS_STATE_REQUEST_e
  */
-static BMS_STATE_REQUEST_e BMS_GetStateRequest(void) {
+static BMS_STATE_REQUEST_e bms_GetStateRequest(void) {
     BMS_STATE_REQUEST_e retval = BMS_STATE_NO_REQUEST;
 
     OS_TaskEnter_Critical();
@@ -160,7 +160,7 @@ STD_RETURN_TYPE_e BMS_GetInitializationState(void) {
  *
  * @return  retVal          current state request, taken from BMS_STATE_REQUEST_e
  */
-static BMS_STATE_REQUEST_e BMS_TransferStateRequest(void) {
+static BMS_STATE_REQUEST_e bms_TransferStateRequest(void) {
     BMS_STATE_REQUEST_e retval = BMS_STATE_NO_REQUEST;
 
     OS_TaskEnter_Critical();
@@ -176,7 +176,7 @@ BMS_RETURN_TYPE_e BMS_SetStateRequest(BMS_STATE_REQUEST_e statereq) {
     BMS_RETURN_TYPE_e retVal = BMS_STATE_NO_REQUEST;
 
     OS_TaskEnter_Critical();
-    retVal = BMS_CheckStateRequest(statereq);
+    retVal = bms_CheckStateRequest(statereq);
 
     if (retVal == BMS_OK) {
             bms_state.statereq = statereq;
@@ -196,7 +196,7 @@ BMS_RETURN_TYPE_e BMS_SetStateRequest(BMS_STATE_REQUEST_e statereq) {
  *
  * @return  result of the state request that was made, taken from BMS_RETURN_TYPE_e
  */
-static BMS_RETURN_TYPE_e BMS_CheckStateRequest(BMS_STATE_REQUEST_e statereq) {
+static BMS_RETURN_TYPE_e bms_CheckStateRequest(BMS_STATE_REQUEST_e statereq) {
     if (statereq == BMS_STATE_ERROR_REQUEST) {
         return BMS_OK;
     }
@@ -223,12 +223,12 @@ void BMS_Trigger(void) {
     DIAG_SysMonNotify(DIAG_SYSMON_BMS_ID, 0);  /* task is running, state = ok */
 
     if (bms_state.state != BMS_STATEMACH_UNINITIALIZED) {
-        BMS_GetMeasurementValues();
-        BMS_CheckVoltages();
-        BMS_CheckTemperatures();
+        bms_GetMeasurementValues();
+        bms_CheckVoltages();
+        bms_CheckTemperatures();
     }
     /* Check re-entrance of function */
-    if (BMS_CheckReEntrance()) {
+    if (bms_CheckReEntrance()) {
         return;
     }
 
@@ -244,7 +244,7 @@ void BMS_Trigger(void) {
         /****************************UNINITIALIZED***********************************/
         case BMS_STATEMACH_UNINITIALIZED:
             /* waiting for Initialization Request */
-            statereq = BMS_TransferStateRequest();
+            statereq = bms_TransferStateRequest();
             if (statereq == BMS_STATE_INIT_REQUEST) {
                 BMS_SAVELASTSTATES();
                 bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
@@ -288,7 +288,7 @@ void BMS_Trigger(void) {
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS_INTERLOCK;
                 break;
             } else if (bms_state.substate == BMS_CHECK_ERROR_FLAGS_INTERLOCK) {
-                if (BMS_CheckAnyErrorFlagSet() == E_NOT_OK) {
+                if (bms_CheckAnyErrorFlagSet() == E_NOT_OK) {
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.state = BMS_STATEMACH_ERROR;
                     bms_state.substate = BMS_ENTRY;
@@ -303,7 +303,7 @@ void BMS_Trigger(void) {
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS;
                 break;
             } else if (bms_state.substate == BMS_CHECK_ERROR_FLAGS) {
-                if (BMS_CheckAnyErrorFlagSet() == E_NOT_OK) {
+                if (bms_CheckAnyErrorFlagSet() == E_NOT_OK) {
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.state = BMS_STATEMACH_ERROR;
                     bms_state.substate = BMS_ENTRY;
@@ -322,7 +322,7 @@ void BMS_Trigger(void) {
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS;
                 break;
             } else if (bms_state.substate == BMS_CHECK_ERROR_FLAGS) {
-                if (BMS_CheckAnyErrorFlagSet() == E_NOT_OK) {
+                if (bms_CheckAnyErrorFlagSet() == E_NOT_OK) {
                     /* we stay already in requested state, nothing to do */
                 } else {
                     if (SECONDARY_OUT_OF_ERROR_STATE == TRUE) {
@@ -346,11 +346,11 @@ void BMS_Trigger(void) {
 
 /*================== Static functions =====================================*/
 
-static void BMS_GetMeasurementValues(void) {
+static void bms_GetMeasurementValues(void) {
     DB_ReadBlock(&bms_tab_minmax, DATA_BLOCK_ID_MINMAX);
 }
 
-static uint8_t BMS_CheckCANRequests(void) {
+static uint8_t bms_CheckCANRequests(void) {
     uint8_t retVal = BMS_REQ_ID_NOREQ;
     DATA_BLOCK_STATEREQUEST_s request;
 
@@ -373,7 +373,7 @@ static uint8_t BMS_CheckCANRequests(void) {
  *
  * @details verify for cell voltage measurements (U), if minimum and maximum values are out of range
  */
-static void BMS_CheckVoltages(void) {
+static void bms_CheckVoltages(void) {
     /* Check over- and undervoltage limits */
     if (bms_tab_minmax.voltage_max > BC_VOLTMAX_MSL) {
         DIAG_Handler(DIAG_CH_CELLVOLTAGE_OVERVOLTAGE_MSL, DIAG_EVENT_NOK, 0);
@@ -394,7 +394,7 @@ static void BMS_CheckVoltages(void) {
  *
  * @details verify for cell temperature measurements (T), if minimum and maximum values are out of range
  */
-static void BMS_CheckTemperatures(void) {
+static void bms_CheckTemperatures(void) {
     /* Check over- and undertemperature. As no information about the current
      * direction is available, only the maximum values of charge/discharge
      * values are checked. This means if different charge and discharge
@@ -434,7 +434,7 @@ static void BMS_CheckTemperatures(void) {
  *
  * @details FOR FUTURE COMPATIBILITY; DUMMY FUNCTION; DO NOT USE
  */
-static void BMS_CheckSlaveTemperatures(void) {
+static void bms_CheckSlaveTemperatures(void) {
     /* TODO: to be implemented */
 }
 
@@ -445,7 +445,7 @@ static void BMS_CheckSlaveTemperatures(void) {
  *
  * @return  E_OK if no error flag is set, otherwise E_NOT_OK
  */
-static STD_RETURN_TYPE_e BMS_CheckAnyErrorFlagSet(void) {
+static STD_RETURN_TYPE_e bms_CheckAnyErrorFlagSet(void) {
     STD_RETURN_TYPE_e retVal = E_OK;  /* is set to E_NOT_OK if error detected */
     DATA_BLOCK_ERRORSTATE_s error_flags;
     DATA_BLOCK_MSL_FLAG_s msl_flags;

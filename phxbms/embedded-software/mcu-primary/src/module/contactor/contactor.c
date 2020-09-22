@@ -107,24 +107,24 @@ static DATA_BLOCK_CONTFEEDBACK_s cont_feedback_tab = {
 
 static int prnt(char *string);
 
-static bool CONT_NewStandbyRequestExists(void);
-static bool CONT_NewErrorRequestExists(void);
-static void CONT_CloseMainPlusWithPrecharge (void);
+static bool cnt_NewStandbyRequestExists(void);
+static bool cnt_NewErrorRequestExists(void);
+static void cnt_CloseMainPlusWithPrecharge (void);
 
-static bool CONT_IsReentry(void);
-static void CONT_CheckAllContactorsFeedback(void);
-static CONT_RETURN_TYPE_e CONT_CheckStateRequest(CONT_STATE_REQUEST_e statereq);
-static CONT_STATE_REQUEST_e CONT_GetStateRequest(void);
-static CONT_STATE_REQUEST_e CONT_TransferStateRequest(void);
+static bool cnt_IsReentry(void);
+static void cnt_CheckAllContactorsFeedback(void);
+static CONT_RETURN_TYPE_e cnt_CheckStateRequest(CONT_STATE_REQUEST_e statereq);
+static CONT_STATE_REQUEST_e cnt_GetStateRequest(void);
+static CONT_STATE_REQUEST_e cnt_TransferStateRequest(void);
 
 // The following two functions are used for testing output channels only
-static void CONT_TestLatchingContactorChannels(void);
-static void CONT_TestAllContactorChannels(void);
+static void cnt_TestLatchingContactorChannels(void);
+static void cnt_TestAllContactorChannels(void);
 
 // LMM: function to save contactor state to database
-static void CONT_SaveContStateToDatabase(DATA_BLOCK_CONTACTORSTATE_s *data_block, CONT_STATEMACH_e contactor_state);
+static void cnt_SaveContStateToDatabase(DATA_BLOCK_CONTACTORSTATE_s *data_block, CONT_STATEMACH_e contactor_state);
 // LMM: function to save contactor sub-state to database
-static void CONT_SaveContSubStateToDatabase(DATA_BLOCK_CONTACTORSTATE_s *data_block, CONT_STATEMACH_SUB_e contactor_substate);
+static void cnt_SaveContSubStateToDatabase(DATA_BLOCK_CONTACTORSTATE_s *data_block, CONT_STATEMACH_SUB_e contactor_substate);
 
 /*================== Static Function Implementations =============================*/
 // This is a temporary function for printing.
@@ -148,9 +148,9 @@ static int prnt(char *string) {
  *
  * @return  true if there is a new Standby request, false else.
  */
-static bool CONT_NewStandbyRequestExists(void) {
+static bool cnt_NewStandbyRequestExists(void) {
     bool stateRequestExists = true;
-    CONT_STATE_REQUEST_e statereq = CONT_TransferStateRequest();
+    CONT_STATE_REQUEST_e statereq = cnt_TransferStateRequest();
     if (statereq == CONT_STATE_STANDBY_REQUEST) {
         CONT_SAVELASTSTATES();
         cont_state.state = CONT_STATEMACH_OPEN_CONT;
@@ -171,9 +171,9 @@ static bool CONT_NewStandbyRequestExists(void) {
  *
  * @return  true if there is a new Standby request, false else.
  */
-static bool CONT_NewErrorRequestExists(void) {
+static bool cnt_NewErrorRequestExists(void) {
     bool stateRequestExists = true;
-    CONT_STATE_REQUEST_e statereq = CONT_TransferStateRequest();
+    CONT_STATE_REQUEST_e statereq = cnt_TransferStateRequest();
     if (statereq == CONT_STATE_ERROR_REQUEST) {
         CONT_SAVELASTSTATES();
         cont_state.state = CONT_STATEMACH_ERROR;
@@ -197,7 +197,7 @@ static bool CONT_NewErrorRequestExists(void) {
  *          context of state machine since it uses blocking delay.
  *          It is not removed since it provides a clear step-by-step flow.
  */
-static void CONT_CloseMainPlusWithPrecharge(void) {
+static void cnt_CloseMainPlusWithPrecharge(void) {
     DATA_BLOCK_CONTACTORSTATE_s contactorstate;
     if (cont_state.substate == CONT_PRECHARGE_CLOSE_PRECHARGE) {
         CONT_CLOSEPRECHARGE();
@@ -225,7 +225,7 @@ static void CONT_CloseMainPlusWithPrecharge(void) {
  * @return  true if this is the reentry of the function, false else.
  */
 // tested
-static bool CONT_IsReentry(void) { //CONT_CheckReEntrance
+static bool cnt_IsReentry(void) { //CONT_CheckReEntrance
     bool reEntry = false;
     taskENTER_CRITICAL();
     if (cont_state.triggerentry) {
@@ -243,17 +243,17 @@ static bool CONT_IsReentry(void) { //CONT_CheckReEntrance
  * @details makes a DIAG entry for each contactor when the feedback does not
  *          match the set value. This is for diagnosis only.
  */
-static void CONT_CheckAllContactorsFeedback(void) {
+static void cnt_CheckAllContactorsFeedback(void) {
     CONT_ELECTRICAL_STATE_TYPE_e feedback;
     uint16_t contactor_feedback_state = 0;
 
     for (uint8_t i = 0; i < BS_NR_OF_CONTACTORS - 2; i++) {
-        feedback = CONT_GetOneContactorFeedback(i);
+        feedback = CNT_GetOneContactorFeedback(i);
         contactor_feedback_state |= feedback << i;
         cont_feedback_tab.contactor_feedback &= (~0x3F);
         cont_feedback_tab.contactor_feedback |= contactor_feedback_state;
 
-        if (feedback != CONT_GetContactorSetValue(i)) {
+        if (feedback != CNT_GetContactorSetValue(i)) {
             switch (i) {
             case CONT_CN_MAIN_PLUS:
                 DIAG_Handler(DIAG_CH_CONTACTOR_MAIN_PLUS_FEEDBACK, DIAG_EVENT_NOK, 0);
@@ -311,7 +311,7 @@ static void CONT_CheckAllContactorsFeedback(void) {
  *
  * @return  result of the state request that was made, taken from (type: CONT_RETURN_TYPE_e)
  */
-static CONT_RETURN_TYPE_e CONT_CheckStateRequest(CONT_STATE_REQUEST_e statereq) {
+static CONT_RETURN_TYPE_e cnt_CheckStateRequest(CONT_STATE_REQUEST_e statereq) {
     if (statereq == CONT_STATE_ERROR_REQUEST) {
         return CONT_OK;
     } else if (statereq == CONT_STATE_NO_REQUEST) {
@@ -368,7 +368,7 @@ static CONT_RETURN_TYPE_e CONT_CheckStateRequest(CONT_STATE_REQUEST_e statereq) 
  *
  * @return  return the current pending state request
  */
-static CONT_STATE_REQUEST_e CONT_GetStateRequest(void) {
+static CONT_STATE_REQUEST_e cnt_GetStateRequest(void) {
     CONT_STATE_REQUEST_e retval = CONT_STATE_NO_REQUEST;
 
     taskENTER_CRITICAL();
@@ -387,7 +387,7 @@ static CONT_STATE_REQUEST_e CONT_GetStateRequest(void) {
  * @return  current state request, taken from CONT_STATE_REQUEST_e
  *
  */
-static CONT_STATE_REQUEST_e CONT_TransferStateRequest(void) {
+static CONT_STATE_REQUEST_e cnt_TransferStateRequest(void) {
     CONT_STATE_REQUEST_e retval = CONT_STATE_NO_REQUEST;
 
     taskENTER_CRITICAL();
@@ -412,7 +412,7 @@ static CONT_STATE_REQUEST_e CONT_TransferStateRequest(void) {
  *          state machine. It works standalone.
  */
 // tested
-static void CONT_TestLatchingContactorChannels(void) {
+static void cnt_TestLatchingContactorChannels(void) {
     static bool contactorsOn = false;
     contactorsOn = !contactorsOn;
     if (contactorsOn) {
@@ -435,11 +435,11 @@ static void CONT_TestLatchingContactorChannels(void) {
  * @details This function tests all contactors as if they are all nonlatching type
  */
  // tested
-static void CONT_TestAllContactorChannels(void) {
+static void cnt_TestAllContactorChannels(void) {
     static bool contactorsOn = false;
     static int i = 0;
 
-    CONT_SetContactorState(i++, contactorsOn);
+    CNT_SetContactorState(i++, contactorsOn);
     cont_state.activePowerLine = CONT_POWER_LINE_NONE;
     cont_state.timer = 50 * CONT_STATEMACH_SHORTTIME_MS;
 
@@ -453,7 +453,7 @@ static void CONT_TestAllContactorChannels(void) {
 
 /*================= Extern Function Implementations ==========================*/
 // Not used
-STD_RETURN_TYPE_e CONT_CheckPrecharge(CONT_WHICH_POWERLINE_e caller) {
+STD_RETURN_TYPE_e CNT_CheckPrecharge(CONT_WHICH_POWERLINE_e caller) {
     DATA_BLOCK_CURRENT_SENSOR_s current_tab = {0};
     STD_RETURN_TYPE_e retVal = E_NOT_OK;
 
@@ -501,7 +501,7 @@ STD_RETURN_TYPE_e CONT_CheckPrecharge(CONT_WHICH_POWERLINE_e caller) {
 }
 
 // Not used
-STD_RETURN_TYPE_e CONT_CheckFuse(CONT_WHICH_POWERLINE_e caller) {
+STD_RETURN_TYPE_e CNT_CheckFuse(CONT_WHICH_POWERLINE_e caller) {
 #if (BS_CHECK_FUSE_PLACED_IN_NORMAL_PATH == TRUE) || (BS_CHECK_FUSE_PLACED_IN_CHARGE_PATH == TRUE)
     STD_RETURN_TYPE_e fuseState = E_NOT_OK;
     DATA_BLOCK_CURRENT_SENSOR_s curSensTab;
@@ -596,11 +596,11 @@ STD_RETURN_TYPE_e CONT_CheckFuse(CONT_WHICH_POWERLINE_e caller) {
 }
 
 // tested
-STD_RETURN_TYPE_e CONT_AcquireContactorFeedbacks(void) {
+STD_RETURN_TYPE_e CNT_AcquireContactorFeedbacks(void) {
     STD_RETURN_TYPE_e retVal = E_NOT_OK;
     taskENTER_CRITICAL();
     for (uint8_t i = 0; i < BS_NR_OF_CONTACTORS - 2; i++) {
-        cont_contactor_states[i].feedback = CONT_GetOneContactorFeedback(i);
+        cont_contactor_states[i].feedback = CNT_GetOneContactorFeedback(i);
     }
     retVal = E_OK;
     taskEXIT_CRITICAL();
@@ -608,7 +608,7 @@ STD_RETURN_TYPE_e CONT_AcquireContactorFeedbacks(void) {
 }
 
 STD_RETURN_TYPE_e CONT_GetAllContactorFeedbacks(void) {
-    return CONT_AcquireContactorFeedbacks();
+    return CNT_AcquireContactorFeedbacks();
 }
 
 /**
@@ -619,7 +619,7 @@ STD_RETURN_TYPE_e CONT_GetAllContactorFeedbacks(void) {
  */
 
 // to be tested
-CONT_ELECTRICAL_STATE_TYPE_e CONT_GetOneContactorFeedback(CONT_NAMES_e contactor) {
+CONT_ELECTRICAL_STATE_TYPE_e CNT_GetOneContactorFeedback(CONT_NAMES_e contactor) {
     CONT_ELECTRICAL_STATE_TYPE_e measuredContactorState = CONT_SWITCH_UNDEF;
     IO_PIN_STATE_e pinstate = IO_PIN_RESET;
 
@@ -656,7 +656,7 @@ CONT_ELECTRICAL_STATE_TYPE_e CONT_GetOneContactorFeedback(CONT_NAMES_e contactor
     return measuredContactorState;
 }
 
-CONT_ELECTRICAL_STATE_TYPE_e CONT_GetContactorSetValue(CONT_NAMES_e contactor) {
+CONT_ELECTRICAL_STATE_TYPE_e CNT_GetContactorSetValue(CONT_NAMES_e contactor) {
     CONT_ELECTRICAL_STATE_TYPE_e contactorSetInformation = FALSE;
     taskENTER_CRITICAL();
     contactorSetInformation = cont_contactor_states[contactor].set;
@@ -664,7 +664,7 @@ CONT_ELECTRICAL_STATE_TYPE_e CONT_GetContactorSetValue(CONT_NAMES_e contactor) {
     return contactorSetInformation;
 }
 
-STD_RETURN_TYPE_e CONT_SetContactorState(CONT_NAMES_e contactor,
+STD_RETURN_TYPE_e CNT_SetContactorState(CONT_NAMES_e contactor,
         CONT_ELECTRICAL_STATE_TYPE_e requestedContactorState) {
     STD_RETURN_TYPE_e retVal = E_OK;
 
@@ -700,7 +700,7 @@ STD_RETURN_TYPE_e CONT_SetContactorState(CONT_NAMES_e contactor,
 
 // The following functions works in the standalone mode. Yet, it does not work
 // in the state machine; the delay may have messed up the transition of states.
-STD_RETURN_TYPE_e CONT_SetContactorState_pulse(CONT_NAMES_e contactor) {
+STD_RETURN_TYPE_e CNT_SetContactorState_pulse(CONT_NAMES_e contactor) {
     STD_RETURN_TYPE_e retVal = E_OK;
     cont_contactor_states[contactor].set = CONT_SWITCH_ON;
 
@@ -720,7 +720,7 @@ STD_RETURN_TYPE_e CONT_SetContactorState_pulse(CONT_NAMES_e contactor) {
 }
 
 // This function should not be called. Need to remove it from the extern list later.
-STD_RETURN_TYPE_e CONT_SwitchAllContactorsOff(void) {
+STD_RETURN_TYPE_e CNT_SwitchAllContactorsOff(void) {
     STD_RETURN_TYPE_e retVal = E_NOT_OK;
     uint8_t offCounter = 0;
     STD_RETURN_TYPE_e successfullSet = E_NOT_OK;
@@ -751,15 +751,15 @@ STD_RETURN_TYPE_e CONT_SwitchAllContactorsOff(void) {
     return retVal;
 }
 
-CONT_STATEMACH_e CONT_GetState(void) {
+CONT_STATEMACH_e CNT_GetState(void) {
     return (cont_state.state);
 }
 
-STD_RETURN_TYPE_e CONT_GetInitializationState(void) {
+STD_RETURN_TYPE_e CNT_GetInitializationState(void) {
     return (cont_state.initFinished);
 }
 
-CONT_POWER_LINE_e CONT_GetActivePowerLine() {
+CONT_POWER_LINE_e CNT_GetActivePowerLine() {
     return (cont_state.activePowerLine);
 }
 
@@ -767,7 +767,7 @@ CONT_RETURN_TYPE_e CONT_SetStateRequest(CONT_STATE_REQUEST_e statereq) {
     CONT_RETURN_TYPE_e retVal = CONT_STATE_NO_REQUEST;
 
     taskENTER_CRITICAL();
-    retVal = CONT_CheckStateRequest(statereq);
+    retVal = cnt_CheckStateRequest(statereq);
 
     if (retVal == CONT_OK) {
         cont_state.statereq = statereq;
@@ -783,14 +783,14 @@ void CONT_Trigger(void) {
     CONT_STATE_REQUEST_e statereq = CONT_STATE_NO_REQUEST;
     DATA_BLOCK_CONTACTORSTATE_s contactorstate;
 
-    if (CONT_IsReentry()) {
+    if (cnt_IsReentry()) {
         return;
     }
 
     DIAG_SysMonNotify(DIAG_SYSMON_CONT_ID, 0);  /* task is running, state = ok */
 
     if (cont_state.state != CONT_STATEMACH_UNINITIALIZED) {
-        CONT_CheckAllContactorsFeedback();
+        cnt_CheckAllContactorsFeedback();
     }
 
     if (cont_state.OscillationCounter > 0) {
@@ -823,7 +823,7 @@ void CONT_Trigger(void) {
     case CONT_STATEMACH_UNINITIALIZED:
         /* waiting for Initialization Request */
         prnt("S: Uninitialized\r\n");
-        statereq = CONT_TransferStateRequest();
+        statereq = cnt_TransferStateRequest();
         if (statereq == CONT_STATE_INIT_REQUEST) {
             CONT_SAVELASTSTATES();
             cont_state.timer = CONT_STATEMACH_SHORTTIME_MS;
@@ -863,7 +863,7 @@ void CONT_Trigger(void) {
         cont_state.timer = CONT_STATEMACH_SHORTTIME_MS;
         cont_state.state = CONT_STATEMACH_STANDBY;
         cont_state.substate = CONT_ENTRY;
-        CONT_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_IDLE);
+        cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_IDLE);
         break;
 
         /****************************STANDBY*************************************/
@@ -875,11 +875,11 @@ void CONT_Trigger(void) {
             printf("Current substate: %d\r\n", cont_state.substate);
         }
         CONT_SAVELASTSTATES();
-        // CONT_TestLatchingContactorChannels();
-        // CONT_TestAllContactorChannels();
+        // cnt_TestLatchingContactorChannels();
+        // cnt_TestAllContactorChannels();
         // break;
-        CONT_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_STANDBY);
-        CONT_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
+        cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_STANDBY);
+        cnt_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
         if (cont_state.substate == CONT_ENTRY) {
             cont_state.OscillationCounter = CONT_OSCILLATION_LIMIT;
             // CONT_OPENALLCONTACTORS();
@@ -888,7 +888,7 @@ void CONT_Trigger(void) {
             cont_state.substate = CONT_STANDBY;
             break;
         } else if (cont_state.substate == CONT_STANDBY) {
-            statereq = CONT_TransferStateRequest();
+            statereq = cnt_TransferStateRequest();
             switch (statereq) {
             case CONT_STATE_CHARGE_REQUEST:
                 CONT_SAVELASTSTATES();
@@ -935,14 +935,14 @@ void CONT_Trigger(void) {
         CONT_SAVELASTSTATES();
 
         /* Check if the process should be interrupted by request */
-        if (CONT_NewStandbyRequestExists()) {
+        if (cnt_NewStandbyRequestExists()) {
             break;
         }
 
-        CONT_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
+        cnt_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
 
         if (cont_state.substate == CONT_ENTRY) {
-            CONT_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_NORMAL_PRECHARGE);
+            cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_NORMAL_PRECHARGE);
 
             if (cont_state.OscillationCounter > 0) {
                 // cont_state.timer = CONT_STATEMACH_SHORTTIME_MS;
@@ -968,7 +968,7 @@ void CONT_Trigger(void) {
             cont_state.timer = CONT_STATEMACH_WAIT_AFTER_CLOSING_MINUS_MS;
             cont_state.substate = CONT_PRECHARGE_CLOSE_PRECHARGE;
         } else if (cont_state.substate == CONT_PRECHARGE_CLOSE_PRECHARGE) {
-            // CONT_CloseMainPlusWithPrecharge();
+            // cnt_CloseMainPlusWithPrecharge();
             prnt("Normal precharge: Closing Precharge\r\n");
             CONT_CLOSEPRECHARGE();
             cont_state.timer = CONT_PRECHARGE_TIME_MS;
@@ -1011,17 +1011,17 @@ void CONT_Trigger(void) {
 
         CONT_SAVELASTSTATES();
         // LMM: double-check with JL that this is the place to put the save --- before the two if statements that could break out 
-        CONT_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_NORMAL);
-        CONT_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
+        cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_NORMAL);
+        cnt_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
 
-        if (CONT_NewStandbyRequestExists()) {
+        if (cnt_NewStandbyRequestExists()) {
             break;
         }
-        if (CONT_NewErrorRequestExists()) {
+        if (cnt_NewErrorRequestExists()) {
             break;
         }
         /* check fuse state */
-        //CONT_CheckFuse(CONT_POWERLINE_NORMAL);
+        //CNT_CheckFuse(CONT_POWERLINE_NORMAL);
         
         
         break;
@@ -1038,11 +1038,11 @@ void CONT_Trigger(void) {
         CONT_SAVELASTSTATES();
 
         /* Check if the process should be interrupted by request */
-        if (CONT_NewStandbyRequestExists()) {
+        if (cnt_NewStandbyRequestExists()) {
             break;
         }
 
-        CONT_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
+        cnt_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
 
         if (cont_state.substate == CONT_ENTRY) {
             if (cont_state.OscillationCounter > 0) {
@@ -1053,9 +1053,9 @@ void CONT_Trigger(void) {
                 cont_state.timer = CONT_STATEMACH_SHORTTIME_MS;
                 cont_state.substate = CONT_PRECHARGE_CLOSE_PRECHARGE;
             }
-            CONT_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_CHARGE_PRECHARGE);
+            cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_CHARGE_PRECHARGE);
         } else if (cont_state.substate == CONT_PRECHARGE_CLOSE_PRECHARGE) {
-            // CONT_CloseMainPlusWithPrecharge();
+            // cnt_CloseMainPlusWithPrecharge();
             prnt("Normal precharge: Closing Precharge\r\n");
             CONT_CLOSEPRECHARGE();
             cont_state.timer = CONT_PRECHARGE_TIME_MS;
@@ -1099,13 +1099,13 @@ void CONT_Trigger(void) {
 
         CONT_SAVELASTSTATES();
         // LMM: double-check with JL that this is the place to put the save --- before the two if statements that could break out 
-        CONT_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_CHARGE);
-        CONT_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
+        cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_CHARGE);
+        cnt_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
 
-        if (CONT_NewStandbyRequestExists()) {
+        if (cnt_NewStandbyRequestExists()) {
             break;
         }
-        if (CONT_NewErrorRequestExists()) {
+        if (cnt_NewErrorRequestExists()) {
             break;
         }
            
@@ -1121,15 +1121,15 @@ void CONT_Trigger(void) {
         }
 
         CONT_SAVELASTSTATES();
-        if (CONT_NewStandbyRequestExists()) {
+        if (cnt_NewStandbyRequestExists()) {
             break;
         }
 
-        CONT_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
+        cnt_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
 
         /* precharge process, can be interrupted anytime by the requests above */
         if (cont_state.substate == CONT_ENTRY) {
-            CONT_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_ENGINE_PRECHARGE);
+            cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_ENGINE_PRECHARGE);
 
             if (cont_state.OscillationCounter > 0) {
                 cont_state.timer = CONT_STATEMACH_SHORTTIME_MS;
@@ -1147,7 +1147,7 @@ void CONT_Trigger(void) {
             cont_state.timer = CONT_STATEMACH_WAIT_AFTER_CLOSING_MINUS_MS;
             cont_state.substate = CONT_PRECHARGE_CLOSE_PRECHARGE;
         } else if (cont_state.substate == CONT_PRECHARGE_CLOSE_PRECHARGE) {
-            // CONT_CloseMainPlusWithPrecharge();
+            // cnt_CloseMainPlusWithPrecharge();
             prnt("Engine precharge: Closing Precharge\r\n");
             CONT_CLOSEPRECHARGE();
             cont_state.timer = CONT_PRECHARGE_TIME_MS;
@@ -1191,17 +1191,17 @@ void CONT_Trigger(void) {
         CONT_SAVELASTSTATES();
 
         // LMM: double-check with JL that this is the place to put the save --- before the two if statements that could break out 
-        CONT_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_ENGINE);
-        CONT_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
+        cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_ENGINE);
+        cnt_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
 
-        if (CONT_NewStandbyRequestExists()) {
+        if (cnt_NewStandbyRequestExists()) {
             break;
         }
-        if (CONT_NewErrorRequestExists()) {
+        if (cnt_NewErrorRequestExists()) {
             break;
         }
         /* check fuse state */
-        // CONT_CheckFuse(CONT_POWERLINE_NORMAL); // ?
+        // CNT_CheckFuse(CONT_POWERLINE_NORMAL); // ?
         
         
         break;
@@ -1209,7 +1209,7 @@ void CONT_Trigger(void) {
     /***************************OPEN CONTACTORS*************************************/
     case CONT_STATEMACH_OPEN_CONT:
 
-        CONT_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
+        cnt_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
 
         if (cont_state.substate == CONT_ENTRY) {
             if (cont_state.OscillationCounter > 0) {
@@ -1225,7 +1225,7 @@ void CONT_Trigger(void) {
                 cont_state.timer = CONT_STATEMACH_SHORTTIME_MS;
                 cont_state.substate = CONT_OPEN_MAIN_PLUS_STEP1;
             }
-            CONT_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_OPEN_CONT);
+            cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_OPEN_CONT);
         } else if (cont_state.substate == CONT_OPEN_MAIN_PLUS_STEP1) {
             CONT_OPENPLUS_STEP1();
             cont_state.timer = CONT_LATCHING_PULSE_WIDTH_MS;
@@ -1261,15 +1261,15 @@ void CONT_Trigger(void) {
             printf("Current substate: %d\r\n", cont_state.substate);
         }
 
-        CONT_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_ERROR);
-        CONT_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
+        cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_ERROR);
+        cnt_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
 
         CONT_SAVELASTSTATES();
         if (cont_state.substate == CONT_ERROR) {
             /* Check if fuse is tripped */
-            // CONT_CheckFuse(CONT_POWERLINE_NORMAL);
+            // CNT_CheckFuse(CONT_POWERLINE_NORMAL);
             /* when process done, look for requests */
-            statereq = CONT_TransferStateRequest();
+            statereq = cnt_TransferStateRequest();
             if (statereq == CONT_STATE_ERROR_REQUEST) {
                 /* we stay already in requested state, nothing to do */
             } else if (statereq == CONT_STATE_STANDBY_REQUEST) {
@@ -1294,12 +1294,12 @@ void CONT_Trigger(void) {
     cont_state.counter++;
 }
 
-static void CONT_SaveContStateToDatabase(DATA_BLOCK_CONTACTORSTATE_s *data_block, CONT_STATEMACH_e contactor_state) {
+static void cnt_SaveContStateToDatabase(DATA_BLOCK_CONTACTORSTATE_s *data_block, CONT_STATEMACH_e contactor_state) {
     DB_ReadBlock(data_block, DATA_BLOCK_ID_CONTACTORSTATE);
     data_block->contactor_state = contactor_state;
     DB_WriteBlock(data_block, DATA_BLOCK_ID_CONTACTORSTATE);
 }
-static void CONT_SaveContSubStateToDatabase(DATA_BLOCK_CONTACTORSTATE_s *data_block, CONT_STATEMACH_SUB_e contactor_substate){
+static void cnt_SaveContSubStateToDatabase(DATA_BLOCK_CONTACTORSTATE_s *data_block, CONT_STATEMACH_SUB_e contactor_substate){
     DB_ReadBlock(data_block, DATA_BLOCK_ID_CONTACTORSTATE);
     data_block->contactor_substate = contactor_substate;
     DB_WriteBlock(data_block, DATA_BLOCK_ID_CONTACTORSTATE);

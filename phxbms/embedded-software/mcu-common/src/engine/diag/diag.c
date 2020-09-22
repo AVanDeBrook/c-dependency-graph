@@ -629,7 +629,7 @@ void DIAG_SysMon(void) {
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
                     if (diag_sysmon_ch_cfg[module_id].handlingtype == DIAG_SYSMON_HANDLING_SWITCHOFFCONTACTOR) {
                         /* system not working trustfully, switch off contactors! */
-                        CONT_SwitchAllContactorsOff();
+                        CNT_SwitchAllContactorsOff();
                     }
 #endif
                     diag_sysmon_cnt[module_id] = 0;

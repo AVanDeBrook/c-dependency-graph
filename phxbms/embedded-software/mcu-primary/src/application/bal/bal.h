@@ -159,7 +159,7 @@ typedef struct {
  *
  * This function is used to make a state request to the state machine,e.g, start voltage measurement,
  * read result of voltage measurement, re-initialization
- * It calls BAL_CheckStateRequest() to check if the request is valid.
+ * It calls bal_CheckStateRequest() to check if the request is valid.
  * The state request is rejected if is not valid.
  * The result of the check is returned immediately, so that the requester can act in case
  * it made a non-valid state request.

@@ -300,7 +300,7 @@ uint8_t COM_testMode_Decoder(void) {
             if (com_receivedbyte[1] == 'e') {
                 printf("Contactor %d", contNumber);
 
-                CONT_SetContactorState(contNumber, CONT_SWITCH_ON);
+                CNT_SetContactorState(contNumber, CONT_SWITCH_ON);
 
                 printf(" enabled\r\n");
             }
@@ -320,7 +320,7 @@ uint8_t COM_testMode_Decoder(void) {
             /* Open contactor */
                 printf("Contactor %d", contNumber);
 
-                CONT_SetContactorState(contNumber, CONT_SWITCH_OFF);
+                CNT_SetContactorState(contNumber, CONT_SWITCH_OFF);
 
                 printf(" disabled\r\n");
         } else {

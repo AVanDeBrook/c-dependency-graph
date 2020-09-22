@@ -1,0 +1,160 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# @copyright &copy; 2010 - 2020, Fraunhofer-Gesellschaft zur Foerderung der
+#   angewandten Forschung e.V. All rights reserved.
+#
+# BSD 3-Clause License
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+# 1.  Redistributions of source code must retain the above copyright notice,
+#     this list of conditions and the following disclaimer.
+# 2.  Redistributions in binary form must reproduce the above copyright notice,
+#     this list of conditions and the following disclaimer in the documentation
+#     and/or other materials provided with the distribution.
+# 3.  Neither the name of the copyright holder nor the names of its
+#     contributors may be used to endorse or promote products derived from this
+#     software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+#
+# We kindly request you to use one or more of the following phrases to refer to
+# foxBMS in your hardware, software, documentation or advertising materials:
+#
+# &Prime;This product uses parts of foxBMS&reg;&Prime;
+#
+# &Prime;This product includes parts of foxBMS&reg;&Prime;
+#
+# &Prime;This product is derived from foxBMS&reg;&Prime;
+
+"""WAF script where the actual build of the binary file happens
+"""
+
+import os
+
+
+def build(bld):
+    """Final instructions of waf function "build" for the binary file
+
+    waf "build" function uses the  libraries build for the modules
+     - application (libfoxbms-application.a)
+     - engine (libfoxbms-engine.a)
+     - hal (libfoxbms-stmhal.a)
+     - module (libfoxbms-module.a)
+     - os (libfoxbms-os.a)
+     - test (libfoxbms-test.a)
+
+    The output is named as specified in APPNAME.
+
+    The waf feature function "hexgen" and "bingen" are exectued after linking.
+    """
+    if bld.env.CPU_MAJOR == "STM32F4xx":
+        srcs = ' '.join([
+               os.path.join('config', bld.env.CPU_MAJOR, 'stm32f4xx_hal_msp.c'),
+               os.path.join('config', bld.env.CPU_MAJOR, 'stm32f4xx_it.c'),
+               os.path.join('config', bld.env.CPU_MAJOR, 'system_stm32f4xx.c')])
+
+    srcs += ' ' + ' '.join([
+            os.path.join('config', 'batterysystem_cfg.c'),
+            os.path.join('main.c'),
+            os.path.join('version.c'),
+            os.path.join('gitinfo_cfg.c')])
+
+    includes = os.path.join(bld.bldnode.abspath()) + ' '
+    includes += bld.env.FreeRTOS_dirs + ' ' + bld.env.hal_dirs + ' '
+    includes += ' '.join([
+                bld.path.get_src().abspath(),
+                bld.path.get_bld().abspath(),
+                os.path.join('config'),
+                os.path.join('config', 'FreeRTOS'),
+                os.path.join('config', bld.env.CPU_MAJOR),
+                os.path.join('includes'),
+
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'application', 'bal'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'application', 'com'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'application', 'config'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'application', 'sox'),
+
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'driver', 'config'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'driver', 'timer'),
+
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'engine', 'config'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'engine', 'sys'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'engine', 'task'),
+
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'module', 'config'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'module', 'contactor'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'module', 'nvram'),
+
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.mcu_dir, 'src', 'os'),
+
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'driver', 'adc'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'driver', 'can'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'driver', 'chksum'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'driver', 'dma'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'driver', 'io'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'driver', 'mcu'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'driver', 'rcc'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'driver', 'rtc'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'driver', 'spi'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'driver', 'uart'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'driver', 'vic'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'driver', 'watchdog'),
+
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'engine', 'database'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'engine', 'diag'),
+
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'module', 'interlock'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'module', 'led'),
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'module', 'meas'),
+
+                os.path.join(bld.top_dir, bld.env.es_dir, bld.env.common_dir, 'src', 'util')])
+
+    startupscript = os.path.join('config', bld.env.CPU_MAJOR, 'startup_stm32f429xx.s')
+    ldscript = os.path.join(bld.path.get_src().abspath(), 'config', bld.env.CPU_MAJOR, 'STM32F429ZIT6_FLASH.ld')
+
+    use = [
+        'foxbms-os',
+        'foxbms-application',
+        'foxbms-engine',
+        'foxbms-common-engine',
+        'foxbms-module',
+        'foxbms-driver',
+        'foxbms-common-module',
+        'foxbms-common-driver',
+        'foxbms-stmhal',
+        'foxbms-common-util']
+
+    if bld.env.USER_DEFINED_LIBS:
+        libs = bld.env.USER_DEFINED_LIBS.split(',')
+        for i, v in enumerate(libs):
+            user_lib_string = 'USER_{}'.format(i)
+            bld.env.append_value('LIB_{}'.format(user_lib_string), v)
+            use.append(user_lib_string)
+
+    if bld.env.target == 'release':
+        bld.program(source=srcs + ' ' + startupscript,
+                    target=bld.env.appname + '_' + bld.variant + '.elf.unpatched',
+                    includes=includes,
+                    cflags=bld.env.CFLAGS_foxbms,
+                    features=['strip', 'hexgen', 'bingen', 'binpatch', 'chksum', 'size', 'check_includes'],
+                    linkflags=bld.env.LINKFLAGS + ['-T' + ldscript, '-Wl,-Map,foxbms.map'] + bld.env.XLINKER,
+                    use=use)
+    else:
+        bld.program(source=srcs + ' ' + startupscript,
+                    target=bld.env.appname + '_' + bld.variant + '.elf.unpatched',
+                    includes=includes,
+                    cflags=bld.env.CFLAGS_foxbms,
+                    features=['hexgen', 'bingen', 'binpatch', 'chksum', 'size', 'check_includes'],
+                    linkflags=bld.env.LINKFLAGS + ['-T' + ldscript, '-Wl,-Map,foxbms.map'] + bld.env.XLINKER,
+                    use=use)

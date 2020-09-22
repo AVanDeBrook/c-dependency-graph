@@ -1,13 +1,9 @@
 package depgraph;
 
-import java.util.List;
-
 public class Manipulator {
 
-	Manager manager;
-
 	public Manipulator() {
-		manager = new Manager();
+		
 	}
 
 	public Graph manipulate(Graph graph) {

@@ -9,10 +9,8 @@ import java.util.List;
 
 public class Reader {
 
-	Manager manager;
-
 	public Reader() {
-		manager = new Manager();
+		
 	}
 
 	/**

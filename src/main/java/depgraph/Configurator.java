@@ -8,8 +8,10 @@ public class Configurator {
 	String nameOfDirectory;
 
 	public Configurator() {
-	
+	 nameOfDirectory="";
+	 nameOfFile="";
 	}
+
 	public void manageCmdLineArguments(String [] args){
 	
 		if(args.length == 0){
@@ -37,6 +39,7 @@ public class Configurator {
 
 		} 
 	}
+
 	private void help(){
 		System.out.println("Welcome to the C Dependency Graph Tool.\n");
 		System.out.println("Command line argument syntax is as follows:");
@@ -59,6 +62,7 @@ public class Configurator {
 		}
 		
 	}
+
 	private void processDirectory(String directoryName){
 		File singleDirectory = new File(directoryName);
 		if(singleDirectory.isDirectory()){
@@ -68,6 +72,7 @@ public class Configurator {
 		}
 
 	}
+
 	// getters 
 	public String getFileName(){
 		return nameOfFile;
@@ -76,7 +81,4 @@ public class Configurator {
 	public String getDirectoryName(){
 		return nameOfDirectory;
 	}
-
-
-
 }

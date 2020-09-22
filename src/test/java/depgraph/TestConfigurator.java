@@ -9,7 +9,7 @@ public class TestConfigurator {
     @Test
     public void singleFileprovided() {
         Configurator config = new Configurator();
-        //source directory is C:\SeniorDesign\c-dependecy-graph\src\test\java\depgraph
+        //source directory is C:\SeniorDesign\c-dependecy-graph
         String [] cmdArgs = {"-h", "-s", ".\\src\\test\\java\\depgraph\\dot-files\\adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot","-d",".\\src\\test\\java\\depgraph\\dot-files"};
         config.manageCmdLineArguments(cmdArgs);
         assertTrue(config.getFileName().equals(".\\src\\test\\java\\depgraph\\dot-files\\adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot"));

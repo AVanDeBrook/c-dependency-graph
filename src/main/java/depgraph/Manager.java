@@ -11,19 +11,14 @@ public class Manager {
 	private Graph graph;
 
 	public static void main(String[] args) {
-		if (args.length != 0) {
-			for (String s : args) {
-				System.out.println(s);
-			}
-			return;
-		}
-
+	
 		configurator = new Configurator();
 		reader = new Reader();
 		parser = new Parser();
 		manipulator = new Manipulator();
-
-		configurator.provideLocation();
+		
+		configurator.manageCmdLineArguments(args);
+		
 	}
 
 	public Manager() {

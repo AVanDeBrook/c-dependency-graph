@@ -8,14 +8,14 @@ import depgraph.Configurator.*;
 public class TestConfigurator {
     @Test
     public void testSingleFileReturnsFile() {
-        String[] args = {"-s", "src/test/java/depgraph/dot-files/adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot"};
+        String[] args = {"-s", "src/test/dot-files/adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot"};
         Configurator config = new Configurator();
         assertEquals(ConfigReturnType.FILE, config.manageCmdLineArguments(args));
     }
 
     @Test
     public void testDirectoryReturnsDirectory() {
-        String[] args = {"-d", "src/test/java/depgraph/dot-files"};
+        String[] args = {"-d", "src/test/dot-files"};
         Configurator config = new Configurator();
         assertEquals(ConfigReturnType.DIRECTORY, config.manageCmdLineArguments(args));
     }

@@ -36,13 +36,13 @@ public class Configurator {
 					break;
 				case 's':
 					// Logging purposes: System.out.println("Name of file passed to the program: " + args[i]);
-					this.processSingleFile(args[++i]);
-					retval = ConfigReturnType.FILE;
+					if (this.processSingleFile(args[++i]))
+						retval = ConfigReturnType.FILE;
 					break;
 				case 'd':
 					// Logging purposes: System.out.println("Path of directory passed to the program: " + args[i]);
-					this.processDirectory(args[++i]);
-					retval = ConfigReturnType.DIRECTORY;
+					if (this.processDirectory(args[++i]))
+						retval = ConfigReturnType.DIRECTORY;
 					break;
 				default:
 					System.out.println("Could not interpret arguments. Run gradle run --args=\" -h \"\n");
@@ -71,15 +71,19 @@ public class Configurator {
 	 *
 	 * @param fileName - name of the file.
 	 */
-	private void processSingleFile(String fileName) {
+	private boolean processSingleFile(String fileName) {
 		// source directory is SeniorDesign\c-dependency-graph
 		File singleFile = new File(fileName);
+		boolean retval = false;
 
 		if (singleFile.isFile()) {
 			this.nameOfFile = fileName;
+			retval = true;
 		} else {
 			System.out.println("File name provided cannot resolve to a file");
 		}
+
+		return retval;
 	}
 
 	/**
@@ -87,14 +91,18 @@ public class Configurator {
 	 *
 	 * @param directorName - name of the directory.
 	 */
-	private void processDirectory(String directoryName) {
+	private boolean processDirectory(String directoryName) {
 		File singleDirectory = new File(directoryName);
+		boolean retval = false;
 
 		if (singleDirectory.isDirectory()) {
 			this.nameOfDirectory = directoryName;
+			retval = true;
 		} else {
 			System.out.println("Directory name provided cannot resolve to a directory");
 		}
+
+		return retval;
 	}
 
 	/**** Accessor Functions  ****/

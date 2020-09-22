@@ -1,20 +1,18 @@
 package depgraph;
 
 import java.io.File;
+import java.nio.file.Files;
 
 public class Configurator {
 	String nameOfFile;
 	String nameOfDirectory;
 
 	public Configurator() {
-		
+		//nameOfFile = "";
+		//nameOfDirectory = "";
 	}
 	public void manageCmdLineArguments(String [] args){
-		if (args.length != 0) {
-			for (String s : args) {
-				System.out.println(s);
-			}
-		}
+	
 		if(args.length == 0){
 			System.out.println("No arguments passed.");
 		}
@@ -23,16 +21,16 @@ public class Configurator {
 
 			for(int i = 0; i < args.length; i++ ){
 				if(args[i].contains("-h")){
-					help();
+					this.help();
 				}
 				else if(args[i].contains("-s")){
 					i++;
-					processSingleFile(args[i]);
-					System.out.println("Name of file passed to the program: " + args[i]);
+					//System.out.println("Name of file passed to the program: " + args[i]);
+					this.processSingleFile(args[i]);
 				}else if(args[i].contains("-d")){
 					i++;
-					processDirectory(args[i]);
-					System.out.println("Path of directory passed to the program : " + args[i]);
+					//System.out.println("Path of directory passed to the program : " + args[i]);
+					this.processDirectory(args[i]);
 				}else{
 					System.out.println("Could not interpret arguments");
 				}
@@ -49,11 +47,13 @@ public class Configurator {
 		System.out.println("-d for processing a directory.");
 	}
 
+	//source directory is SeniorDesign\c-dependency-graph
 	private void processSingleFile(String fileName){
 
 		File singleFile = new File(fileName);
+		
 		if(singleFile.isFile()){
-			nameOfFile = fileName;
+			this.nameOfFile = fileName;
 		}else{
 			System.out.println("File name provided cannot resolve to a file");
 		}
@@ -62,7 +62,7 @@ public class Configurator {
 	private void processDirectory(String directoryName){
 		File singleDirectory = new File(directoryName);
 		if(singleDirectory.isDirectory()){
-			nameOfDirectory = directoryName;
+			this.nameOfDirectory = directoryName;
 		}else{
 			System.out.println("Directory name provided cannot resolve to a directory");
 		}

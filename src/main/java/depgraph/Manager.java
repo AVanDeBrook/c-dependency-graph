@@ -18,7 +18,7 @@ public class Manager {
 		manipulator = new Manipulator();
 		
 		configurator.manageCmdLineArguments(args);
-		
+
 	}
 
 	public Manager() {

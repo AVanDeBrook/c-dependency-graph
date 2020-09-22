@@ -23,3 +23,6 @@ bin
 .settings
 .classpath
 .project
+
+# Output Image Files
+**/*.png

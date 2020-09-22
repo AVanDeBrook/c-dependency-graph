@@ -36,10 +36,16 @@ public class Manager {
 	 */
 	public static void start() {
 		List<String> files = null;
-		if (configurator.isDirectory()) {
-			files = reader.readDirectory(configurator.getDirectory());
-		} else {
-			files = reader.readSingleFile(configurator.getFilePath());
+		
+			if (configurator.isDirectory()) {
+				files = reader.readDirectory(configurator.getDirectory());
+			} else {
+				files = reader.readSingleFile(configurator.getFilePath());
+			}
+		
+		if (files == null) {
+			System.out.println("Reader failed to read file");
+			return;
 		}
 
 		graph = new Graph();

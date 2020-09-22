@@ -19,21 +19,21 @@ public class Configurator {
 			System.out.println("Processing arguments now ... \n");
 
 			for(int i = 0; i < args.length; i++ ){
-				if(args[i].contains("-h")){
-					this.help();
+				if( (args[i].charAt(0) == '-') && (args[i].length() == 2) ){
+					switch(args[i].charAt(1)){
+						case 'h' : this.help();
+								   break;
+						case 's' : //Logging purposes: System.out.println("Name of file passed to the program: " + args[i]);
+								   this.processSingleFile(args[++i]);
+								   break;
+						case 'd' : //Logging purposes: System.out.println("Path of directory passed to the program : " + args[i]);
+								   this.processDirectory(args[++i]);
+						default:   System.out.println("Could not interpret arguments. Run gradle run --args=\" -h \"\n");
+								   break;
+
+					}
 				}
-				else if(args[i].contains("-s")){
-					i++;
-					//Logging purposes: System.out.println("Name of file passed to the program: " + args[i]);
-					this.processSingleFile(args[i]);
-				}else if(args[i].contains("-d")){
-					i++;
-					//Logging purposes: System.out.println("Path of directory passed to the program : " + args[i]);
-					this.processDirectory(args[i]);
-				}else{
-					System.out.println("Could not interpret arguments. Run gradle run --args=\" -h \"\n");
-				}
-			}
+			}		
 
 		} 
 	}

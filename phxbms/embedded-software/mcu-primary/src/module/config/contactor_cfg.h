@@ -141,10 +141,10 @@
 // each---a channel for clossing the relay and another for opening the relay.
 // Precharge and Engine are normal relays.
 // Note that we use IO here to stress that these are IO pins.
-#define CONT_IO_MAIN_PLUS_CLOSE        CONT_MAIN_PLUS_CONTROL 
+#define CONT_IO_MAIN_PLUS_CLOSE        CONT_MAIN_PLUS_CONTROL
 #define CONT_IO_MAIN_PLUS_FEEDBACK     CONT_MAIN_PLUS_FEEDBACK
 
-#define CONT_IO_MAIN_MINUS_CLOSE       CONT_MAIN_MINUS_CONTROL 
+#define CONT_IO_MAIN_MINUS_CLOSE       CONT_MAIN_MINUS_CONTROL
 #define CONT_IO_MAIN_MINUS_FEEDBACK    CONT_MAIN_MINUS_FEEDBACK
 
 #define CONT_IO_PRECHARGE_CONTROL      CONT_PRECHARGE_PLUS_CONTROL
@@ -161,16 +161,16 @@
 
 //--------------------------
 // Note that we use CN here to stress these are channel numbers.
-#define CONT_CN_MAIN_PLUS               CONT_MAIN_PLUS            
-#define CONT_CN_PRECHARGE               CONT_PRECHARGE_PLUS       
-#define CONT_CN_MAIN_MINUS              CONT_MAIN_MINUS           
-#define CONT_CN_ENGINE                  CONT_CHARGE_MAIN_PLUS     
+#define CONT_CN_MAIN_PLUS               CONT_MAIN_PLUS
+#define CONT_CN_PRECHARGE               CONT_PRECHARGE_PLUS
+#define CONT_CN_MAIN_MINUS              CONT_MAIN_MINUS
+#define CONT_CN_ENGINE                  CONT_CHARGE_MAIN_PLUS
 #define CONT_CN_MAIN_PLUS2              CONT_CHARGE_PRECHARGE_PLUS
-#define CONT_CN_MAIN_MINUS2             CONT_CHARGE_MAIN_MINUS    
+#define CONT_CN_MAIN_MINUS2             CONT_CHARGE_MAIN_MINUS
 
 
 /*
- * If additional relay control channels are needed. See the original foxBMS 
+ * If additional relay control channels are needed. See the original foxBMS
  * contactor_cfg.h file for the definations of the IO Pins.
 */
 
@@ -187,7 +187,7 @@
 
 /**
  * This define MUST represent the cycle time of the task in which context the
- * functions run, e.g., if the CONT_Trigger() is running in the 10 ms task
+ * functions run, e.g., if the CNT_Trigger() is running in the 10 ms task
  * then the define must be set to 10.
  *
  * This define also sets the minimum time.

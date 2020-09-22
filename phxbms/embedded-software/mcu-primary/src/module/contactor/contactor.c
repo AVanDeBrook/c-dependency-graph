@@ -142,9 +142,9 @@ static int prnt(char *string) {
 /**
  * @brief   checks if there is new Standby request
  *
- * @details This function checks if we have the following request: 
+ * @details This function checks if we have the following request:
  *          (1) CONT_STATE_STANDBY_REQUEST.
- *          If so, the new state will be the transit OPEN CONTACTOR state. 
+ *          If so, the new state will be the transit OPEN CONTACTOR state.
  *
  * @return  true if there is a new Standby request, false else.
  */
@@ -607,7 +607,7 @@ STD_RETURN_TYPE_e CNT_AcquireContactorFeedbacks(void) {
     return retVal;
 }
 
-STD_RETURN_TYPE_e CONT_GetAllContactorFeedbacks(void) {
+STD_RETURN_TYPE_e CNT_GetAllContactorFeedbacks(void) {
     return CNT_AcquireContactorFeedbacks();
 }
 
@@ -763,7 +763,7 @@ CONT_POWER_LINE_e CNT_GetActivePowerLine() {
     return (cont_state.activePowerLine);
 }
 
-CONT_RETURN_TYPE_e CONT_SetStateRequest(CONT_STATE_REQUEST_e statereq) {
+CONT_RETURN_TYPE_e CNT_SetStateRequest(CONT_STATE_REQUEST_e statereq) {
     CONT_RETURN_TYPE_e retVal = CONT_STATE_NO_REQUEST;
 
     taskENTER_CRITICAL();
@@ -778,7 +778,7 @@ CONT_RETURN_TYPE_e CONT_SetStateRequest(CONT_STATE_REQUEST_e statereq) {
 }
 
 
-void CONT_Trigger(void) {
+void CNT_Trigger(void) {
     STD_RETURN_TYPE_e retVal = E_OK;
     CONT_STATE_REQUEST_e statereq = CONT_STATE_NO_REQUEST;
     DATA_BLOCK_CONTACTORSTATE_s contactorstate;
@@ -1010,7 +1010,7 @@ void CONT_Trigger(void) {
         }
 
         CONT_SAVELASTSTATES();
-        // LMM: double-check with JL that this is the place to put the save --- before the two if statements that could break out 
+        // LMM: double-check with JL that this is the place to put the save --- before the two if statements that could break out
         cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_NORMAL);
         cnt_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
 
@@ -1022,8 +1022,8 @@ void CONT_Trigger(void) {
         }
         /* check fuse state */
         //CNT_CheckFuse(CONT_POWERLINE_NORMAL);
-        
-        
+
+
         break;
 
     /****************************CHARGE_PRECHARGE*************************************/
@@ -1098,7 +1098,7 @@ void CONT_Trigger(void) {
         }
 
         CONT_SAVELASTSTATES();
-        // LMM: double-check with JL that this is the place to put the save --- before the two if statements that could break out 
+        // LMM: double-check with JL that this is the place to put the save --- before the two if statements that could break out
         cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_CHARGE);
         cnt_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
 
@@ -1108,7 +1108,7 @@ void CONT_Trigger(void) {
         if (cnt_NewErrorRequestExists()) {
             break;
         }
-           
+
         break;
 
     /****************************ENGINE_PRECHARGE**************************/
@@ -1190,7 +1190,7 @@ void CONT_Trigger(void) {
 
         CONT_SAVELASTSTATES();
 
-        // LMM: double-check with JL that this is the place to put the save --- before the two if statements that could break out 
+        // LMM: double-check with JL that this is the place to put the save --- before the two if statements that could break out
         cnt_SaveContStateToDatabase(&contactorstate, CONT_STATEMACH_ENGINE);
         cnt_SaveContSubStateToDatabase(&contactorstate, cont_state.substate);
 
@@ -1202,8 +1202,8 @@ void CONT_Trigger(void) {
         }
         /* check fuse state */
         // CNT_CheckFuse(CONT_POWERLINE_NORMAL); // ?
-        
-        
+
+
         break;
 
     /***************************OPEN CONTACTORS*************************************/

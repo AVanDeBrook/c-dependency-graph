@@ -346,7 +346,7 @@ void SYS_Trigger(void) {
             SYS_SAVELASTSTATES();
 
             if (sys_state.substate == SYS_ENTRY) {
-                CONT_SetStateRequest(CONT_STATE_INIT_REQUEST);
+                CNT_SetStateRequest(CONT_STATE_INIT_REQUEST);
 
                 sys_state.timer = SYS_STATEMACH_SHORTTIME_MS;
                 sys_state.substate = SYS_WAIT_INITIALIZATION_CONT;

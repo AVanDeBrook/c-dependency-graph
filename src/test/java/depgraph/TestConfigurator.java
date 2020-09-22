@@ -1,25 +1,36 @@
-    package depgraph;
+package depgraph;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.DisplayName;
 
+import depgraph.Configurator.*;
 
 public class TestConfigurator {
     @Test
-    public void singleFileProvided() {
+    public void testSingleFileReturnsFile() {
+        String[] args = {"-s", "src/test/java/depgraph/dot-files/adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot"};
         Configurator config = new Configurator();
-        //source directory is C:\SeniorDesign\c-dependecy-graph
-        String [] cmdArgs = {"-h", "-s", ".\\src\\test\\java\\depgraph\\dot-files\\adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot"};
-        config.manageCmdLineArguments(cmdArgs);
-        assertTrue(config.getFileName().equals(".\\src\\test\\java\\depgraph\\dot-files\\adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot"));
+        assertEquals(ConfigReturnType.FILE, config.manageCmdLineArguments(args));
     }
+
     @Test
-    public void singleDirectoryProvided(){
+    public void testDirectoryReturnsDirectory() {
+        String[] args = {"-d", "src/test/java/depgraph/dot-files"};
         Configurator config = new Configurator();
-        //source directory is C:\SeniorDesign\c-dependecy-graph
-        String [] cmdArgs = {"-h","-d",".\\src\\test\\java\\depgraph\\dot-files"};
-        config.manageCmdLineArguments(cmdArgs);
-        assertTrue(config.getDirectoryName().equals(".\\src\\test\\java\\depgraph\\dot-files"));
+        assertEquals(ConfigReturnType.DIRECTORY, config.manageCmdLineArguments(args));
+    }
+
+    @Test
+    public void testInvalidFileReturnsNone() {
+        String[] args = {"-s", "stupid/dummy/directory/that/will/never/be/found"};
+        Configurator config = new Configurator();
+        assertEquals(ConfigReturnType.NONE, config.manageCmdLineArguments(args));
+    }
+
+    @Test
+    public void testInvalidDirectoryReturnsNone() {
+        String[] args = {"-d", "stupid/dummy/directory/that/will/never/be/found"};
+        Configurator config = new Configurator();
+        assertEquals(ConfigReturnType.NONE, config.manageCmdLineArguments(args));
     }
 }

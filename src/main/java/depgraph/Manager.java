@@ -2,6 +2,8 @@ package depgraph;
 
 import java.util.List;
 
+import depgraph.Reader.Reader;
+
 public class Manager {
 
 	private static Configurator configurator;
@@ -23,7 +25,11 @@ public class Manager {
 		parser = new Parser();
 		manipulator = new Manipulator();
 
-		start();
+		try {
+			start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Manager() {
@@ -34,12 +40,16 @@ public class Manager {
 	 * Method used by Configurator to provide the file location and kick off the
 	 * process
 	 */
-	public static void start() {
+	public static void start() throws Exception {
+
 		List<String> files = null;
 		if (configurator.isDirectory()) {
 			files = reader.readDirectory(configurator.getDirectory());
 		} else {
 			files = reader.readSingleFile(configurator.getFilePath());
+		}
+		if (files == null) {
+			return;
 		}
 
 		graph = new Graph();

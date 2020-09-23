@@ -1,17 +1,22 @@
 package depgraph.Reader;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Reader {
 
-	public Reader() { }
+	public Reader() {
+	}
 
 	/**
 	 * Method used to get the contents of a single DOT file at a given location.
 	 *
-	 * @param the path of a single DOT file to read
-	 * @return a list containing one string, the contents of the file. Null if
+	 * @param filePath - The path of a single DOT file to read.
+	 * @return A list containing one string, the contents of the file. Null if
 	 * the file path given did not exist.
 	 */
 	public List<String> readSingleFile(String filePath) throws Exception {
@@ -19,7 +24,7 @@ public class Reader {
 
 		System.out.println("Reading single file...");
 
-		if(checkIfFileIsDot(filePath)){
+		if (isDotFile(filePath)) {
 			filesList.add(read(filePath));
 		} else {
 			throw new Exception("Invalid File Extension: Must be '.dot'");
@@ -30,10 +35,10 @@ public class Reader {
 
 	/**
 	 * Method used to get the contents of all DOT files in a given directory as
-	 * a list of Strings (one string = one file)
+	 * a list of Strings (one string = one file).
 	 *
-	 * @param a directory containing DOT files
-	 * @return a list of strings, each string representing the contents of one
+	 * @param directory - A directory containing DOT files.
+	 * @return A list of strings, each string representing the contents of one
 	 * file. Null if the directory did not exist or did not contain DOT files.
 	 */
 	public List<String> readDirectory(String directory) throws Exception {
@@ -44,7 +49,7 @@ public class Reader {
 		System.out.println("Reading files from directory...");
 
 		for (File file : filesInDir) {
-			if (file.isFile() && checkIfFileIsDot(file.toString())) {
+			if (file.isFile() && isDotFile(file.toString())) {
 				filesList.add(read(file.toString()));
 			}
 		}
@@ -57,11 +62,10 @@ public class Reader {
 	}
 
 	/**
-	 * Helper function to read contents of
-	 * file and converts it to a string.
+	 * Helper function to read contents of file and convert it to a string.
 	 *
-	 * @param filePath - path to file to read.
-	 * @return - string version of the file.
+	 * @param filePath - The path of a file to read.
+	 * @return - String version of the file.
 	 */
 	private String read(String filePath) {
 		StringBuilder stringBuild = new StringBuilder();
@@ -81,20 +85,19 @@ public class Reader {
 	}
 
 	/**
-	 * Helper function, to check if given file is a 'dot' file.
+	 * Helper function to check if given file is a 'dot' file.
 	 *
-	 * @param filePath - file name
-	 * @return - true if dot file, false otherwise.
+	 * @param filePath - The path of a single file.
+	 * @return True if dot file, false otherwise.
 	 */
-	private boolean checkIfFileIsDot(String filePath) {
+	private boolean isDotFile(String filePath) {
 		int index = filePath.lastIndexOf('.');
 		String extension = filePath.substring(index + 1);
-		boolean retval = false;
 
 		if (index != -1 && extension.equals("dot")) {
 			return true;
+		} else {
+			return false;
 		}
-
-		return retval;
 	}
 }

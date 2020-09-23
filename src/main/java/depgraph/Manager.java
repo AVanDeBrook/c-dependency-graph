@@ -2,7 +2,7 @@ package depgraph;
 
 import java.util.List;
 
-import depgraph.Reader.*;
+import depgraph.Reader.Reader;
 
 public class Manager {
 

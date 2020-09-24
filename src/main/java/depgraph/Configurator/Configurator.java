@@ -26,7 +26,12 @@ public class Configurator {
 		if (args.length == 0) {
 			System.out.println("No arguments passed.");
 			return retval;
-		}
+        }
+
+        if(args.length>2){
+            System.out.println("Too many arguments");
+            return retval;
+        }
 
 		for (int i = 0; i < args.length; i++) {
 			if ((args[i].charAt(0) == '-') && (args[i].length() == 2)) {

@@ -57,12 +57,13 @@ public class Configurator {
 	private void help() {
 		System.out.println("Welcome to the C Dependency Graph Tool.\n");
 		System.out.println("Command line argument syntax is as follows:");
-		System.out.println("gradle run --args=\" -[options] [arguments] \"\n");
+		System.out.println("gradle run --args=\" [-s <filename> | -d <directory name> | -h] \"\n");
 		System.out.println("Possible arguments include -h for help,");
 		System.out.println("-s for processing a single file,");
 		System.out.println("-d for processing a directory.\n");
 		System.out.println("If having problems providing a path to a file or directory, remember that the root directroy is c-dependecy-graph");
-	}
+        System.out.println("You may not run more than a single command at a time.");
+    }
 
 	/**
 	 * Checks if the passed file exists and sets the class attribute if it does.

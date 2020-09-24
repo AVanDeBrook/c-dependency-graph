@@ -24,12 +24,12 @@ public class Configurator {
 		ConfigReturnType retval = ConfigReturnType.NONE;
 
 		if (args.length == 0) {
-			System.out.println("No arguments passed.");
+			System.err.println("No arguments passed.");
 			return retval;
         }
 
         if(args.length>2){
-            System.out.println("Too many arguments");
+            System.err.println("Too many arguments.");
             return retval;
         }
 
@@ -84,7 +84,7 @@ public class Configurator {
 			this.nameOfFile = fileName;
 			retval = true;
 		} else {
-			System.out.println("File name provided cannot resolve to a file");
+			System.err.println("File name provided cannot resolve to a file");
 		}
 
 		return retval;
@@ -103,7 +103,7 @@ public class Configurator {
 			this.nameOfDirectory = directoryName;
 			retval = true;
 		} else {
-			System.out.println("Directory name provided cannot resolve to a directory");
+			System.err.println("Directory name provided cannot resolve to a directory");
 		}
 
 		return retval;

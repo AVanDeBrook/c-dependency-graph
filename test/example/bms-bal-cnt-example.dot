@@ -1,12 +1,17 @@
 digraph {
     rankdir="LR";
+    fontname="Monospace";
+    node [shape=record,fontname="Monospace",fixedsize=true,width=3.5,height=0.5,fontsize=12];
+    edge [style=solid];
 
     subgraph cluster_BAL {
         label="BAL";
+        fontsize=24;
         rank="same";
 
         subgraph cluster_pub_BAL {
             label="Public";
+            fontsize=16;
             /* Public Functions Nodes */
             BAL_SetStateRequest [label="BAL_SetStateRequest"];
             BAL_GetState [label="BAL_GetState"];
@@ -31,10 +36,12 @@ digraph {
 
     subgraph cluster_BMS {
         label="BMS";
+        fontsize=24;
         rank="same";
 
         subgraph cluster_pub_BMS {
             label="Public";
+            fontsize=16;
             /* Public Function Nodes */
             BMS_SetStateRequest [label="BMS_SetStateRequest"];
             BMS_GetState [label="BMS_GetState"];
@@ -45,6 +52,7 @@ digraph {
 
         subgraph cluster_priv_BMS {
             label="Private";
+            fontsize=16;
             /* Private Function Nodes */
             bms_CheckStateRequest [label="bms_CheckStateRequest"];
             bms_GetStateRequest [label="bms_GetStateRequest"];
@@ -69,10 +77,12 @@ digraph {
 
     subgraph cluster_CNT {
         label="CNT";
+        fontsize=24;
         rank="same";
 
         subgraph cluster_pub_CNT {
             label="Public";
+            fontsize=16;
             /* Public Function Nodes */
             CNT_Init [label="CNT_Init"];
             CNT_CheckPrecharge [label="CNT_CheckPrecharge"];

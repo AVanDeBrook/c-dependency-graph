@@ -1,0 +1,13 @@
+digraph "Abstract Program Flowchart" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    input_node [label="Input:\nFile/Directory"];
+    read_node [label="Read input into memory"];
+    parse_node [label="Parse input into objects, which we can then manipulate",comment="Complex, hard to build, first step toward actually processing graphs."];
+    process_node [label="Process objects, trim internal connections, etc."];
+    write_node [label="Output:\nProcess objects into dot graphs in desired form"];
+    generate_node [label="(Optional) Output:\nRun dot on dot-file and generate graph image"];
+
+    input_node -> read_node -> parse_node -> process_node -> write_node -> generate_node;
+}

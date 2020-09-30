@@ -1,6 +1,7 @@
 digraph {
     rankdir="LR";
     fontname="Monospace";
+    compund=true;
     node [shape=record,fontname="Monospace",fixedsize=true,width=3.5,height=0.5,fontsize=12];
     edge [style=solid];
 
@@ -8,6 +9,8 @@ digraph {
         label="BAL";
         fontsize=24;
         rank="same";
+
+        BAL_format [style=invisible];
 
         subgraph cluster_pub_BAL {
             label="Public";
@@ -32,12 +35,14 @@ digraph {
         // }
     }
 
-    BAL_Trigger -> BMS_GetBatterySystemState;
+    // BAL_Trigger -> BMS_GetBatterySystemState;
 
     subgraph cluster_BMS {
         label="BMS";
         fontsize=24;
         rank="same";
+
+        BMS_format [style=invisible];
 
         subgraph cluster_pub_BMS {
             label="Public";
@@ -80,6 +85,8 @@ digraph {
         fontsize=24;
         rank="same";
 
+        CNT_format [style=invisible];
+
         subgraph cluster_pub_CNT {
             label="Public";
             fontsize=16;
@@ -117,5 +124,8 @@ digraph {
         //     cnt_SaveContactorStateToDatabase [label="cnt_SaveContactorStateToDatabase"];
         //     cnt_SaveContactorSubStateToDatabase [label="cnt_SaveContactorSubStateToDatabase"];
         // }
+
+        BAL_format -> BMS_format [ltail=cluster_BAL,lhead=cluster_BMS,style=invisible,arrowhead=none];
+        BMS_format -> CNT_format [ltail=cluster_BMS,lhead=cluster_CNT,style=invisible,arrowhead=none];
     }
 }

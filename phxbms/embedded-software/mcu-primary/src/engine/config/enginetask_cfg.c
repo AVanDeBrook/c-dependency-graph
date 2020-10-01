@@ -143,7 +143,7 @@ void ENG_Cyclic_1ms(void) {
 void ENG_Cyclic_10ms(void) {
     SYS_Trigger();
 #if BUILD_MODULE_ENABLE_CONTACTOR
-    CONT_Trigger();
+    CNT_Trigger();
 #endif
 #if BUILD_MODULE_ENABLE_ILCK
     ILCK_Trigger();

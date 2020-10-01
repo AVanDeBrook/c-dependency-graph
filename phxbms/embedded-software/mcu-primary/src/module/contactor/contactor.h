@@ -288,7 +288,7 @@ extern CONT_ELECTRICAL_STATE_TYPE_e CNT_GetContactorSetValue(CONT_NAMES_e contac
 extern STD_RETURN_TYPE_e CNT_SetContactorState(CONT_NAMES_e contactor, CONT_ELECTRICAL_STATE_TYPE_e requestedContactorState);
 
 /**
- * @brief   Sets the latching type contactor state to its requested state, if the contactor is at 
+ * @brief   Sets the latching type contactor state to its requested state, if the contactor is at
  *          that time not in the requested state.
  *
  * @details If the new state was already requested, but not reached (meaning the measured feedback
@@ -355,7 +355,7 @@ extern CONT_POWER_LINE_e CNT_GetActivePowerLine(void);
  *
  * @return  #CONT_OK if a state request was made, #CONT_STATE_NO_REQUEST if no state request was made
  */
-extern CONT_RETURN_TYPE_e CONT_SetStateRequest(CONT_STATE_REQUEST_e statereq);
+extern CONT_RETURN_TYPE_e CNT_SetStateRequest(CONT_STATE_REQUEST_e statereq);
 
 
 /**
@@ -365,7 +365,7 @@ extern CONT_RETURN_TYPE_e CONT_SetStateRequest(CONT_STATE_REQUEST_e statereq);
  *          called time-triggered, every 1ms. It exits without effect, if the function call is
  *          a reentrance.
  */
-extern void CONT_Trigger(void);
+extern void CNT_Trigger(void);
 
 
 #endif /* CONTACTOR_H_ */

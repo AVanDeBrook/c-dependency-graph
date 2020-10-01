@@ -1,0 +1,131 @@
+digraph {
+    rankdir="LR";
+    fontname="Monospace";
+    compund=true;
+    node [shape=record,fontname="Monospace",fixedsize=true,width=3.5,height=0.5,fontsize=12];
+    edge [style=solid];
+
+    subgraph cluster_BAL {
+        label="BAL";
+        fontsize=24;
+        rank="same";
+
+        BAL_format [style=invisible];
+
+        subgraph cluster_pub_BAL {
+            label="Public";
+            fontsize=16;
+            /* Public Functions Nodes */
+            BAL_SetStateRequest [label="BAL_SetStateRequest"];
+            BAL_GetState [label="BAL_GetState"];
+            BAL_GetInitializationState [label="BAL_GetInitializationState"];
+            BAL_Trigger [label="BAL_Trigger"];
+        }
+
+        // subgraph cluster_priv_BAL {
+        //     label="Private";
+        //     /* Private Function Nodes */
+        //     bal_CheckStateRequest [label="bal_CheckStateRequest"];
+        //     bal_GetStateRequest [label="bal_GetStateRequest"];
+        //     bal_TransferStateRequest [label="bal_TransferStateRequest"];
+        //     bal_CheckReEntrance [label="bal_CheckReEntrance"];
+        //     bal_Init [label="bal_Init"];
+        //     bal_Deactivate [label="bal_Deactivate"];
+        //     bal_Activate_Balancing_Voltage [label="bal_Activate_Balancing_Voltage"];
+        // }
+    }
+
+    // BAL_Trigger -> BMS_GetBatterySystemState;
+
+    subgraph cluster_BMS {
+        label="BMS";
+        fontsize=24;
+        rank="same";
+
+        BMS_format [style=invisible];
+
+        subgraph cluster_pub_BMS {
+            label="Public";
+            fontsize=16;
+            /* Public Function Nodes */
+            BMS_SetStateRequest [label="BMS_SetStateRequest"];
+            BMS_GetState [label="BMS_GetState"];
+            BMS_GetInitializationState [label="BMS_GetInitializationState"];
+            BMS_Trigger [label="BMS_Trigger"];
+            BMS_GetBatterySystemState [label="BMS_GetBatterySystemState"];
+        }
+
+        subgraph cluster_priv_BMS {
+            label="Private";
+            fontsize=16;
+            /* Private Function Nodes */
+            bms_CheckStateRequest [label="bms_CheckStateRequest"];
+            bms_GetStateRequest [label="bms_GetStateRequest"];
+            bms_TransferStateRequest [label="bms_TransferStateRequest"];
+            bms_CheckReEntrance [label="bms_CheckReEntrance"];
+            bms_CheckCANRequests [label="bms_CheckCANRequests"];
+            bms_CheckAnyErrorFlagsSet [label="bms_CheckAnyErrorFlagsSet"];
+            bms_UpdateBatsysState [label="bms_UpdateBatsysState"];
+            bms_GetMeasurementValues [label="bms_GetMeasurementValues"];
+            bms_CheckVoltages [label="bms_CheckVoltages"];
+            bms_CheckTemperatures [label="bms_CheckTemperatures"];
+            bms_CheckCurrent [label="bms_CheckCurrent"];
+            bms_CheckSlaveTemperatures [label="bms_CheckSlaveTemperatures"];
+            bms_CheckOpenSenseWire [label="bms_CheckOpenSenseWire"];
+        }
+    }
+
+    BMS_Trigger -> BAL_SetStateRequest;
+    BMS_Trigger -> CNT_SetStateRequest;
+    BMS_Trigger -> CNT_GetState;
+    bms_CheckCurrent -> CNT_GetActivePowerLine;
+
+    subgraph cluster_CNT {
+        label="CNT";
+        fontsize=24;
+        rank="same";
+
+        CNT_format [style=invisible];
+
+        subgraph cluster_pub_CNT {
+            label="Public";
+            fontsize=16;
+            /* Public Function Nodes */
+            CNT_Init [label="CNT_Init"];
+            CNT_CheckPrecharge [label="CNT_CheckPrecharge"];
+            CNT_CheckFuse [label="CNT_CheckFuse"];
+            CNT_AcquireContactorFeedbacks [label="CNT_AcquireContactorFeedbacks"];
+            CNT_GetAllContactorFeedbacks [label="CNT_GetAllContactorFeedbacks"];
+            CNT_GetOneContactorFeedback [label="CNT_GetOneContactorFeedback"];
+            CNT_GetContactorSetValue [label="CNT_GetContactorSetValue"];
+            CNT_GetContactorState [label="CNT_GetContactorState"];
+            CNT_SetContactorState_pulse [label="CNT_SetContactorState_pulse"];
+            CNT_SwitchAllContactorsOff [label="CNT_SwitchAllContactorsOff"];
+            CNT_GetState [label="CNT_GetState"];
+            CNT_GetInitializationState [label="CNT_GetInitializationState"];
+            CNT_GetActivePowerLine [label="CNT_GetActivePowerLine"];
+            CNT_SetStateRequest [label="CNT_SetStateRequest"];
+            CNT_Trigger [label="CNT_Trigger"];
+        }
+
+        // subgraph cluster_priv_CNT {
+        //     label="Private";
+        //     /* Private Function Nodes */
+        //     cnt_NewStandbyRequestExists [label="cnt_NewStandbyRequestExists"];
+        //     cnt_NewErrorRequestExists [label="cnt_NewErrorRequestExists"];
+        //     cnt_CloseMainPlustWithPrecharge [label="cnt_CloseMainPlustWithPrecharge"];
+        //     cnt_IsReentry [label="cnt_IsReentry"];
+        //     cnt_CheckAllContactorsFeedback [label="cnt_CheckAllContactorsFeedback"];
+        //     cnt_CheckStateRequest [label="cnt_CheckStateRequest"];
+        //     cnt_GetStateRequest [label="cnt_GetStateRequest"];
+        //     cnt_TransferStateRequest [label="cnt_TransferStateRequest"];
+        //     cnt_TestLatchingContactorChannels [label="cnt_TestLatchingContactorChannels"];
+        //     cnt_TestAllContactorChannels [label="cnt_TestAllContactorChannels"];
+        //     cnt_SaveContactorStateToDatabase [label="cnt_SaveContactorStateToDatabase"];
+        //     cnt_SaveContactorSubStateToDatabase [label="cnt_SaveContactorSubStateToDatabase"];
+        // }
+
+        BAL_format -> BMS_format [ltail=cluster_BAL,lhead=cluster_BMS,style=invisible,arrowhead=none];
+        BMS_format -> CNT_format [ltail=cluster_BMS,lhead=cluster_CNT,style=invisible,arrowhead=none];
+    }
+}

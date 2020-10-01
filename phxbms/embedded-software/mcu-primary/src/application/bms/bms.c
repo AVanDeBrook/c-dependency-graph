@@ -118,11 +118,11 @@ static void bms_CheckOpenSenseWire(void);
 
 /*================== Function Implementations =============================*/
 
-// This is a temporary function for printing. 
+// This is a temporary function for printing.
 static int prnt(char *string) {
     static int prntNumber = 0;
     taskENTER_CRITICAL();
-    printf("%d. ", prntNumber++); 
+    printf("%d. ", prntNumber++);
     int rtnVal = printf(string);
     taskEXIT_CRITICAL();
     return rtnVal;
@@ -364,7 +364,7 @@ void BMS_Trigger(void) {
                 BAL_SetStateRequest(BAL_STATE_GLOBAL_ENABLE_REQUEST);
                 BAL_SetStateRequest(BAL_STATE_ALLOWBALANCING_REQUEST);
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
-                CONT_SetStateRequest(CONT_STATE_STANDBY_REQUEST);
+                CNT_SetStateRequest(CONT_STATE_STANDBY_REQUEST);
 #endif /* BUILD_MODULE_ENABLE_CONTACTOR == 1 */
 #if BUILD_MODULE_ENABLE_ILCK == 1
                 ILCK_SetStateRequest(ILCK_STATE_CLOSE_REQUEST);
@@ -446,7 +446,7 @@ void BMS_Trigger(void) {
                 systemstate.bms_state = BMS_STATEMACH_PRECHARGE;
                 DB_WriteBlock(&systemstate, DATA_BLOCK_ID_SYSTEMSTATE);
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
-                CONT_SetStateRequest(CONT_STATE_NORMAL_REQUEST);
+                CNT_SetStateRequest(CONT_STATE_NORMAL_REQUEST);
 #endif
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS;
                 bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
@@ -554,7 +554,7 @@ void BMS_Trigger(void) {
                 systemstate.bms_state = BMS_STATEMACH_CHARGE_PRECHARGE;
                 DB_WriteBlock(&systemstate, DATA_BLOCK_ID_SYSTEMSTATE);
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
-                CONT_SetStateRequest(CONT_STATE_CHARGE_REQUEST);
+                CNT_SetStateRequest(CONT_STATE_CHARGE_REQUEST);
 #endif
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS;
                 bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
@@ -619,12 +619,12 @@ void BMS_Trigger(void) {
                 systemstate.bms_state = BMS_STATEMACH_CHARGE;
                 DB_WriteBlock(&systemstate, DATA_BLOCK_ID_SYSTEMSTATE);
                 bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
-                bms_state.substate = BMS_CHECK_STATE_REQUESTS; 
+                bms_state.substate = BMS_CHECK_STATE_REQUESTS;
                 break;
             } else if (bms_state.substate == BMS_CHECK_STATE_REQUESTS) {
                 if ((bms_CheckCANRequests() == BMS_REQ_ID_STANDBY) ||
                         // Check if the highest cell voltage is higher than the threshold
-                        (bms_tab_minmax.voltage_max >= BC_VOLTMAX_MSL)) { 
+                        (bms_tab_minmax.voltage_max >= BC_VOLTMAX_MSL)) {
                     bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
                     bms_state.state = BMS_STATEMACH_STANDBY;
                     bms_state.substate = BMS_ENTRY;
@@ -664,7 +664,7 @@ void BMS_Trigger(void) {
                 systemstate.bms_state = BMS_STATEMACH_ENGINE_PRECHARGE;
                 DB_WriteBlock(&systemstate, DATA_BLOCK_ID_SYSTEMSTATE);
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
-                CONT_SetStateRequest(CONT_STATE_ENGINE_REQUEST);
+                CNT_SetStateRequest(CONT_STATE_ENGINE_REQUEST);
 #endif
                 bms_state.substate = BMS_CHECK_ERROR_FLAGS;
                 bms_state.timer = BMS_STATEMACH_SHORTTIME_MS;
@@ -760,7 +760,7 @@ void BMS_Trigger(void) {
             if (bms_state.substate == BMS_ENTRY) {
                 BAL_SetStateRequest(BAL_STATE_NOBALANCING_REQUEST);
 #if BUILD_MODULE_ENABLE_CONTACTOR == 1
-                CONT_SetStateRequest(CONT_STATE_ERROR_REQUEST);
+                CNT_SetStateRequest(CONT_STATE_ERROR_REQUEST);
 #endif
                 bms_state.timer = BMS_STATEMACH_VERYLONGTIME_MS;
 #if BUILD_MODULE_ENABLE_ILCK == 1

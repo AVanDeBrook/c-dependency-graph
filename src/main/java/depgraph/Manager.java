@@ -5,6 +5,7 @@ import java.util.List;
 import depgraph.Reader.Reader;
 import depgraph.Configurator.ConfigReturnType;
 import depgraph.Configurator.Configurator;
+import depgraph.Parser.*;
 
 public class Manager {
 

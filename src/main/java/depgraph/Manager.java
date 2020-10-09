@@ -3,9 +3,8 @@ package depgraph;
 import java.util.List;
 
 import depgraph.Reader.Reader;
-import depgraph.Configurator.ConfigReturnType;
-import depgraph.Configurator.Configurator;
 import depgraph.Parser.*;
+import depgraph.Configurator.*;
 
 public class Manager {
 
@@ -28,10 +27,6 @@ public class Manager {
 		}
 	}
 
-	public Manager() {
-
-	}
-
 	/**
 	 * Method used by Configurator to provide the file location and kick off the
 	 * process
@@ -48,13 +43,17 @@ public class Manager {
 
         if (files == null) {
 			return;
-		}
+        }
 
         // graph = new Graph();
 
 		for (String singleFile : files) {
 			parser.parse(singleFile);
 		}
+		// for (String singleFile : files) {
+		// 	Module module = parser.parse(singleFile);
+		// 	graph.addModule(module);
+		// }
 
 		// graph = manipulator.manipulate(graph);
 

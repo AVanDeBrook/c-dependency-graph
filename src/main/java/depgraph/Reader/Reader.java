@@ -1,17 +1,9 @@
 package depgraph.Reader;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class Reader {
-
-	public Reader() {
-	}
-
 	/**
 	 * Method used to get the contents of a single DOT file at a given location.
 	 *

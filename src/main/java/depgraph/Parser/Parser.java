@@ -6,7 +6,6 @@ public class Parser {
 	private Lexer lexer;
 
 	public Parser() {
-		// TODO: Constructor
 		lexer = new Lexer();
 	}
 
@@ -22,19 +21,13 @@ public class Parser {
 
 	public Graph parse(String fileContents) {
         String[] lines = fileContents.split("\n");
-        Token token = null;
+        // Token token = null;
 
         for (String line : lines) {
-            try {
-                token = lexer.tokenize(line);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            } finally {
-                if (token == null) {
-                    System.out.println("IGNORED\n");
-                } else {
-                    System.out.println(token);
-                }
+            System.out.println(lexer.tokenize(line));
+            String eol = lexer.getEndOfLine();
+            if (eol != null) {
+                System.out.printf("EOL: %s\n\n", eol);
             }
         }
 

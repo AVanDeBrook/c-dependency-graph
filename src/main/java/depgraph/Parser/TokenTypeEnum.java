@@ -8,5 +8,6 @@ public enum TokenTypeEnum {
     EDGE_STMT,
     L_BRACE,
     R_BRACE,
+    IGNORED,
     NONE
 }

@@ -12,7 +12,7 @@ public class Manager {
 	private static Reader reader;
 	private static Parser parser;
 	private static Manipulator manipulator;
-	private static Graph graph;
+	private static List<Graph> graphList;
 
 	public static void main(String[] args) {
 		configurator = new Configurator();
@@ -45,17 +45,7 @@ public class Manager {
 			return;
         }
 
-        // graph = new Graph();
-
-		for (String singleFile : files) {
-			parser.parse(singleFile);
-		}
-		// for (String singleFile : files) {
-		// 	Module module = parser.parse(singleFile);
-		// 	graph.addModule(module);
-		// }
-
-		// graph = manipulator.manipulate(graph);
+        graphList = parser.parse(files);
 
 		// TODO continue flow
 	}

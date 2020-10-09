@@ -57,12 +57,14 @@ public class Lexer {
                 String rhs = this.lookAhead(Arrays.copyOfRange(lineArray, i+1, lineArray.length));
                 String lookAheadString = this.lookAhead(Arrays.copyOfRange(lineArray, i+1, i+4));
 
-                if (lookAheadString.charAt(0) == '[') {
+                if (lookAheadString.equals("") || lookAheadString.charAt(0) == '[') {
                     tokenType = TokenTypeEnum.NODE_STMT;
                 } else if (lookAheadString.equals("->")) {
                     tokenType = TokenTypeEnum.EDGE_STMT;
-                    endOfLine = rhs.substring(rhs.indexOf("["), rhs.length());
-                    rhs = rhs.substring(0, rhs.indexOf("["));
+                    if (rhs.indexOf("[") != -1) {
+                        endOfLine = rhs.substring(rhs.indexOf("["), rhs.length());
+                        rhs = rhs.substring(0, rhs.indexOf("["));
+                    }
                 }
 
                 token = new Token(tokenType, buffer + rhs);
@@ -109,7 +111,7 @@ public class Lexer {
         String buffer = "";
 
         for (char c : arr) {
-            if (c != ' ' && c != '\n' && c != ';') {
+            if (c != ' ' && c != '\n' && c != ';' && c != 0) {
                 buffer += c;
             }
         }

@@ -1,9 +1,11 @@
 package depgraph;
 
+import depgraph.Parser.*;
+
 public class Manipulator {
 
 	public Manipulator() {
-		
+
 	}
 
 	public Graph manipulate(Graph graph) {

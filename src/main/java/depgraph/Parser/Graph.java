@@ -1,7 +1,4 @@
-package depgraph;
-
-import java.util.ArrayList;
-import java.util.List;
+package depgraph.Parser;
 
 public class Graph {
 	private String name;

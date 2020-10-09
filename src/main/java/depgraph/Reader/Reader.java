@@ -75,7 +75,7 @@ public class Reader {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			while ((line = reader.readLine()) != null)
-				stringBuild.append(line);
+				stringBuild.append(line + "\n");
 			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();

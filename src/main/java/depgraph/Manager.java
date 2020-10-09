@@ -50,14 +50,13 @@ public class Manager {
 			return;
 		}
 
-        graph = new Graph();
+        // graph = new Graph();
 
 		for (String singleFile : files) {
-			Module module = parser.parse(singleFile);
-			graph.addModule(module);
+			parser.parse(singleFile);
 		}
 
-		graph = manipulator.manipulate(graph);
+		// graph = manipulator.manipulate(graph);
 
 		// TODO continue flow
 	}

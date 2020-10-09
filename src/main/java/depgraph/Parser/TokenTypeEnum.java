@@ -6,7 +6,7 @@ public enum TokenTypeEnum {
     EDGE_ATTR_STMT,
     NODE_STMT,
     EDGE_STMT,
-    L_BRACKET,
-    R_BRACKET,
+    L_BRACE,
+    R_BRACE,
     NONE
 }

@@ -23,6 +23,7 @@ public class Lexer {
     public Token tokenize(String line) {
         char[] lineArray = line.toCharArray();
         String buffer = "";
+        TokenTypeEnum tokenType = TokenTypeEnum.NONE;
         Token token = null;
 
         for (int i = 0; i < lineArray.length; i++) {
@@ -31,8 +32,8 @@ public class Lexer {
             }
 
             if (this.checkKeyword(buffer)) {
-                TokenTypeEnum tokenType = TokenTypeEnum.NONE;
-                // decide what to do for each keyword
+                String tempValue = this.lookAhead(Arrays.copyOfRange(lineArray, i+1, lineArray.length));
+
                 if (buffer.equals("digraph")) {
                     tokenType = TokenTypeEnum.DIGRAPH_DEF;
                 } else if (buffer.equals("node")) {
@@ -40,19 +41,28 @@ public class Lexer {
                 } else if (buffer.equals("edge")) {
                     tokenType = TokenTypeEnum.EDGE_ATTR_STMT;
                 }
-                // look ahead 1
-                String tempValue = this.lookAhead(Arrays.copyOfRange(lineArray, i+1, lineArray.length));
+
                 token = new Token(tokenType, tempValue);
+                return token;
             } else if (nodeIdPattern.matcher(buffer).find()) {
-                // check Node statement
-                // look ahead 1 to see if it's an edge stmt
-                token = new Token(TokenTypeEnum.NODE_STMT, "NOT IMPLEMENTED");
+                String rhs = this.lookAhead(Arrays.copyOfRange(lineArray, i+1, lineArray.length));
+                String lookAheadString = this.lookAhead(Arrays.copyOfRange(lineArray, i+1, i+4));
+
+                if (lookAheadString.charAt(0) == '[') {
+                    tokenType = TokenTypeEnum.NODE_STMT;
+                } else if (lookAheadString.equals("->")) {
+                    tokenType = TokenTypeEnum.EDGE_STMT;
+                    rhs = rhs.substring(0, rhs.indexOf("["));
+                }
+
+                token = new Token(tokenType, buffer + rhs);
+                return token;
             }
 
             if (lineArray[i] == '{') {
-                token = new Token(TokenTypeEnum.L_BRACKET, String.format("%c", lineArray[i]));
+                token = new Token(TokenTypeEnum.L_BRACE, String.format("%s", lineArray[i]));
             } else if (lineArray[i] == '}') {
-                token = new Token(TokenTypeEnum.R_BRACKET, String.format("%c", lineArray[i]));
+                token = new Token(TokenTypeEnum.R_BRACE, String.format("%s", lineArray[i]));
             }
         }
 
@@ -88,7 +98,7 @@ public class Lexer {
 
         for (char c : arr) {
             if (c == ' ' || c == '\n' || c == ';') {
-                break;
+                continue;
             } else {
                 buffer += c;
             }

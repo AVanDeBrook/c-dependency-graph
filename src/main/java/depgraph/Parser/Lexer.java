@@ -5,15 +5,19 @@ import java.util.regex.Pattern;
 
 public class Lexer {
 	private Pattern nodePattern;
+	private Pattern nodePattern2;
 	private Pattern edgePattern;
+	private Pattern edgePattern2;
 	private String endOfLine;
 
 	/**
 	 * Initializes identifier regex patterns and EOL attribute to null.
 	 */
 	public Lexer() {
-		nodePattern = Pattern.compile("^Node\\d+\\[+");
-		edgePattern = Pattern.compile("^Node\\d+->Node\\d+\\[+");
+		nodePattern = Pattern.compile("^Node\\d+\\[");
+		nodePattern2 = Pattern.compile("^Node\\d+;");
+		edgePattern = Pattern.compile("^Node\\d+->Node\\d+\\[");
+		edgePattern2 = Pattern.compile("^Node\\d+->Node\\d;");
 		endOfLine = null;
 	}
 
@@ -61,7 +65,7 @@ public class Lexer {
 				token = new Token(tokenType, tokenValue);
 				return token;
 
-			} else if (nodePattern.matcher(buffer).find()) {
+			} else if (nodePattern.matcher(buffer).find() || nodePattern2.matcher(buffer).find()) {
 
 				tokenType = TokenType.NODE_STMT;
 				String rhs = this.lookAhead(Arrays.copyOfRange(charsInLine, i + 1, charsInLine.length));
@@ -69,7 +73,7 @@ public class Lexer {
 				token = new Token(tokenType, tokenValue);
 				return token;
 
-			} else if (edgePattern.matcher(buffer).find()) {
+			} else if (edgePattern.matcher(buffer).find() || edgePattern2.matcher(buffer).find()) {
 
 				tokenType = TokenType.EDGE_STMT;
 				String rhs = this.lookAhead(Arrays.copyOfRange(charsInLine, i + 1, charsInLine.length));

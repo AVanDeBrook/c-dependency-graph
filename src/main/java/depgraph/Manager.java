@@ -32,7 +32,7 @@ public class Manager {
 	private static void start(String[] args) throws Exception {
 		List<String> files = null;
 
-//		String[] testArgs = { "-s", "test\\dot-files\\appltask_8c_acbf30997012258f31a0d0b52062dc35b_cgraph.dot" };
+//		String[] testArgs = { "-s", "test\\dot-files\\adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot" };
 //		ConfigType fileType = configurator.manageCmdLineArguments(testArgs);
 		ConfigType fileType = configurator.manageCmdLineArguments(args);
 

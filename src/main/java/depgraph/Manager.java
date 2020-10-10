@@ -2,9 +2,11 @@ package depgraph;
 
 import java.util.List;
 
+import depgraph.Configurator.ConfigType;
+import depgraph.Configurator.Configurator;
+import depgraph.Parser.Graph;
+import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
-import depgraph.Parser.*;
-import depgraph.Configurator.*;
 
 public class Manager {
 
@@ -27,25 +29,24 @@ public class Manager {
 		}
 	}
 
-	/**
-	 * Method used by Configurator to provide the file location and kick off the
-	 * process
-	 */
-	public static void start(String[] args) throws Exception {
-        List<String> files = null;
-        ConfigReturnType fileType = configurator.manageCmdLineArguments(args);
+	private static void start(String[] args) throws Exception {
+		List<String> files = null;
 
-        if (fileType == ConfigReturnType.DIRECTORY) {
-            files = reader.readDirectory(configurator.getDirectoryName());
-        } else if (fileType == ConfigReturnType.FILE) {
-            files = reader.readSingleFile(configurator.getFileName());
-        }
+//		String[] testArgs = { "-s", "test\\dot-files\\appltask_8c_acbf30997012258f31a0d0b52062dc35b_cgraph.dot" };
+//		ConfigType fileType = configurator.manageCmdLineArguments(testArgs);
+		ConfigType fileType = configurator.manageCmdLineArguments(args);
 
-        if (files == null) {
+		if (fileType == ConfigType.DIRECTORY) {
+			files = reader.readDirectory(configurator.getDirectoryName());
+		} else if (fileType == ConfigType.FILE) {
+			files = reader.readSingleFile(configurator.getFileName());
+		}
+
+		if (files == null) {
 			return;
-        }
+		}
 
-        graphList = parser.parse(files);
+		graphList = parser.parse(files);
 
 		// TODO continue flow
 	}

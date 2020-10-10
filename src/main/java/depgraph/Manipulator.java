@@ -1,6 +1,6 @@
 package depgraph;
 
-import depgraph.Parser.*;
+import depgraph.Parser.Graph;
 
 public class Manipulator {
 

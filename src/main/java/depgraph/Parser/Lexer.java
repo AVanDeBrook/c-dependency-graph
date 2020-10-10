@@ -1,132 +1,118 @@
 package depgraph.Parser;
 
 import java.util.Arrays;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 public class Lexer {
-    public final String[] keywords = {
-        "digraph", "node", "edge"
-    };
+	private Pattern nodePattern;
+	private Pattern edgePattern;
+	private String endOfLine;
 
-    private Pattern nodeIdPattern;
-    private String endOfLine;
+	/**
+	 * Initializes identifier regex patterns and EOL attribute to null.
+	 */
+	public Lexer() {
+		nodePattern = Pattern.compile("^Node\\d+\\[+");
+		edgePattern = Pattern.compile("^Node\\d+->Node\\d+\\[+");
+		endOfLine = null;
+	}
 
-    /**
-     * Initializes identifier regex pattern (always "Node" followed by 1 or more digits) and EOL attribute to null.
-     */
-    public Lexer() {
-        nodeIdPattern = Pattern.compile("Node[0-9]+");
-        endOfLine = null;
-    }
+	/**
+	 * Core of the Lexer class. Scans and tokenizes a line and returns a Token
+	 * object with the relevant info from that line.
+	 *
+	 * @param line - A single line from the file to tokenize.
+	 * @return Token with relevant data from the tokenized line.
+	 * @see Token, Parser
+	 */
+	public Token tokenize(String line) {
+		char[] charsInLine = line.toCharArray();
+		String buffer = "";
+		TokenType tokenType = TokenType.NONE;
+		String tokenValue = null;
+		Token token = null;
+		if (endOfLine != null)
+			endOfLine = null;
 
-    /**
-     * Core of the Lexer class. Scans and tokenizes a line and returns
-     * a Token object with the relevant info from that line.
-     *
-     * @param line  Line from the file to tokenize.
-     * @return      Token with relevant data from the tokenized line.
-     * @see         Token, Parser
-     */
-    public Token tokenize(String line) {
-        char[] lineArray = line.toCharArray();
-        String buffer = "";
-        TokenTypeEnum tokenType = TokenTypeEnum.NONE;
-        Token token = null;
+		for (int i = 0; i < charsInLine.length; i++) {
 
-        if (endOfLine != null)
-            endOfLine = null;
+			if (charsInLine[i] != ' ' && charsInLine[i] != '\n') {
+				buffer += charsInLine[i];
+			}
 
-        for (int i = 0; i < lineArray.length; i++) {
-            if (lineArray[i] != ' ' && lineArray[i] != '\n') {
-                buffer += lineArray[i];
-            }
+			if (charsInLine[i] == '{') {
 
-            if (this.checkKeyword(buffer)) {
-                String tempValue = this.lookAhead(Arrays.copyOfRange(lineArray, i+1, lineArray.length));
+				tokenType = TokenType.L_BRACE;
+				tokenValue = String.format("%s", charsInLine[i]);
+				token = new Token(tokenType, tokenValue);
+				return token;
 
-                if (buffer.equals("digraph"))
-                    tokenType = TokenTypeEnum.DIGRAPH_DEF;
-                else if (buffer.equals("node"))
-                    tokenType = TokenTypeEnum.NODE_ATTR_STMT;
-                else if (buffer.equals("edge"))
-                    tokenType = TokenTypeEnum.EDGE_ATTR_STMT;
+			} else if (charsInLine[i] == '}') {
 
-                token = new Token(tokenType, tempValue);
-                return token;
-            } else if (nodeIdPattern.matcher(buffer).find()) {
-                String rhs = this.lookAhead(Arrays.copyOfRange(lineArray, i+1, lineArray.length));
-                String lookAheadString = this.lookAhead(Arrays.copyOfRange(lineArray, i+1, i+4));
+				tokenType = TokenType.R_BRACE;
+				tokenValue = String.format("%s", charsInLine[i]);
+				token = new Token(tokenType, tokenValue);
+				return token;
 
-                if (lookAheadString.equals("") || lookAheadString.charAt(0) == '[') {
-                    tokenType = TokenTypeEnum.NODE_STMT;
-                } else if (lookAheadString.equals("->")) {
-                    tokenType = TokenTypeEnum.EDGE_STMT;
-                    if (rhs.indexOf("[") != -1) {
-                        endOfLine = rhs.substring(rhs.indexOf("["), rhs.length());
-                        rhs = rhs.substring(0, rhs.indexOf("["));
-                    }
-                }
+			} else if (TokenType.getTokenTypeIfKeyword(buffer) != null) {
 
-                token = new Token(tokenType, buffer + rhs);
-                return token;
-            }
+				tokenType = TokenType.getTokenTypeIfKeyword(buffer);
+				tokenValue = this.lookAhead(Arrays.copyOfRange(charsInLine, i + 1, charsInLine.length));
+				token = new Token(tokenType, tokenValue);
+				return token;
 
-            if (lineArray[i] == '{')
-                token = new Token(TokenTypeEnum.L_BRACE, String.format("%s", lineArray[i]));
-            else if (lineArray[i] == '}')
-                token = new Token(TokenTypeEnum.R_BRACE, String.format("%s", lineArray[i]));
-        }
+			} else if (nodePattern.matcher(buffer).find()) {
 
-        if (token == null)
-            token = new Token(TokenTypeEnum.IGNORED, buffer);
+				tokenType = TokenType.NODE_STMT;
+				String rhs = this.lookAhead(Arrays.copyOfRange(charsInLine, i + 1, charsInLine.length));
+				tokenValue = buffer + rhs;
+				token = new Token(tokenType, tokenValue);
+				return token;
 
-        return token;
-    }
+			} else if (edgePattern.matcher(buffer).find()) {
 
-    /**
-     * Simple linear search for a keyword match.
-     *
-     * @param word  keyword to search for.
-     * @return      True if word is a keyword, false otherwise.
-     */
-    private boolean checkKeyword(String word) {
-        boolean match = false;
+				tokenType = TokenType.EDGE_STMT;
+				String rhs = this.lookAhead(Arrays.copyOfRange(charsInLine, i + 1, charsInLine.length));
+				tokenValue = buffer + rhs;
+				token = new Token(tokenType, tokenValue);
+				return token;
+			}
+		}
 
-        for (String keyword : keywords) {
-            if (word.equals(keyword)) {
-                match = true;
-            }
-        }
+		if (token == null)
+			token = new Token(TokenType.IGNORED, buffer);
 
-        return match;
-    }
+		return token;
+	}
 
-    /**
-     * Scans forward by one "word" and returns the result. Skips white space and semi-colons (end of line char).
-     *
-     * @param arr   Subset of the char array from the tokenize function.
-     * @return      String representing the "word" found.
-     */
-    private String lookAhead(char[] arr) {
-        String buffer = "";
+	/**
+	 * Scans forward by one "word" and returns the result. Skips white space and
+	 * semi-colons (end of line char).
+	 *
+	 * @param arr - Subset of the char array from the tokenize function.
+	 * @return String representing the "word" found.
+	 */
+	private String lookAhead(char[] arr) {
+		String buffer = "";
 
-        for (char c : arr) {
-            if (c != ' ' && c != '\n' && c != ';' && c != 0) {
-                buffer += c;
-            }
-        }
+		for (char c : arr) {
+			if (c != ' ' && c != '\n' && c != ';' && c != 0) {
+				buffer += c;
+			}
+		}
 
-        return buffer;
-    }
+		return buffer;
+	}
 
-    /**
-     * If part of the string in the buffer was not returned, it will be saved here.
-     *
-     * @return  rest of the string in buffer until the EOL
-     *          (e.g. EDGE_STMTs usually have an attribute string in brackets afterwards.
-     *          That can be retrieved with this function).
-     */
-    public String getEndOfLine() {
-        return this.endOfLine;
-    }
+	/**
+	 * If part of the string in the buffer was not returned, it will be saved
+	 * here.
+	 *
+	 * @return rest of the string in buffer until the EOL (e.g. EDGE_STMTs
+	 * usually have an attribute string in brackets afterwards. That can be
+	 * retrieved with this function).
+	 */
+	public String getEndOfLine() {
+		return this.endOfLine;
+	}
 }

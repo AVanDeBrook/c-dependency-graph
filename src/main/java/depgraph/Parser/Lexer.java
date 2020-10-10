@@ -17,7 +17,7 @@ public class Lexer {
 		nodePattern = Pattern.compile("^Node\\d+\\[");
 		nodePattern2 = Pattern.compile("^Node\\d+;");
 		edgePattern = Pattern.compile("^Node\\d+->Node\\d+\\[");
-		edgePattern2 = Pattern.compile("^Node\\d+->Node\\d;");
+		edgePattern2 = Pattern.compile("^Node\\d+->Node\\d+;");
 		endOfLine = null;
 	}
 

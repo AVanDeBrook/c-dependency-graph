@@ -19,8 +19,16 @@ public class Graph {
         this.name=graphName;
     }
 
-    public void setNodeAttributes(){
+    public void setNodeAttributes(String [][] tempArray){
+        this.nodeAttributes=tempArray;
+    }
 
+    public void setEdgeAttributes(String [][] tempArray){
+        this.edgeAttributes = tempArray;
+    }
+
+    public void setPrefix(String pre){
+        this.prefix = pre;
     }
 
 	public String prefix() {

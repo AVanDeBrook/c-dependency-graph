@@ -46,8 +46,14 @@ public class Parser {
 
             switch(lexer.tokenize(line).getToken()){
                 case DIGRAPH_DEF:
-                    functionGraph.setName(lexer.tokenize(line).getValue());
-                    System.out.println("\nFunction evaluated "+lexer.tokenize(line).getValue());
+                    StringTokenizer tkp = new StringTokenizer(lexer.tokenize(line).getValue(),"_ \"");
+                    StringTokenizer tkn = new StringTokenizer(lexer.tokenize(line).getValue(),"\"");
+
+                    functionGraph.setName(tkn.nextToken());
+                    functionGraph.setPrefix(tkp.nextToken());
+
+                    System.out.println("\nFunction evaluated "+functionGraph.getName());
+                    System.out.println("\nPrefix: "+ functionGraph.prefix());
                     break;
                 case L_BRACE:
                     System.out.println("\nFunction entered ...");
@@ -56,9 +62,10 @@ public class Parser {
                     System.out.println("\nFunction exited ...");
                     break;
                 case NODE_ATTR_STMT:
-                    this.splitIntoKeyValuePairs(lexer.tokenize(line).getValue());
+                    functionGraph.setNodeAttributes(this.splitIntoKeyValuePairs(lexer.tokenize(line).getValue()));
                     break;
                 case EDGE_ATTR_STMT:
+                    functionGraph.setEdgeAttributes(this.splitIntoKeyValuePairs(lexer.tokenize(line).getValue()));
                     break;
                 case NODE_STMT:
                     break;
@@ -90,7 +97,9 @@ public class Parser {
         while(multiTokenizer.hasMoreElements()){
             tempArray[counter][key] = multiTokenizer.nextToken();
             tempArray[counter][value] = multiTokenizer.nextToken();
-            System.out.println("\nKey: "+ tempArray[counter][key] + "\tValue: "+tempArray[counter][value]);
+
+            //System.out.println("\nKey: "+ tempArray[counter][key] + "\tValue: "+tempArray[counter][value]);
+
             counter++;
         }
 

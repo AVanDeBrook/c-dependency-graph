@@ -3,50 +3,49 @@ package depgraph.Parser;
 import java.util.LinkedList;
 
 public class Graph {
-	private String name="";
-    private String prefix="";
 
-    public String [][] edgeAttributes;
-    public String [][] nodeAttributes;
-    public LinkedList <Node> arrayOfNodes = new LinkedList<Node>() ;
+	private String name = "";
+	private String prefix = "";
+	public String[][] edgeAttributes;
+	public String[][] nodeAttributes;
+	public LinkedList<Node> nodes = new LinkedList<Node>();
 
 	public Graph() {
 	}
 
-    public void addNode(Node temp){
-        boolean tempBool = true;
+	public void addNode(Node nodeToAdd) {
+		boolean isAlreadyAdded = false;
+		for (int i = 0; i < nodes.size(); i++) {
+			if (nodes.get(i).getName() == nodeToAdd.getName())
+				isAlreadyAdded = true;
+		}
 
-        for(int i = 0; i < arrayOfNodes.size(); i++){
-            if(arrayOfNodes.get(i).getName()==temp.getName())
-                tempBool = false;
-        }
-
-        if(tempBool){
-            arrayOfNodes.add(temp);
-        }
-    }
+		if (!isAlreadyAdded) {
+			nodes.add(nodeToAdd);
+		}
+	}
 
 	public String getName() {
-		return name;
-    }
+		return this.name;
+	}
 
-    public void setName(String graphName){
-        this.name=graphName;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setNodeAttributes(String [][] tempArray){
-        this.nodeAttributes=tempArray;
-    }
+	public void setNodeAttributes(String[][] nodeAttributes) {
+		this.nodeAttributes = nodeAttributes;
+	}
 
-    public void setEdgeAttributes(String [][] tempArray){
-        this.edgeAttributes = tempArray;
-    }
+	public void setEdgeAttributes(String[][] edgeAttributes) {
+		this.edgeAttributes = edgeAttributes;
+	}
 
-    public void setPrefix(String pre){
-        this.prefix = pre;
-    }
+	public String getPrefix() {
+		return this.prefix;
+	}
 
-	public String prefix() {
-		return prefix;
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
 	}
 }

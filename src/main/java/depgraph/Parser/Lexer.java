@@ -58,9 +58,9 @@ public class Lexer {
 				token = new Token(tokenType, tokenValue);
 				return token;
 
-			} else if (TokenType.getTokenTypeIfKeyword(buffer) != null) {
+			} else if (TokenType.getTypeIfKeyword(buffer) != null) {
 
-				tokenType = TokenType.getTokenTypeIfKeyword(buffer);
+				tokenType = TokenType.getTypeIfKeyword(buffer);
 				tokenValue = this.lookAhead(Arrays.copyOfRange(charsInLine, i + 1, charsInLine.length));
 				token = new Token(tokenType, tokenValue);
 				return token;
@@ -114,8 +114,7 @@ public class Lexer {
 	 *
 	 * @return rest of the string in buffer until the EOL (e.g. EDGE_STMTs
 	 * usually have an attribute string in brackets afterwards. That can be
-	 * retrieved with this function).
-     * This function is deprecated
+	 * retrieved with this function). This function is deprecated
 	 */
 	public String getEndOfLine() {
 		return this.endOfLine;

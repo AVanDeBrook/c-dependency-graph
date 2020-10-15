@@ -39,102 +39,98 @@ public class Parser {
 	private Graph parse(String fileContents) {
 		String[] lines = fileContents.split("\n");
 		// Token token = null;
-        Graph functionGraph = new Graph();
+		Graph functionGraph = new Graph();
 
 		for (String line : lines) {
-			//System.out.println(lexer.tokenize(line));
+			Token tokenizedLine = lexer.tokenize(line);
+			// System.out.println(tokenizedLine);
 
-            switch(lexer.tokenize(line).getToken()){
-                case DIGRAPH_DEF:
-                    StringTokenizer tkp = new StringTokenizer(lexer.tokenize(line).getValue(),"_ \"");
-                    StringTokenizer tkn = new StringTokenizer(lexer.tokenize(line).getValue(),"\"");
+			switch (tokenizedLine.getToken()) {
+			case DIGRAPH_DEF:
+				StringTokenizer tkp = new StringTokenizer(tokenizedLine.getValue(), "_ \"");
+				StringTokenizer tkn = new StringTokenizer(tokenizedLine.getValue(), "\"");
 
-                    functionGraph.setName(tkn.nextToken());
-                    functionGraph.setPrefix(tkp.nextToken());
+				functionGraph.setName(tkn.nextToken());
+				functionGraph.setPrefix(tkp.nextToken());
 
-                    System.out.println("\nFunction evaluated "+functionGraph.getName());
-                    System.out.println("\nPrefix: "+ functionGraph.prefix());
-                    break;
-                case L_BRACE:
-                    System.out.println("\nFunction entered ...");
-                    break;
-                case R_BRACE:
-                    System.out.println("\nFunction exited ...");
-                    break;
-                case NODE_ATTR_STMT:
-                    functionGraph.setNodeAttributes(this.splitIntoKeyValuePairs(lexer.tokenize(line).getValue()));
-                    break;
-                case EDGE_ATTR_STMT:
-                    functionGraph.setEdgeAttributes(this.splitIntoKeyValuePairs(lexer.tokenize(line).getValue()));
-                    break;
-                case NODE_STMT:
-                    /*
-                    * separate label from attributes
-                    * save node in the graph array
-                    */
-                    String [] tempArray = new String[2];
-                    String [][] tempAttr;
-                    Node newNode = new Node();
+				System.out.println("\nFunction evaluated: " + functionGraph.getName());
+				System.out.println("\nPrefix: " + functionGraph.getPrefix());
+				break;
+			case L_BRACE:
+				System.out.println("\nFunction entered...");
+				break;
+			case R_BRACE:
+				System.out.println("\nFunction exited...");
+				break;
+			case NODE_ATTR_STMT:
+				functionGraph.setNodeAttributes(this.splitIntoKeyValuePairs(tokenizedLine.getValue()));
+				break;
+			case EDGE_ATTR_STMT:
+				functionGraph.setEdgeAttributes(this.splitIntoKeyValuePairs(tokenizedLine.getValue()));
+				break;
+			case NODE_STMT:
+				/*
+				 * separate label from attributes save node in the graph array
+				 */
+				String[] name = new String[2];
+				String[][] attributes;
+				Node newNode = new Node();
+				name = this.separateNodeNameFromAttr(tokenizedLine.getValue());
+				attributes = this.splitIntoKeyValuePairs(name[1]);
+				newNode.setName(name[0]);
+				newNode.setAttributes(attributes);
+				functionGraph.addNode(newNode);
+				break;
+			case EDGE_STMT:
+				/*
+				 * separate label from attributes save connection in the node
+				 * array
+				 */
+				// TODO
+				break;
+			case IGNORED:
+				break;
+			case NONE:
+				break;
+			default:
+				break;
 
-                    tempArray = this.separateNodeNameFromAttr(lexer.tokenize(line).getValue());
-                    tempAttr = this.splitIntoKeyValuePairs(tempArray[1]);
-
-                    newNode.setName(tempArray[0]);
-                    newNode.setAttributes(tempAttr);
-
-                    functionGraph.addNode(newNode);
-
-                    break;
-                case EDGE_STMT:
-                    /*
-                    * separate label from attributes
-                    * save connection in the node array
-                    */
-                    break;
-                case IGNORED:
-                    break;
-                case NONE:
-                    break;
-                default:
-                    break;
-
-            }
+			}
 		}
 
 		// temp return to satisfy errors/warnings
 		return new Graph();
-    }
+	}
 
-    private String [][] splitIntoKeyValuePairs(String unfilteredString){
+	private String[][] splitIntoKeyValuePairs(String unfilteredString) {
 
-        StringTokenizer multiTokenizer = new StringTokenizer(unfilteredString,"[]=,\"");
-        int arraySize = multiTokenizer.countTokens()/2;
-        String [][] tempArray = new String[arraySize][arraySize];
-        int key =0;
-        int value=1;
-        int counter=0;
+		StringTokenizer multiTokenizer = new StringTokenizer(unfilteredString, "[]=,\"");
+		int numAttributes = multiTokenizer.countTokens() / 2;
+		String[][] keyValuePairs = new String[numAttributes][numAttributes];
+		int key = 0;
+		int value = 1;
+		int counter = 0;
 
-        while(multiTokenizer.hasMoreElements()){
-            tempArray[counter][key] = multiTokenizer.nextToken();
-            tempArray[counter][value] = multiTokenizer.nextToken();
+		while (multiTokenizer.hasMoreElements()) {
+			keyValuePairs[counter][key] = multiTokenizer.nextToken();
+			keyValuePairs[counter][value] = multiTokenizer.nextToken();
 
-          //  System.out.println("\nKey: "+ tempArray[counter][key] + "\tValue: "+tempArray[counter][value]);
+			System.out.println("Key: " + keyValuePairs[counter][key] + "\tValue: " + keyValuePairs[counter][value]);
 
-            counter++;
-        }
+			counter++;
+		}
 
-        return tempArray;
-    }
+		return keyValuePairs;
+	}
 
-    private String [] separateNodeNameFromAttr(String unfilteredNode){
-        StringTokenizer st = new StringTokenizer(unfilteredNode,"[]");
-        String [] nameAttributeArray = new String[2];
-        nameAttributeArray[0] = st.nextToken();
-        if(st.hasMoreElements())
-            nameAttributeArray[1]=st.nextToken();
+	private String[] separateNodeNameFromAttr(String unfilteredNode) {
+		StringTokenizer st = new StringTokenizer(unfilteredNode, "[]");
+		String[] nameAttributeArray = new String[2];
+		nameAttributeArray[0] = st.nextToken();
+		if (st.hasMoreElements())
+			nameAttributeArray[1] = st.nextToken();
 
-        return nameAttributeArray;
-    }
-
+		return nameAttributeArray;
+	}
 
 }

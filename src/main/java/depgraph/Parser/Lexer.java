@@ -115,6 +115,7 @@ public class Lexer {
 	 * @return rest of the string in buffer until the EOL (e.g. EDGE_STMTs
 	 * usually have an attribute string in brackets afterwards. That can be
 	 * retrieved with this function).
+     * This function is deprecated
 	 */
 	public String getEndOfLine() {
 		return this.endOfLine;

@@ -68,8 +68,28 @@ public class Parser {
                     functionGraph.setEdgeAttributes(this.splitIntoKeyValuePairs(lexer.tokenize(line).getValue()));
                     break;
                 case NODE_STMT:
+                    /*
+                    * separate label from attributes
+                    * save node in the graph array
+                    */
+                    String [] tempArray = new String[2];
+                    String [][] tempAttr;
+                    Node newNode = new Node();
+
+                    tempArray = this.separateNodeNameFromAttr(lexer.tokenize(line).getValue());
+                    tempAttr = this.splitIntoKeyValuePairs(tempArray[1]);
+
+                    newNode.setName(tempArray[0]);
+                    newNode.setAttributes(tempAttr);
+
+                    functionGraph.addNode(newNode);
+
                     break;
                 case EDGE_STMT:
+                    /*
+                    * separate label from attributes
+                    * save connection in the node array
+                    */
                     break;
                 case IGNORED:
                     break;
@@ -98,12 +118,22 @@ public class Parser {
             tempArray[counter][key] = multiTokenizer.nextToken();
             tempArray[counter][value] = multiTokenizer.nextToken();
 
-            //System.out.println("\nKey: "+ tempArray[counter][key] + "\tValue: "+tempArray[counter][value]);
+          //  System.out.println("\nKey: "+ tempArray[counter][key] + "\tValue: "+tempArray[counter][value]);
 
             counter++;
         }
 
         return tempArray;
+    }
+
+    private String [] separateNodeNameFromAttr(String unfilteredNode){
+        StringTokenizer st = new StringTokenizer(unfilteredNode,"[]");
+        String [] nameAttributeArray = new String[2];
+        nameAttributeArray[0] = st.nextToken();
+        if(st.hasMoreElements())
+            nameAttributeArray[1]=st.nextToken();
+
+        return nameAttributeArray;
     }
 
 

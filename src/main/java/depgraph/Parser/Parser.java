@@ -50,10 +50,8 @@ public class Parser {
 			case DIGRAPH_DEF:
 				StringTokenizer tkp = new StringTokenizer(tokenizedLine.getValue(), "_ \"");
 				StringTokenizer tkn = new StringTokenizer(tokenizedLine.getValue(), "\"");
-
 				functionGraph.setName(tkn.nextToken());
 				functionGraph.setPrefix(tkp.nextToken());
-
 				System.out.println("\nFunction evaluated: " + functionGraph.getName());
 				System.out.println("\nPrefix: " + functionGraph.getPrefix());
 				break;
@@ -73,17 +71,12 @@ public class Parser {
 				/*
 				 * separate label from attributes save node in the graph array
 				 */
-				String[] name = new String[2];
-				HashMap<String, String> attribtues = new HashMap<String, String>();
-
-				HashMap<String, String> attributes;
 				Node newNode = new Node();
-				name = this.separateNodeNameFromAttr(tokenizedLine.getValue());
-				attributes = this.splitIntoKeyValuePairs(name[1]);
-				newNode.setName(name[0]);
-				newNode.setAttributes(attributes);
+				String[] nameAndAttributes = new String[2];
+				nameAndAttributes = this.separateNodeNameFromAttr(tokenizedLine.getValue());
+				newNode.setName(nameAndAttributes[0]);
+				newNode.setAttributes(this.splitIntoKeyValuePairs(nameAndAttributes[1]));
 				functionGraph.addNode(newNode);
-
 				break;
 			case EDGE_STMT:
 				/*
@@ -109,18 +102,13 @@ public class Parser {
 	private HashMap<String, String> splitIntoKeyValuePairs(String unfilteredString) {
 
 		StringTokenizer multiTokenizer = new StringTokenizer(unfilteredString, "[]=,\"");
-		int numAttributes = multiTokenizer.countTokens() / 2;
 		HashMap<String, String> keyValuePairs = new HashMap<String, String>();
 
 		while (multiTokenizer.hasMoreElements()) {
-
 			String key = multiTokenizer.nextToken();
 			String value = multiTokenizer.nextToken();
-
 			keyValuePairs.put(key, value);
-
 			System.out.println("Key: " + key + "\tValue: " + value);
-
 		}
 
 		return keyValuePairs;

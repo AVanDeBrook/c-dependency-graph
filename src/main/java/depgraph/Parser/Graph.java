@@ -23,7 +23,6 @@ public class Graph {
 
 		if (!isAlreadyAdded) {
 			nodes.add(nodeToAdd);
-
 		}
 	}
 

@@ -17,13 +17,9 @@ public class Node {
 
 	public void setAttributes(HashMap<String, String> attributes) {
 		this.attributes = attributes;
-		this.functionName = getFunctionNameFromAttributes();
+		this.functionName = attributes.get(NodeAttributeType.LABEL.getKeyword());
 		StringTokenizer st = new StringTokenizer(this.functionName, "_");
 		this.prefix = st.nextToken();
-	}
-
-	private String getFunctionNameFromAttributes() {
-		return attributes.get(NodeAttributeType.LABEL.getKeyword());
 	}
 
 	public String getName() {

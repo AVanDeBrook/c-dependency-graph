@@ -3,6 +3,8 @@ package depgraph.Parser;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
+// TODO class javadoc
+/**  */
 public class Lexer {
 	private Pattern nodePattern;
 	private Pattern nodePattern2;
@@ -40,7 +42,7 @@ public class Lexer {
 
 		for (int i = 0; i < charsInLine.length; i++) {
 
-			if (charsInLine[i] != ' ' && charsInLine[i] != '\n') {
+			if (charsInLine[i] != ' ' && charsInLine[i] != '\n' && charsInLine[i] != '\"') {
 				buffer += charsInLine[i];
 			}
 
@@ -100,7 +102,7 @@ public class Lexer {
 		String buffer = "";
 
 		for (char c : arr) {
-			if (c != ' ' && c != '\n' && c != ';' && c != 0) {
+			if (c != ' ' && c != '\n' && c != ';' && c != 0 && c != '\"') {
 				buffer += c;
 			}
 		}
@@ -108,6 +110,7 @@ public class Lexer {
 		return buffer;
 	}
 
+	// TODO Not in use, Aaron has ideas to reevaluate this
 	/**
 	 * If part of the string in the buffer was not returned, it will be saved
 	 * here.

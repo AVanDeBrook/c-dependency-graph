@@ -4,7 +4,6 @@ import java.util.List;
 
 import depgraph.Configurator.ConfigType;
 import depgraph.Configurator.Configurator;
-import depgraph.Parser.Graph;
 import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
 
@@ -14,7 +13,6 @@ public class Manager {
 	private static Reader reader;
 	private static Parser parser;
 	private static Manipulator manipulator;
-	private static List<Graph> graphList;
 
 	public static void main(String[] args) {
 		configurator = new Configurator();
@@ -50,7 +48,7 @@ public class Manager {
 			return;
 		}
 
-		graphList = parser.parse(files);
+		parser.parse(files);
 
 		// TODO continue flow
 	}

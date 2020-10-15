@@ -1,13 +1,15 @@
 package depgraph.Parser;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.StringTokenizer;
 
+//TODO class javadoc
+/**  */
 public class Parser {
 
 	private Lexer lexer;
+	ArrayList<Node> nodes = new ArrayList<Node>();
+	ArrayList<Edge> edges = new ArrayList<Edge>();
 
 	/**
 	 * No-arg constructor.
@@ -18,110 +20,91 @@ public class Parser {
 
 	/**
 	 * Kick off point for parsing, used by Manager.
+	 * 
+	 * @param TODO
+	 * @return TODO
 	 */
-	public ArrayList<Graph> parse(List<String> fileContents) {
-		ArrayList<Graph> graphList = new ArrayList<Graph>();
-
+	public void parse(List<String> fileContents) {
 		for (String singleFileContents : fileContents) {
-			graphList.add(this.parse(singleFileContents));
+			this.parse(singleFileContents);
 		}
+	}
 
-		return graphList;
+	public ArrayList<Node> getNodes() {
+		return nodes;
+	}
+
+	public ArrayList<Edge> getEdges() {
+		return edges;
 	}
 
 	/**
-	 * Parses file contents and creates a graph object.
+	 * Parses file contents and adds the graph objects to the class lists. FIXME
 	 *
 	 * @param fileContents - A string containing the contents of a single DOT
 	 * file
-	 * @return A graph object representing the relevant values found in the DOT
+	 * @return A node object representing the relevant values found in the DOT
 	 * file
 	 */
-	private Graph parse(String fileContents) {
+	private ArrayList<Node> parse(String fileContents) {
 		String[] lines = fileContents.split("\n");
-		// Token token = null;
-		Graph functionGraph = new Graph();
+		String graphName = null;
 
 		for (String line : lines) {
 			Token tokenizedLine = lexer.tokenize(line);
-			// System.out.println(tokenizedLine);
 
 			switch (tokenizedLine.getToken()) {
 			case DIGRAPH_DEF:
-				StringTokenizer tkp = new StringTokenizer(tokenizedLine.getValue(), "_ \"");
-				StringTokenizer tkn = new StringTokenizer(tokenizedLine.getValue(), "\"");
-				functionGraph.setName(tkn.nextToken());
-				functionGraph.setPrefix(tkp.nextToken());
-				System.out.println("\nFunction evaluated: " + functionGraph.getName());
-				System.out.println("\nPrefix: " + functionGraph.getPrefix());
-				break;
-			case L_BRACE:
-				System.out.println("\nFunction entered...");
-				break;
-			case R_BRACE:
-				System.out.println("\nFunction exited...");
-				break;
-			case NODE_ATTR_STMT:
-				functionGraph.setNodeAttributes(this.splitIntoKeyValuePairs(tokenizedLine.getValue()));
-				break;
-			case EDGE_ATTR_STMT:
-				functionGraph.setEdgeAttributes(this.splitIntoKeyValuePairs(tokenizedLine.getValue()));
+				graphName = tokenizedLine.getValue();
 				break;
 			case NODE_STMT:
-				/*
-				 * separate label from attributes save node in the graph array
-				 */
 				Node newNode = new Node();
-				String[] nameAndAttributes = new String[2];
-				nameAndAttributes = this.separateNodeNameFromAttr(tokenizedLine.getValue());
-				newNode.setName(nameAndAttributes[0]);
-				newNode.setAttributes(this.splitIntoKeyValuePairs(nameAndAttributes[1]));
-				functionGraph.addNode(newNode);
+				newNode.setNodeId(getNodeIdFromString(tokenizedLine.getValue()));
+				newNode.setNodeLabel(getNodeLabelFromString(tokenizedLine.getValue()));
+				newNode.setModulePrefix(getModulePrefixFromNodeLabel(newNode.getNodeLabel()));
+				newNode.setIsRoot(newNode.getNodeLabel().equals(graphName));
+				System.out.println(newNode);
+				nodes.add(newNode);
 				break;
 			case EDGE_STMT:
-				/*
-				 * separate label from attributes save connection in the node
-				 * array
-				 */
-				// TODO
-				break;
-			case IGNORED:
-				break;
-			case NONE:
+				Edge newEdge = new Edge();
+				newEdge.setSourceNode(getSourceNodeFromString(tokenizedLine.getValue()));
+				newEdge.setDestinationNode(getDestinationNodeFromString(tokenizedLine.getValue()));
+				System.out.println(newEdge);
+				edges.add(newEdge);
 				break;
 			default:
+				/*
+				 * Other token types L_BRACE, R_BRACE, NODE_ATTR_STMT,
+				 * EDGE_ATTR_STMT, IGNORED, and NONE are ignored because they do
+				 * not provide information currently useful to us
+				 */
 				break;
-
 			}
 		}
 
-		// temp return to satisfy errors/warnings
-		return new Graph();
+		return nodes;
 	}
 
-	private HashMap<String, String> splitIntoKeyValuePairs(String unfilteredString) {
-
-		StringTokenizer multiTokenizer = new StringTokenizer(unfilteredString, "[]=,\"");
-		HashMap<String, String> keyValuePairs = new HashMap<String, String>();
-
-		while (multiTokenizer.hasMoreElements()) {
-			String key = multiTokenizer.nextToken();
-			String value = multiTokenizer.nextToken();
-			keyValuePairs.put(key, value);
-			System.out.println("Key: " + key + "\tValue: " + value);
-		}
-
-		return keyValuePairs;
+	private String getNodeIdFromString(String valueString) {
+		return valueString.substring(0, valueString.indexOf('['));
 	}
 
-	private String[] separateNodeNameFromAttr(String unfilteredNode) {
-		StringTokenizer st = new StringTokenizer(unfilteredNode, "[]");
-		String[] nameAttributeArray = new String[2];
-		nameAttributeArray[0] = st.nextToken();
-		if (st.hasMoreElements())
-			nameAttributeArray[1] = st.nextToken();
-
-		return nameAttributeArray;
+	private String getNodeLabelFromString(String valueString) {
+		String assigment = valueString.substring(valueString.indexOf('['), valueString.indexOf(','));
+		String nodeLabel = assigment.split("=")[1];
+		return nodeLabel;
 	}
 
+	private String getModulePrefixFromNodeLabel(String nodeLabel) {
+		return nodeLabel.substring(0, nodeLabel.indexOf('_'));
+	}
+
+	private String getSourceNodeFromString(String valueString) {
+		return valueString.substring(0, valueString.indexOf('-'));
+	}
+
+	private String getDestinationNodeFromString(String valueString) {
+		return valueString.substring(valueString.indexOf('>') + 1, valueString.indexOf('['));
+	}
 }

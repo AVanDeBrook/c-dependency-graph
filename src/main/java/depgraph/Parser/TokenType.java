@@ -3,6 +3,8 @@ package depgraph.Parser;
 
 import java.util.HashMap;
 
+// TODO javadoc
+/** */
 public enum TokenType {
 
 	// @formatter:off

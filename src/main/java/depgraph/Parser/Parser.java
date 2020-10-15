@@ -1,6 +1,7 @@
 package depgraph.Parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -73,13 +74,16 @@ public class Parser {
 				 * separate label from attributes save node in the graph array
 				 */
 				String[] name = new String[2];
-				String[][] attributes;
+				HashMap<String, String> attribtues = new HashMap<String, String>();
+
+				HashMap<String, String> attributes;
 				Node newNode = new Node();
 				name = this.separateNodeNameFromAttr(tokenizedLine.getValue());
 				attributes = this.splitIntoKeyValuePairs(name[1]);
 				newNode.setName(name[0]);
 				newNode.setAttributes(attributes);
 				functionGraph.addNode(newNode);
+
 				break;
 			case EDGE_STMT:
 				/*
@@ -102,22 +106,21 @@ public class Parser {
 		return new Graph();
 	}
 
-	private String[][] splitIntoKeyValuePairs(String unfilteredString) {
+	private HashMap<String, String> splitIntoKeyValuePairs(String unfilteredString) {
 
 		StringTokenizer multiTokenizer = new StringTokenizer(unfilteredString, "[]=,\"");
 		int numAttributes = multiTokenizer.countTokens() / 2;
-		String[][] keyValuePairs = new String[numAttributes][numAttributes];
-		int key = 0;
-		int value = 1;
-		int counter = 0;
+		HashMap<String, String> keyValuePairs = new HashMap<String, String>();
 
 		while (multiTokenizer.hasMoreElements()) {
-			keyValuePairs[counter][key] = multiTokenizer.nextToken();
-			keyValuePairs[counter][value] = multiTokenizer.nextToken();
 
-			System.out.println("Key: " + keyValuePairs[counter][key] + "\tValue: " + keyValuePairs[counter][value]);
+			String key = multiTokenizer.nextToken();
+			String value = multiTokenizer.nextToken();
 
-			counter++;
+			keyValuePairs.put(key, value);
+
+			System.out.println("Key: " + key + "\tValue: " + value);
+
 		}
 
 		return keyValuePairs;

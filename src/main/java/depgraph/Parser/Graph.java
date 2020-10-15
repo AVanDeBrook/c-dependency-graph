@@ -1,13 +1,14 @@
 package depgraph.Parser;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Graph {
 
 	private String name = "";
 	private String prefix = "";
-	public String[][] edgeAttributes;
-	public String[][] nodeAttributes;
+	public HashMap<String, String> edgeAttributes;
+	public HashMap<String, String> nodeAttributes;
 	public LinkedList<Node> nodes = new LinkedList<Node>();
 
 	public Graph() {
@@ -22,6 +23,7 @@ public class Graph {
 
 		if (!isAlreadyAdded) {
 			nodes.add(nodeToAdd);
+
 		}
 	}
 
@@ -33,11 +35,11 @@ public class Graph {
 		this.name = name;
 	}
 
-	public void setNodeAttributes(String[][] nodeAttributes) {
+	public void setNodeAttributes(HashMap<String, String> nodeAttributes) {
 		this.nodeAttributes = nodeAttributes;
 	}
 
-	public void setEdgeAttributes(String[][] edgeAttributes) {
+	public void setEdgeAttributes(HashMap<String, String> edgeAttributes) {
 		this.edgeAttributes = edgeAttributes;
 	}
 

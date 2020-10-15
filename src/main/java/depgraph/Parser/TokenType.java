@@ -6,15 +6,9 @@ import java.util.HashMap;
 public enum TokenType {
 
 	// @formatter:off
-	NONE(0, null),
-	IGNORED(1, null),
-	DIGRAPH_DEF(2, "digraph"),
-	NODE_ATTR_STMT(3, "node"),
-	EDGE_ATTR_STMT(4, "edge"),
-	NODE_STMT(5, null),
-	EDGE_STMT(6, null),
-	L_BRACE(7, null),
-	R_BRACE(8, null);
+	NONE(0, null), IGNORED(1, null), DIGRAPH_DEF(2, "digraph"), NODE_ATTR_STMT(3, "node"), EDGE_ATTR_STMT(4, "edge"),
+	NODE_STMT(5, null), EDGE_STMT(6, null), L_BRACE(7, null), R_BRACE(8, null);
+
 	// @formatter:on
 
 	private TokenType(Integer id, String keyword) {

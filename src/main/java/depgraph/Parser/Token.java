@@ -10,6 +10,7 @@ public class Token {
 	public Token() {
 		this.type = TokenType.NONE;
 		this.value = "";
+
 	}
 
 	/**

@@ -36,9 +36,9 @@ public class Manager {
 		 * For development only: To run Manager using Eclipse, uncomment the
 		 * following two lines and comment out the third
 		 */
-		String[] testArgs = { "-s", "test\\dot-files\\adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot" };
-		ConfigType fileType = configurator.manageCmdLineArguments(testArgs);
-//		ConfigType fileType = configurator.manageCmdLineArguments(args);
+//		String[] testArgs = { "-s", "test\\dot-files\\adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot" };
+//		ConfigType fileType = configurator.manageCmdLineArguments(testArgs);
+		ConfigType fileType = configurator.manageCmdLineArguments(args);
 
 		if (fileType == ConfigType.DIRECTORY) {
 			files = reader.readDirectory(configurator.getDirectoryName());

@@ -2,8 +2,11 @@ package depgraph;
 
 import java.util.List;
 
+import depgraph.Configurator.ConfigType;
+import depgraph.Configurator.Configurator;
+import depgraph.Parser.Graph;
+import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
-import depgraph.Configurator.*;
 
 public class Manager {
 
@@ -11,7 +14,7 @@ public class Manager {
 	private static Reader reader;
 	private static Parser parser;
 	private static Manipulator manipulator;
-	private static Graph graph;
+	private static List<Graph> graphList;
 
 	public static void main(String[] args) {
 		configurator = new Configurator();
@@ -26,32 +29,24 @@ public class Manager {
 		}
 	}
 
-	/**
-	 * Method used by Configurator to provide the file location and kick off the
-	 * process
-	 */
-	public static void start(String[] args) throws Exception {
-        List<String> files = null;
-        ConfigReturnType fileType = configurator.manageCmdLineArguments(args);
+	private static void start(String[] args) throws Exception {
+		List<String> files = null;
 
-        if (fileType == ConfigReturnType.DIRECTORY) {
-            files = reader.readDirectory(configurator.getDirectoryName());
-        } else if (fileType == ConfigReturnType.FILE) {
-            files = reader.readSingleFile(configurator.getFileName());
-        }
+//		String[] testArgs = { "-s", "test\\dot-files\\adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot" };
+//		ConfigType fileType = configurator.manageCmdLineArguments(testArgs);
+		ConfigType fileType = configurator.manageCmdLineArguments(args);
 
-        if (files == null) {
+		if (fileType == ConfigType.DIRECTORY) {
+			files = reader.readDirectory(configurator.getDirectoryName());
+		} else if (fileType == ConfigType.FILE) {
+			files = reader.readSingleFile(configurator.getFileName());
+		}
+
+		if (files == null) {
 			return;
-        }
+		}
 
-        // graph = new Graph();
-
-		// for (String singleFile : files) {
-		// 	Module module = parser.parse(singleFile);
-		// 	graph.addModule(module);
-		// }
-
-		// graph = manipulator.manipulate(graph);
+		graphList = parser.parse(files);
 
 		// TODO continue flow
 	}

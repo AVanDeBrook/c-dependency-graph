@@ -1,4 +1,4 @@
-package depgraph;
+package depgraph.Parser;
 
 import java.util.ArrayList;
 import java.util.List;

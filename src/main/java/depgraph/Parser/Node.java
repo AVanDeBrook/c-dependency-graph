@@ -1,4 +1,4 @@
-package depgraph;
+package depgraph.Parser;
 
 public class Node {
 

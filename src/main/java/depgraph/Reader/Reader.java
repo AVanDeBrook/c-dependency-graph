@@ -1,9 +1,14 @@
 package depgraph.Reader;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Reader {
+
 	/**
 	 * Method used to get the contents of a single DOT file at a given location.
 	 *
@@ -57,7 +62,7 @@ public class Reader {
 	 * Helper function to read contents of file and convert it to a string.
 	 *
 	 * @param filePath - The path of a file to read.
-	 * @return - String version of the file.
+	 * @return String containing contents of the file.
 	 */
 	private String read(String filePath) {
 		StringBuilder stringBuild = new StringBuilder();
@@ -67,7 +72,7 @@ public class Reader {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			while ((line = reader.readLine()) != null)
-				stringBuild.append(line);
+				stringBuild.append(line + "\n");
 			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -77,10 +82,10 @@ public class Reader {
 	}
 
 	/**
-	 * Helper function to check if given file is a 'dot' file.
+	 * Helper function to check if given file is a DOT file.
 	 *
 	 * @param filePath - The path of a single file.
-	 * @return True if dot file, false otherwise.
+	 * @return True if DOT file, false otherwise.
 	 */
 	private boolean isDotFile(String filePath) {
 		int index = filePath.lastIndexOf('.');

@@ -3,13 +3,44 @@ package depgraph.Parser;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-// TODO class javadoc
-/**  */
+/**
+ * This class, specifically the tokenize function, is used to find what type
+ * of declaration (based on the dot language grammar) and reduce the passed
+ * line down to one token with the necessary information for the Parser to do
+ * its job.
+ *
+ * The tokenize function goes through each line character-by-character and
+ * builds up a buffer of what has been read until it matches a known pattern
+ * from the dot language grammar.
+ */
 public class Lexer {
-	private Pattern nodePattern;
-	private Pattern nodePattern2;
-	private Pattern edgePattern;
-	private Pattern edgePattern2;
+    /**
+     * Regex pattern to check for node_stmts with attribute lists.
+     */
+    private Pattern nodePattern;
+
+    /**
+     * Regex pattern to check for node_stmts without attribute lists.
+     */
+    private Pattern nodePattern2;
+
+    /**
+     * Regex pattern to check for edge_stmts with attribute lists.
+     */
+    private Pattern edgePattern;
+
+    /**
+     * Regex pattern to check for edge_stmts without attribute lists.
+     */
+    private Pattern edgePattern2;
+
+    /**
+     * Used for some statements where the attribute string may have been
+     * omitted in the Token value.
+     *
+     * May change this in the future to grab the attribute string for every
+     * value, so that the calling context can grab it if needed.
+     */
 	private String endOfLine;
 
 	/**
@@ -115,7 +146,7 @@ public class Lexer {
 	 * If part of the string in the buffer was not returned, it will be saved
 	 * here.
 	 *
-	 * @return rest of the string in buffer until the EOL (e.g. EDGE_STMTs
+	 * @return rest of the string in buffer until the EOL aka ';' (e.g. EDGE_STMTs
 	 * usually have an attribute string in brackets afterwards. That can be
 	 * retrieved with this function). This function is deprecated
 	 */

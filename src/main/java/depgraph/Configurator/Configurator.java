@@ -2,8 +2,28 @@ package depgraph.Configurator;
 
 import java.io.File;
 
+/**
+ * Responsible for parsing and handling command-line arguments passed to the program.
+ *
+ * List of possible flags:
+ *     - s   dot file to process
+ *     - d   directory of dot files to process.
+ *     - h   print help menu
+ *
+ * Run in gradle using (replace ... with desired arguments):
+ *     gradle run --args="..."
+ *
+ * Otherwise pass arguments normally.
+ */
 public class Configurator {
-	private String nameOfFile;
+    /**
+     * Name of file, if the passed argument is a single file.
+     */
+    private String nameOfFile;
+
+    /**
+     * Name of a directory, if the passed argument is a directory.
+     */
 	private String nameOfDirectory;
 
 	/**
@@ -17,7 +37,7 @@ public class Configurator {
 	/**
 	 * Parses command-line arguments and processes/responds to them.
 	 *
-	 * @param args - Command-line arguments passed from main.
+	 * @param args Command-line arguments passed from main.
 	 * @return Type of handle for the reader to process (FILE, DIRECTORY, NONE)
 	 */
 	public ConfigType manageCmdLineArguments(String[] args) {
@@ -73,19 +93,16 @@ public class Configurator {
 		System.out.println("-h\tPrint the help menu");
 		System.out.println("-s\tProcess a single file");
 		System.out.println("-d\tProcess a directory");
-		// System.out.println("You may not run more than a single command at a
-		// time.");
 	}
 
 	/**
 	 * Checks if the passed file exists and sets the class attribute if it does.
 	 *
-	 * @param fileName - Name of the file.
+	 * @param fileName name of the file.
 	 * @return True if param was an existing file and class attribute was set,
-	 * false otherwise.
+	 *         false otherwise.
 	 */
 	private boolean processSingleFile(String fileName) {
-		// source directory is SeniorDesign\c-dependency-graph
 		File singleFile = new File(fileName);
 		boolean success = false;
 
@@ -103,9 +120,9 @@ public class Configurator {
 	 * Checks if the passed directory exists and sets the class attribute if it
 	 * does.
 	 *
-	 * @param directoryName - name of the directory.
+	 * @param directoryName name of the directory.
 	 * @return True if param was an existing directory and class attribute was
-	 * set, false otherwise.
+	 *         set, false otherwise.
 	 */
 	private boolean processDirectory(String directoryName) {
 		File directory = new File(directoryName);
@@ -121,22 +138,12 @@ public class Configurator {
 		return success;
 	}
 
-	/**** Accessor Functions ****/
+	/* Setters and Getters */
 
-	/**
-	 * Gets file name, if it exists.
-	 *
-	 * @return File name.
-	 */
 	public String getFileName() {
 		return nameOfFile;
 	}
 
-	/**
-	 * Gets directory name, if it exists.
-	 *
-	 * @return Directory name.
-	 */
 	public String getDirectoryName() {
 		return nameOfDirectory;
 	}

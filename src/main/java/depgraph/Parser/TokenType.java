@@ -40,7 +40,7 @@ public enum TokenType {
 
 	/**
 	 * Gets a TokenType if the provided string is a keyword.
-	 * 
+	 *
 	 * @param word - The word to search for
 	 * @return A TokenType if the provided string was a keyword, null otherwise
 	 */

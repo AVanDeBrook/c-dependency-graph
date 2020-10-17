@@ -1,14 +1,26 @@
 package depgraph.Parser;
 
 /**
- * Represents edge_stmt from the formal grammar definition for DOT
+ * Essentially a data structure to represent the connections between two nodes.
+ * Based on an edge_stmt from the formal grammar definition for DOT.
+ *
+ * From the official dot language grammar:
+ *     edge_stmt: (node_id | subgraph) edgeRHS [attr_list]
+ *     edgeRHS:   edgeop (node_id | subgraph) [edgeRHS]
+ *     node_id:   ID [port]
  */
 public class Edge {
 
-	/** TODO */
+	/**
+     * node_id of the source node in the edge_stmt that the Edge class
+     * represents (essentially the left-hand side of the edge_stmt).
+     */
 	private String sourceNode;
 
-	/** TODO */
+	/**
+     * node_id of the destination node in the edge_stmt that the Edge class
+     * represents (essentially the right-hand side of the edge_stmt).
+     */
 	private String destinationNode;
 
 	/* Setters and Getters */
@@ -31,8 +43,6 @@ public class Edge {
 
 	@Override
 	public String toString() {
-		// TODO
-//		return String.format("NodeId: %s\nNodeLabel: %s\n", this.nodeId, this.nodeLabel);
-		return String.format("%s %s", this.sourceNode, this.destinationNode);
+		return String.format("SOURCE: %s\nDESTINATION: %s\n", this.sourceNode, this.destinationNode);
 	}
 }

@@ -15,23 +15,51 @@ public class Edge {
      * node_id of the source node in the edge_stmt that the Edge class
      * represents (essentially the left-hand side of the edge_stmt).
      */
-	private String sourceNode;
+    private String sourceNode;
+
+    /**
+     * Reference to an object with a nodeId that matches the sourceNode.
+     */
+    private Node sourceObject;
 
 	/**
      * node_id of the destination node in the edge_stmt that the Edge class
      * represents (essentially the right-hand side of the edge_stmt).
      */
-	private String destinationNode;
+    private String destinationNode;
+
+    /**
+     * Reference to an object with a nodeId that matches the destinationNode.
+     */
+    private Node destinationObject;
+
+    /**
+     * No-arg constructor
+     */
+    public Edge() {
+        this.sourceNode = "";
+        this.destinationNode = "";
+        this.sourceObject = null;
+        this.destinationObject = null;
+    }
 
 	/* Setters and Getters */
 
 	public String getSourceNode() {
 		return this.sourceNode;
-	}
+    }
 
 	public void setSourceNode(String sourceNode) {
 		this.sourceNode = sourceNode;
-	}
+    }
+
+    public Node getSourceObject() {
+        return this.sourceObject;
+    }
+
+    public void setSourceObject(Node sourceObject) {
+        this.sourceObject = sourceObject;
+    }
 
 	public String getDestinationNode() {
 		return this.destinationNode;
@@ -39,7 +67,15 @@ public class Edge {
 
 	public void setDestinationNode(String destinationNode) {
 		this.destinationNode = destinationNode;
-	}
+    }
+
+    public Node getDestinationObject() {
+        return this.destinationObject;
+    }
+
+    public void setDestinationObject(Node destinationObject) {
+        this.destinationObject = destinationObject;
+    }
 
 	@Override
 	public String toString() {

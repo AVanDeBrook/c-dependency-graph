@@ -61,15 +61,22 @@ public class Parser {
      * can be tokenized and handled more easily. At the moment, this function
      * ignores L_BRACE, R_BRACE, NODE_ATTR_STMT, EDGE_ATTR_STMT, IGNORED, and
      * NONE because they have no real use in the information we are storing.
+     *
+     * When adding edges the getNodeObjectFromId function is called, which
+     * searches a given array list for a specific object with a matching nodeId.
+     * If there is no object with a matching nodeId, then it will throw a
+     * NullPointerException, which is caught and effectively ignored.
 	 *
 	 * @param fileContents - A string containing the contents of a single DOT
 	 * file
 	 * @return A node object representing the relevant values found in the DOT
 	 * file
 	 */
-	private ArrayList<Node> parse(String fileContents) {
+	private void parse(String fileContents) {
 		String[] lines = fileContents.split("\n");
-		String graphName = null;
+        String graphName = null;
+        ArrayList<Node> nodeCollection = new ArrayList<Node>();
+        ArrayList<Edge> edgeCollection = new ArrayList<Edge>();
 
 		for (String line : lines) {
 			Token tokenizedLine = lexer.tokenize(line);
@@ -84,22 +91,43 @@ public class Parser {
 				newNode.setNodeLabel(getNodeLabelFromString(tokenizedLine.getValue()));
 				newNode.setModulePrefix(getModulePrefixFromNodeLabel(newNode.getNodeLabel()));
 				newNode.setIsRoot(newNode.getNodeLabel().equals(graphName));
-				System.out.println(newNode);
-				nodes.add(newNode);
+				nodeCollection.add(newNode);
 				break;
 			case EDGE_STMT:
-				Edge newEdge = new Edge();
-				newEdge.setSourceNode(getSourceNodeFromString(tokenizedLine.getValue()));
-				newEdge.setDestinationNode(getDestinationNodeFromString(tokenizedLine.getValue()));
-				System.out.println(newEdge);
-				edges.add(newEdge);
+                Edge newEdge = new Edge();
+                String sourceNode = getSourceNodeFromString(tokenizedLine.getValue());
+                String destinationNode = getDestinationNodeFromString(tokenizedLine.getValue());
+
+                try {
+                    newEdge.setSourceNode(sourceNode);
+                    newEdge.setSourceObject(getNodeObjectFromId(nodeCollection, sourceNode));
+                } catch (NullPointerException ex) {
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                try {
+                    newEdge.setDestinationNode(destinationNode);
+                    newEdge.setDestinationObject(getNodeObjectFromId(nodeCollection, destinationNode));
+                } catch (NullPointerException ex) {
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+				edgeCollection.add(newEdge);
 				break;
 			default:
 				break;
 			}
-		}
+        }
 
-		return nodes;
+        for (Edge e : edgeCollection) {
+            if (e.getSourceObject() == null)
+                e.setSourceObject(getNodeObjectFromId(nodeCollection, e.getSourceNode()));
+
+            if (e.getDestinationObject() == null)
+                e.setDestinationObject(getNodeObjectFromId(nodeCollection, e.getDestinationNode()));
+        }
 	}
 
     /**
@@ -158,6 +186,29 @@ public class Parser {
      */
 	private String getDestinationNodeFromString(String valueString) {
 		return valueString.substring(valueString.indexOf('>') + 1, valueString.indexOf('['));
+    }
+
+    /**
+     * Simple search function to find a node that matches a specific ID
+     * (nodeId) in a list. Both the list and ID need to passed to this
+     * function, however, it works for both source and destination nodes.
+     *
+     * @param nodeCollection        ArrayList of nodes to search through.
+     * @param nodeId                Specific ID to match.
+     * @return                      The node with a matching ID.
+     * @throws NullPointerException If a node with a matching ID cannot be found,
+     *                              then a NullPointerException is thrown.
+     */
+    private Node getNodeObjectFromId(ArrayList<Node> nodeCollection, String nodeId) throws NullPointerException {
+        Node output = null;
+        for (Node node : nodeCollection)
+            if (node.getNodeId().equals(nodeId))
+                output = node;
+
+        if (output == null)
+            throw new NullPointerException();
+
+        return output;
     }
 
     /* Setters and Getters  */

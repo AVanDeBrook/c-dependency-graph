@@ -34,7 +34,7 @@ public class Parser {
      * Collection of Edge objects created based on the connections between
      * nodes defined the dot file(s) passed to the program.
      */
-	private ArrayList<Edge> edges;
+    private ArrayList<Edge> edges;
 
 	/**
 	 * No-arg constructor.
@@ -53,7 +53,7 @@ public class Parser {
 	public void parse(List<String> fileContents) {
 		for (String singleFileContents : fileContents) {
 			this.parse(singleFileContents);
-		}
+        }
 	}
 
 	/**
@@ -83,15 +83,20 @@ public class Parser {
 
 			switch (tokenizedLine.getToken()) {
 			case DIGRAPH_DEF:
-				graphName = tokenizedLine.getValue();
+                graphName = tokenizedLine.getValue();
+                System.out.println("Running for: " + graphName);
 				break;
 			case NODE_STMT:
-				Node newNode = new Node();
+                Node newNode = new Node();
 				newNode.setNodeId(getNodeIdFromString(tokenizedLine.getValue()));
 				newNode.setNodeLabel(getNodeLabelFromString(tokenizedLine.getValue()));
 				newNode.setModulePrefix(getModulePrefixFromNodeLabel(newNode.getNodeLabel()));
-				newNode.setIsRoot(newNode.getNodeLabel().equals(graphName));
-				nodeCollection.add(newNode);
+                newNode.setIsRoot(newNode.getNodeLabel().equals(graphName));
+
+                // if (isDuplicate(newNode.getNodeLabel()) && !newNode.isRoot())
+                //     newNode = null;
+                // else
+                nodeCollection.add(newNode);
 				break;
 			case EDGE_STMT:
                 Edge newEdge = new Edge();
@@ -121,6 +126,19 @@ public class Parser {
 			}
         }
 
+        // for (Node node : nodeCollection) {
+        //     if (isDuplicate(node.getNodeLabel())) {
+        //         Node original = getNodeObjectFromId(nodes, findNodeIdFromLabel(node.getNodeLabel()));
+        //         for (Edge edge : edgeCollection) {
+        //             if (edge.getSourceNode().equals(node.getNodeId()))
+        //                 edge.setSourceNode(original.getNodeId());
+
+        //             if (edge.getDestinationNode().equals(node.getNodeId()))
+        //                 edge.setDestinationNode(original.getNodeId());
+        //         }
+        //     }
+        // }
+
         for (Edge e : edgeCollection) {
             if (e.getSourceObject() == null)
                 e.setSourceObject(getNodeObjectFromId(nodeCollection, e.getSourceNode()));
@@ -128,6 +146,9 @@ public class Parser {
             if (e.getDestinationObject() == null)
                 e.setDestinationObject(getNodeObjectFromId(nodeCollection, e.getDestinationNode()));
         }
+
+        nodes.addAll(nodeCollection);
+        edges.addAll(edgeCollection);
 	}
 
     /**
@@ -163,7 +184,12 @@ public class Parser {
      * @return Module prefix of a function (e.g. BAL, BMS, CONT, etc.)
      */
 	private String getModulePrefixFromNodeLabel(String nodeLabel) {
-		return nodeLabel.substring(0, nodeLabel.indexOf('_'));
+        String modulePrefix = "";
+        if (nodeLabel.indexOf('_') == -1)
+            modulePrefix = "RTOS";
+        else
+            modulePrefix = nodeLabel.substring(0, nodeLabel.indexOf('_'));
+        return modulePrefix;
 	}
 
     /**
@@ -206,9 +232,25 @@ public class Parser {
                 output = node;
 
         if (output == null)
-            throw new NullPointerException();
+            throw new NullPointerException("Could not find node: " + nodeId + "\n");
 
         return output;
+    }
+
+    private boolean isDuplicate(String nodeLabel) {
+        boolean duplicate = false;
+        for (Node node : nodes)
+            if (node.getNodeLabel().equals(nodeLabel))
+                duplicate = true;
+        return duplicate;
+    }
+
+    private String findNodeIdFromLabel(String nodeLabel) {
+        String nodeId = "";
+        for (Node node : nodes)
+            if (node.getNodeLabel().equals(nodeLabel))
+                nodeId = node.getNodeId();
+        return nodeId;
     }
 
     /* Setters and Getters  */

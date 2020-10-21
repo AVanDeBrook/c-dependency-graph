@@ -92,10 +92,6 @@ public class Parser {
 				newNode.setNodeLabel(getNodeLabelFromString(tokenizedLine.getValue()));
 				newNode.setModulePrefix(getModulePrefixFromNodeLabel(newNode.getNodeLabel()));
                 newNode.setIsRoot(newNode.getNodeLabel().equals(graphName));
-
-                // if (isDuplicate(newNode.getNodeLabel()) && !newNode.isRoot())
-                //     newNode = null;
-                // else
                 nodeCollection.add(newNode);
 				break;
 			case EDGE_STMT:
@@ -126,19 +122,6 @@ public class Parser {
 			}
         }
 
-        // for (Node node : nodeCollection) {
-        //     if (isDuplicate(node.getNodeLabel())) {
-        //         Node original = getNodeObjectFromId(nodes, findNodeIdFromLabel(node.getNodeLabel()));
-        //         for (Edge edge : edgeCollection) {
-        //             if (edge.getSourceNode().equals(node.getNodeId()))
-        //                 edge.setSourceNode(original.getNodeId());
-
-        //             if (edge.getDestinationNode().equals(node.getNodeId()))
-        //                 edge.setDestinationNode(original.getNodeId());
-        //         }
-        //     }
-        // }
-
         for (Edge e : edgeCollection) {
             if (e.getSourceObject() == null)
                 e.setSourceObject(getNodeObjectFromId(nodeCollection, e.getSourceNode()));
@@ -151,6 +134,16 @@ public class Parser {
         edges.addAll(edgeCollection);
 	}
 
+    private void eliminateDuplicates(){
+
+        /**
+         * first check nodes for duplicate names and record them.
+         * do rounds of substituting the edges with a unique name for each node
+         * so if node8 = node81 = node108 then all source and dest nodes should point to node8
+         * check for duplicate edge objects and delete any if there are any.
+         */
+
+    }
     /**
      * Determines the node_id from a node_stmt.
      *

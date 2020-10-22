@@ -36,6 +36,12 @@ public class Parser {
      */
     private ArrayList<Edge> edges;
 
+    /**
+     * Collection of Module objects created based on the module prefixes
+     * parsed when the nodes are created.
+     */
+    private ArrayList<Module> modules;
+
 	/**
 	 * No-arg constructor.
 	 */
@@ -43,16 +49,35 @@ public class Parser {
         lexer = new Lexer();
         nodes = new ArrayList<Node>();
         edges = new ArrayList<Edge>();
+        modules = new ArrayList<Module>();
 	}
 
 	/**
 	 * Kick off point for parsing, used by Manager.
+     *
+     * Parses every individual file handed to the program into nodes and
+     * edges, then separates those nodes into modules based on the parsed
+     * module prefix.
 	 *
 	 * @param fileContents File contents read by the Reader class in List form
 	 */
 	public void parse(List<String> fileContents) {
 		for (String singleFileContents : fileContents) {
 			this.parse(singleFileContents);
+        }
+
+        for (Node node : nodes) {
+            Module module = getModuleFromModulePrefix(node.getModulePrefix());
+
+            if (node.getModulePrefix().equals(""))
+                continue;
+
+            if (module == null) {
+                module = new Module(node.getModulePrefix());
+                modules.add(module);
+            }
+
+            module.add(node);
         }
 	}
 
@@ -230,6 +255,13 @@ public class Parser {
         return output;
     }
 
+    /**
+     * Helper function to scan the "global" list of nodes and check if there
+     * is a duplicate of the given node label.
+     *
+     * @param nodeLabel The node label (aka function name) to check against.
+     * @return true if there is a match, false otherwise.
+     */
     private boolean isDuplicate(String nodeLabel) {
         boolean duplicate = false;
         for (Node node : nodes)
@@ -238,12 +270,21 @@ public class Parser {
         return duplicate;
     }
 
-    private String findNodeIdFromLabel(String nodeLabel) {
-        String nodeId = "";
-        for (Node node : nodes)
-            if (node.getNodeLabel().equals(nodeLabel))
-                nodeId = node.getNodeId();
-        return nodeId;
+    /**
+     * Scans the "global" list of modules to find a Module object matching
+     * with a matching module prefix.
+     *
+     * @param modulePrefix Specific module prefix to search for (e.g. ADC, BAL, etc.).
+     * @return Module object with the matching module prefix, null if one doesn't exist.
+     */
+    private Module getModuleFromModulePrefix(String modulePrefix) {
+        Module module = null;
+
+        for (Module m : modules)
+            if (m.getModulePrefix().equals(modulePrefix))
+                module = m;
+
+        return module;
     }
 
     /* Setters and Getters  */
@@ -254,5 +295,9 @@ public class Parser {
 
 	public ArrayList<Edge> getEdges() {
 		return edges;
-	}
+    }
+
+    public ArrayList<Module> getModules() {
+        return modules;
+    }
 }

@@ -2,9 +2,7 @@ package depgraph;
 
 import java.util.List;
 
-import depgraph.Configurator.ConfigType;
-import depgraph.Configurator.Configurator;
-import depgraph.Parser.Graph;
+import depgraph.Configurator.*;
 import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
 
@@ -12,15 +10,16 @@ public class Manager {
 
 	private static Configurator configurator;
 	private static Reader reader;
-	private static Parser parser;
-	private static Manipulator manipulator;
-	private static List<Graph> graphList;
+    private static Parser parser;
+    // Currently unused; commenting to supress warnings
+	// private static Manipulator manipulator;
 
 	public static void main(String[] args) {
 		configurator = new Configurator();
 		reader = new Reader();
-		parser = new Parser();
-		manipulator = new Manipulator();
+        parser = new Parser();
+        // Currently unused; commenting to supress warnings
+		// manipulator = new Manipulator();
 
 		try {
 			start(args);
@@ -30,10 +29,13 @@ public class Manager {
 	}
 
 	private static void start(String[] args) throws Exception {
-		List<String> files = null;
-
-//		String[] testArgs = { "-s", "test\\dot-files\\adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot" };
-//		ConfigType fileType = configurator.manageCmdLineArguments(testArgs);
+		/*
+		 * For development only: To run Manager using Eclipse, uncomment the
+		 * following two lines and comment out the third
+		 */
+        // String[] testArgs = { "-s", "test\\dot-files\\adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot" };
+        // ConfigType fileType = configurator.manageCmdLineArguments(testArgs);
+        List<String> files = null;
 		ConfigType fileType = configurator.manageCmdLineArguments(args);
 
 		if (fileType == ConfigType.DIRECTORY) {
@@ -42,12 +44,12 @@ public class Manager {
 			files = reader.readSingleFile(configurator.getFileName());
 		}
 
-		if (files == null) {
-			return;
+		if (files != null) {
+            parser.parse(files);
 		}
 
-		graphList = parser.parse(files);
-
-		// TODO continue flow
+        // TODO Call manipulator
+        // TODO Call graph writer
+        // TODO Call Dot runner
 	}
 }

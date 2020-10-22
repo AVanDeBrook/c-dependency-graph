@@ -1,11 +1,22 @@
 package depgraph.Parser;
 
+/**
+ *
+ */
 public class Token {
-	private TokenType type;
+    /**
+     * Type of declaration that was found on the tokenized line.
+     * @see TokenType
+     */
+    private TokenType type;
+
+    /**
+     * Value of the line that was tokenized.
+     */
 	private String value;
 
 	/**
-	 * No-arg constructor. Initializes the object to null values.
+	 * No-arg constructor. Initializes the object to null/zero state values.
 	 */
 	public Token() {
 		this.type = TokenType.NONE;
@@ -16,13 +27,15 @@ public class Token {
 	 * Simple constructor for Token object creation. Initializes the type and
 	 * value attribute fields.
 	 *
-	 * @param type - Type of token, of TokenType enumeration
-	 * @param value - Actual value of the token. Usually an ID or attribute.
+	 * @param type Type of token, of TokenType enumeration
+	 * @param value Actual value of the token. Usually an ID or attribute.
 	 */
 	public Token(TokenType type, String value) {
 		this.type = type;
 		this.value = value;
 	}
+
+    /* Setters and Getters */
 
 	public TokenType getToken() {
 		return type;

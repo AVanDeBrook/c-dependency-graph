@@ -3,6 +3,8 @@ package depgraph.Parser;
 
 import java.util.HashMap;
 
+// TODO javadoc
+/** */
 public enum TokenType {
 
 	// @formatter:off
@@ -25,33 +27,33 @@ public enum TokenType {
 	private Integer id;
 	private String keyword;
 
-	private static final HashMap<Integer, TokenType> idToTokenTypeLookup = new HashMap<Integer, TokenType>();
-	private static final HashMap<TokenType, Integer> tokenTypeToIdLookup = new HashMap<TokenType, Integer>();
-	private static final HashMap<String, TokenType> keywordToTokenTypeLookup = new HashMap<String, TokenType>();
+	private static final HashMap<Integer, TokenType> idToTypeLookup = new HashMap<Integer, TokenType>();
+	private static final HashMap<TokenType, Integer> typeToIdLookup = new HashMap<TokenType, Integer>();
+	private static final HashMap<String, TokenType> keywordToTypeLookup = new HashMap<String, TokenType>();
 	static {
 		for (TokenType type : TokenType.values()) {
-			idToTokenTypeLookup.put(type.getId(), type);
-			tokenTypeToIdLookup.put(type, type.getId());
-			keywordToTokenTypeLookup.put(type.getKeyword(), type);
+			idToTypeLookup.put(type.getId(), type);
+			typeToIdLookup.put(type, type.getId());
+			keywordToTypeLookup.put(type.getKeyword(), type);
 		}
 	}
 
 	/**
 	 * Gets a TokenType if the provided string is a keyword.
-	 * 
+	 *
 	 * @param word - The word to search for
 	 * @return A TokenType if the provided string was a keyword, null otherwise
 	 */
-	public static TokenType getTokenTypeIfKeyword(String word) {
-		return keywordToTokenTypeLookup.get(word);
+	public static TokenType getTypeIfKeyword(String word) {
+		return keywordToTypeLookup.get(word);
 	}
 
-	public static TokenType getTokenTypeFromId(Integer id) {
-		return idToTokenTypeLookup.get(id);
+	public static TokenType getTypeFromId(Integer id) {
+		return idToTypeLookup.get(id);
 	}
 
-	public static Integer getIdFromTokenType(TokenType type) {
-		return tokenTypeToIdLookup.get(type);
+	public static Integer getIdFromType(TokenType type) {
+		return typeToIdLookup.get(type);
 	}
 
 	public Integer getId() {

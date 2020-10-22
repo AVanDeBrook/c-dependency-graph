@@ -1,26 +1,24 @@
 package depgraph;
 
-import depgraph.Parser.Graph;
+import java.util.ArrayList;
+import depgraph.Parser.*;
 
 public class Manipulator {
-
+    /**
+     * No-arg constructor.
+     */
 	public Manipulator() {
 
 	}
 
-	public Graph manipulate(Graph graph) {
-		System.out.println("Manipulator manipulating graph...");
-		// TODO
-		removeConnection();
-		addConnection();
-		return graph;
-	}
-
-	public void removeConnection() {
-		// TODO
-	}
-
-	public void addConnection() {
-		// TODO
+    /**
+     * Rearranges and reformats the graph objects to meet the desired module
+     * dependency view.
+     *
+     * @param nodes Original nodes created by the parser.
+     * @param edges Original edges created by the parser.
+     */
+    public void manipulate(ArrayList<Node> nodes, ArrayList<Edge> edges) {
+        // TODO Fill out manipulate function
 	}
 }

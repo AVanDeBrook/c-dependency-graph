@@ -131,8 +131,8 @@ public class Parser {
                 e.setDestinationObject(getNodeObjectFromId(nodeCollection, e.getDestinationNode()));
         }
 
-        //nodeCollection = cleanUpNodeCollection(nodeCollection);
-        //edgeCollection = cleanUpEdgeCollection(edgeCollection);
+        nodeCollection = cleanUpNodeCollection(nodeCollection);
+        edgeCollection = cleanUpEdgeCollection(edgeCollection);
 
         nodes.addAll(nodeCollection);
         edges.addAll(edgeCollection);
@@ -144,17 +144,36 @@ public class Parser {
         for(Edge tempEdge : oldCollection){
             //rewrite duplicates according to the global node
             if(isDuplicate(tempEdge.getSourceObject().getNodeLabel())){
-                // tempEdge.setSourceNode(/** */);
-                // tempEdge.setSourceObject(/** */);
-                // tempEdge.setDestinationNode(/** */);
-                // tempEdge.setDestinationObject(/** */);
+                Node tempSrcNode = getGlobalNodeFromNodeLabel(tempEdge.getSourceObject().getNodeLabel());
+                tempEdge.setSourceNode(tempSrcNode.getNodeId());
+                tempEdge.setSourceObject(tempSrcNode);
+
+            }
+            if(isDuplicate(tempEdge.getDestinationObject().getNodeLabel())){
+                Node tempDstNode = getGlobalNodeFromNodeLabel(tempEdge.getDestinationObject().getNodeLabel());
+                tempEdge.setDestinationNode(tempDstNode.getNodeId());
+                tempEdge.setDestinationObject(tempDstNode);
             }
             newCollection.add(tempEdge);
         }
 
         return newCollection;
     }
+    /**
+     * Returns the global node object that corresponds to a given nodeLabel
+     * @param nodeLabel
+     * @return Node
+     */
+    private Node getGlobalNodeFromNodeLabel(String nodeLabel){
+       Node returnNode = null;
 
+        for(Node tempNode : this.nodes){
+            if(tempNode.getNodeLabel().equals(nodeLabel))
+                returnNode = tempNode;
+        }
+
+        return returnNode;
+    }
 
     /**
      * Removes nodes in a collection that are already accounted for in the global context

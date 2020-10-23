@@ -138,6 +138,12 @@ public class Parser {
         edges.addAll(edgeCollection);
     }
 
+    /**
+     * Takes a collection of edges. If the source or destination node exists in the global context, it substitutes the local value
+     * This aids in keeping nodes unique in the global context.
+     * @param oldCollection
+     * @return newCollection
+     */
     private ArrayList <Edge> cleanUpEdgeCollection(ArrayList<Edge> oldCollection){
         ArrayList<Edge> newCollection = new ArrayList<Edge>();
 
@@ -159,6 +165,7 @@ public class Parser {
 
         return newCollection;
     }
+
     /**
      * Returns the global node object that corresponds to a given nodeLabel
      * @param nodeLabel

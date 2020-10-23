@@ -3,6 +3,8 @@ package depgraph;
 import java.util.List;
 
 import depgraph.Configurator.*;
+import depgraph.Parser.Edge;
+import depgraph.Parser.Node;
 import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
 
@@ -46,7 +48,14 @@ public class Manager {
 
 		if (files != null) {
             parser.parse(files);
-		}
+        }
+
+        // for(Node node : parser.getNodes()){
+        //     System.out.println("\nNode ID: "+node.getNodeId()+"\tNode Name: "+node.getNodeLabel());
+        // }
+        // for(Edge edge : parser.getEdges()){
+        //     System.out.println("\nSrc Node: "+edge.getSourceNode()+"\tDest Node: "+edge.getDestinationNode());
+        // }
 
         // TODO Call manipulator
         // TODO Call graph writer

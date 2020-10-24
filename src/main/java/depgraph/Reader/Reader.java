@@ -1,15 +1,24 @@
 package depgraph.Reader;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ *
+ */
 public class Reader {
+
 	/**
 	 * Method used to get the contents of a single DOT file at a given location.
 	 *
 	 * @param filePath - The path of a single DOT file to read.
 	 * @return A list containing one string, the contents of the file. Null if
-	 * the file path given did not exist.
+	 *         the file path given did not exist.
+     * @throws Exception if passed file is not a dot file.
 	 */
 	public List<String> readSingleFile(String filePath) throws Exception {
 		List<String> filesList = new ArrayList<String>();
@@ -31,7 +40,8 @@ public class Reader {
 	 *
 	 * @param directory - A directory containing DOT files.
 	 * @return A list of strings, each string representing the contents of one
-	 * file. Null if the directory did not exist or did not contain DOT files.
+	 *         file. Null if the directory did not exist or did not contain DOT files.
+     * @throws Exception if directory does not contain dot files.
 	 */
 	public List<String> readDirectory(String directory) throws Exception {
 		File folder = new File(directory);
@@ -57,7 +67,7 @@ public class Reader {
 	 * Helper function to read contents of file and convert it to a string.
 	 *
 	 * @param filePath - The path of a file to read.
-	 * @return - String version of the file.
+	 * @return String containing contents of the file.
 	 */
 	private String read(String filePath) {
 		StringBuilder stringBuild = new StringBuilder();
@@ -67,7 +77,7 @@ public class Reader {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			while ((line = reader.readLine()) != null)
-				stringBuild.append(line);
+				stringBuild.append(line + "\n");
 			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -77,10 +87,10 @@ public class Reader {
 	}
 
 	/**
-	 * Helper function to check if given file is a 'dot' file.
+	 * Helper function to check if given file is a DOT file.
 	 *
 	 * @param filePath - The path of a single file.
-	 * @return True if dot file, false otherwise.
+	 * @return True if DOT file, false otherwise.
 	 */
 	private boolean isDotFile(String filePath) {
 		int index = filePath.lastIndexOf('.');

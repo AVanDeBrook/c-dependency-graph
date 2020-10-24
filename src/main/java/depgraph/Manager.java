@@ -2,22 +2,24 @@ package depgraph;
 
 import java.util.List;
 
-import depgraph.Reader.Reader;
 import depgraph.Configurator.*;
+import depgraph.Parser.Parser;
+import depgraph.Reader.Reader;
 
 public class Manager {
 
 	private static Configurator configurator;
 	private static Reader reader;
-	private static Parser parser;
-	private static Manipulator manipulator;
-	private static Graph graph;
+    private static Parser parser;
+    // Currently unused; commenting to supress warnings
+	// private static Manipulator manipulator;
 
 	public static void main(String[] args) {
 		configurator = new Configurator();
 		reader = new Reader();
-		parser = new Parser();
-		manipulator = new Manipulator();
+        parser = new Parser();
+        // Currently unused; commenting to supress warnings
+		// manipulator = new Manipulator();
 
 		try {
 			start(args);
@@ -26,33 +28,28 @@ public class Manager {
 		}
 	}
 
-	/**
-	 * Method used by Configurator to provide the file location and kick off the
-	 * process
-	 */
-	public static void start(String[] args) throws Exception {
+	private static void start(String[] args) throws Exception {
+		/*
+		 * For development only: To run Manager using Eclipse, uncomment the
+		 * following two lines and comment out the third
+		 */
+        // String[] testArgs = { "-s", "test\\dot-files\\adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot" };
+        // ConfigType fileType = configurator.manageCmdLineArguments(testArgs);
         List<String> files = null;
-        ConfigReturnType fileType = configurator.manageCmdLineArguments(args);
+		ConfigType fileType = configurator.manageCmdLineArguments(args);
 
-        if (fileType == ConfigReturnType.DIRECTORY) {
-            files = reader.readDirectory(configurator.getDirectoryName());
-        } else if (fileType == ConfigReturnType.FILE) {
-            files = reader.readSingleFile(configurator.getFileName());
-        }
+		if (fileType == ConfigType.DIRECTORY) {
+			files = reader.readDirectory(configurator.getDirectoryName());
+		} else if (fileType == ConfigType.FILE) {
+			files = reader.readSingleFile(configurator.getFileName());
+		}
 
-        if (files == null) {
-			return;
-        }
+		if (files != null) {
+            parser.parse(files);
+		}
 
-        // graph = new Graph();
-
-		// for (String singleFile : files) {
-		// 	Module module = parser.parse(singleFile);
-		// 	graph.addModule(module);
-		// }
-
-		// graph = manipulator.manipulate(graph);
-
-		// TODO continue flow
+        // TODO Call manipulator
+        // TODO Call graph writer
+        // TODO Call Dot runner
 	}
 }

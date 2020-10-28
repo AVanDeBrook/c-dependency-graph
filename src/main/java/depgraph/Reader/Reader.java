@@ -17,8 +17,8 @@ public class Reader {
 	 *
 	 * @param filePath - The path of a single DOT file to read.
 	 * @return A list containing one string, the contents of the file. Null if
-	 *         the file path given did not exist.
-     * @throws Exception if passed file is not a dot file.
+	 * the file path given did not exist.
+	 * @throws Exception if passed file is not a dot file.
 	 */
 	public List<String> readSingleFile(String filePath) throws Exception {
 		List<String> filesList = new ArrayList<String>();
@@ -40,8 +40,8 @@ public class Reader {
 	 *
 	 * @param directory - A directory containing DOT files.
 	 * @return A list of strings, each string representing the contents of one
-	 *         file. Null if the directory did not exist or did not contain DOT files.
-     * @throws Exception if directory does not contain dot files.
+	 * file. Null if the directory did not exist or did not contain DOT files.
+	 * @throws Exception if directory does not contain DOT files.
 	 */
 	public List<String> readDirectory(String directory) throws Exception {
 		File folder = new File(directory);

@@ -32,10 +32,10 @@ public class Manager {
 		 * For development only: To run Manager using Eclipse, uncomment the
 		 * following line
 		 */
-//		String[] args = { "-s", "test\\dot-files\\adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot" };
+		String[] testargs = { "-s", "test\\dot-files\\algo__cfg_8c_a71940f25b478e21c90c2df689d99a4ee_cgraph.dot" };
 
 		List<String> files = null;
-		ConfigType fileType = configurator.manageCmdLineArguments(args);
+		ConfigType fileType = configurator.manageCmdLineArguments(testargs);
 
 		if (fileType == ConfigType.DIRECTORY) {
 			files = reader.readDirectory(configurator.getDirectoryName());
@@ -48,11 +48,10 @@ public class Manager {
 		}
 
 		for (Node node : parser.getNodes()) {
-			System.out.println("\nNode ID: " + node.getNodeId() + "\tNode Name: " + node.getNodeLabel());
+			System.out.println(node.toString());
 		}
 		for (Edge edge : parser.getEdges()) {
-			System.out.println(
-					"\nSrc Node ID: " + edge.getSourceNodeId() + "\tDest Node ID: " + edge.getDestinationNodeId());
+			System.out.println(edge.toString());
 		}
 
 		// TODO Call graph writer

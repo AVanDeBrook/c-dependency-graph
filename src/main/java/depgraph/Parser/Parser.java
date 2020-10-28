@@ -75,7 +75,6 @@ public class Parser {
 	private void parse(String fileContents) {
 		String[] lines = fileContents.split("\n");
 		String graphName = null;
-		String moduleName = null;
 		ArrayList<Node> nodeCollection = new ArrayList<Node>();
 		ArrayList<Edge> edgeCollection = new ArrayList<Edge>();
 
@@ -125,7 +124,7 @@ public class Parser {
 
 				if (newEdge.getSourceNodeObject() != null && newEdge.getDestinationNodeObject() != null
 						&& newEdge.getSourceNodeObject().getModulePrefix()
-								.equals(newEdge.getSourceNodeObject().getModulePrefix())) {
+								.equals(newEdge.getDestinationNodeObject().getModulePrefix())) {
 					/* Don't add Edges between Nodes of the same Module */
 				} else {
 					edgeCollection.add(newEdge);
@@ -176,8 +175,9 @@ public class Parser {
 				edge.setDestinationNodeObject(dstNode);
 			}
 
-			if (edge.getSourceNodeObject() != null && edge.getDestinationNodeObject() != null && edge
-					.getSourceNodeObject().getModulePrefix().equals(edge.getSourceNodeObject().getModulePrefix())) {
+			if (edge.getSourceNodeObject() != null && edge.getDestinationNodeObject() != null
+					&& edge.getSourceNodeObject().getModulePrefix()
+							.equals(edge.getDestinationNodeObject().getModulePrefix())) {
 				/* Don't add Edges between Nodes of the same Module */
 			} else {
 				newCollection.add(edge);

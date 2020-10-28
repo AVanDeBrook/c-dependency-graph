@@ -78,6 +78,6 @@ public class Edge {
 
 	@Override
 	public String toString() {
-		return String.format("SOURCE: %s\nDESTINATION: %s\n", this.sourceNodeId, this.destinationNodeId);
+		return String.format("Edge\n\tSOURCE: %s\n\tDESTINATION: %s", this.sourceNodeId, this.destinationNodeId);
 	}
 }

@@ -74,7 +74,7 @@ public class Node {
 
 	@Override
 	public String toString() {
-		return String.format("NODE ID: %s\nNODE LABEL: %s\nMODULE PREFIX: %s\nROOT: %b", this.nodeId, this.nodeLabel,
-				this.modulePrefix, this.isRoot);
+		return String.format("Node\n\tNODE ID: %s\n\tNODE LABEL: %s\n\tMODULE PREFIX: %s\n\tROOT: %b", this.nodeId,
+				this.nodeLabel, this.modulePrefix, this.isRoot);
 	}
 }

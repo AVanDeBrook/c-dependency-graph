@@ -92,6 +92,7 @@ public class Parser {
 				newNode.setNodeLabel(getNodeLabelFromString(tokenizedLine.getValue()));
 				newNode.setModulePrefix(getModulePrefixFromNodeLabel(newNode.getNodeLabel()));
 				newNode.setIsRoot(newNode.getNodeLabel().equals(graphName));
+				newNode.setIsPublic(getIsPublicFromNodeLabel(newNode.getNodeLabel()));
 				nodeCollection.add(newNode);
 				break;
 			case EDGE_STMT:
@@ -233,6 +234,28 @@ public class Parser {
 		else
 			modulePrefix = nodeLabel.substring(0, nodeLabel.indexOf('_'));
 		return modulePrefix;
+	}
+
+	/**
+	 * Determines the function name of a function from the node label in order
+	 * to determine if the function is private/public
+	 * 
+	 * @param nodeLabel
+	 * @return whether or not the function is private/public by capitalization
+	 * from the label
+	 */
+	private Boolean getIsPublicFromNodeLabel(String nodeLabel) {
+		String functionName = "";
+		functionName = nodeLabel.substring(1, nodeLabel.indexOf('_'));
+
+		char[] charArray = functionName.toCharArray();
+
+		if (Character.isLowerCase(charArray[0])) {
+			return false;
+
+		} else {
+			return true;
+		}
 	}
 
 	/**

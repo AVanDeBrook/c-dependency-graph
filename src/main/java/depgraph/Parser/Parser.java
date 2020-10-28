@@ -92,6 +92,7 @@ public class Parser {
 				newNode.setNodeLabel(getNodeLabelFromString(tokenizedLine.getValue()));
 				newNode.setModulePrefix(getModulePrefixFromNodeLabel(newNode.getNodeLabel()));
                 newNode.setIsRoot(newNode.getNodeLabel().equals(graphName));
+
                 nodeCollection.add(newNode);
 				break;
 			case EDGE_STMT:
@@ -130,20 +131,75 @@ public class Parser {
                 e.setDestinationObject(getNodeObjectFromId(nodeCollection, e.getDestinationNode()));
         }
 
+        nodeCollection = cleanUpNodeCollection(nodeCollection);
+        edgeCollection = cleanUpEdgeCollection(edgeCollection);
+
         nodes.addAll(nodeCollection);
         edges.addAll(edgeCollection);
-	}
-
-    private void eliminateDuplicates(){
-
-        /**
-         * first check nodes for duplicate names and record them.
-         * do rounds of substituting the edges with a unique name for each node
-         * so if node8 = node81 = node108 then all source and dest nodes should point to node8
-         * check for duplicate edge objects and delete any if there are any.
-         */
-
     }
+
+    /**
+     * Takes a collection of edges. If the source or destination node exists in the global context, it substitutes the local value
+     * This aids in keeping nodes unique in the global context.
+     * @param oldCollection
+     * @return newCollection
+     */
+    private ArrayList <Edge> cleanUpEdgeCollection(ArrayList<Edge> oldCollection){
+        ArrayList<Edge> newCollection = new ArrayList<Edge>();
+
+        for(Edge tempEdge : oldCollection){
+            //rewrite duplicates according to the global node
+            if(isDuplicate(tempEdge.getSourceObject().getNodeLabel())){
+                Node tempSrcNode = getGlobalNodeFromNodeLabel(tempEdge.getSourceObject().getNodeLabel());
+                tempEdge.setSourceNode(tempSrcNode.getNodeId());
+                tempEdge.setSourceObject(tempSrcNode);
+
+            }
+            if(isDuplicate(tempEdge.getDestinationObject().getNodeLabel())){
+                Node tempDstNode = getGlobalNodeFromNodeLabel(tempEdge.getDestinationObject().getNodeLabel());
+                tempEdge.setDestinationNode(tempDstNode.getNodeId());
+                tempEdge.setDestinationObject(tempDstNode);
+            }
+            newCollection.add(tempEdge);
+        }
+
+        return newCollection;
+    }
+
+    /**
+     * Returns the global node object that corresponds to a given nodeLabel
+     * @param nodeLabel
+     * @return Node
+     */
+    private Node getGlobalNodeFromNodeLabel(String nodeLabel){
+       Node returnNode = null;
+
+        for(Node tempNode : this.nodes){
+            if(tempNode.getNodeLabel().equals(nodeLabel))
+                returnNode = tempNode;
+        }
+
+        return returnNode;
+    }
+
+    /**
+     * Removes nodes in a collection that are already accounted for in the global context
+     * @param oldCollection
+     * @return newCollection
+     */
+    private ArrayList <Node> cleanUpNodeCollection(ArrayList<Node> oldCollection){
+        ArrayList<Node> newCollection = new ArrayList<Node>();
+
+        for(Node tempNode: oldCollection){
+            //only adds new nodes to the global array
+            if(!isDuplicate(tempNode.getNodeLabel())){
+                newCollection.add(tempNode);
+            }
+        }
+
+        return newCollection;
+    }
+
     /**
      * Determines the node_id from a node_stmt.
      *

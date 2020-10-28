@@ -75,6 +75,7 @@ public class Parser {
 	private void parse(String fileContents) {
 		String[] lines = fileContents.split("\n");
 		String graphName = null;
+		String moduleName = null;
 		ArrayList<Node> nodeCollection = new ArrayList<Node>();
 		ArrayList<Edge> edgeCollection = new ArrayList<Edge>();
 
@@ -100,6 +101,13 @@ public class Parser {
 				String destinationNodeId = getDestinationNodeIdFromString(tokenizedLine.getValue());
 				newEdge.setSourceNodeId(sourceNodeId);
 				newEdge.setDestinationNodeId(destinationNodeId);
+
+				/*
+				 * Setting the Edge's Node objects may not be possible if the
+				 * Node objects haven't been parsed yet. Here we attempt to, NPE
+				 * if not found, then we'll try again after escaping this loop
+				 * (finish parsing all lines)
+				 */
 				try {
 					newEdge.setSourceNodeObject(getNodeObjectFromId(nodeCollection, sourceNodeId));
 				} catch (NullPointerException ex) {
@@ -107,7 +115,6 @@ public class Parser {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-
 				try {
 					newEdge.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, destinationNodeId));
 				} catch (NullPointerException ex) {
@@ -115,7 +122,14 @@ public class Parser {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-				edgeCollection.add(newEdge);
+
+				if (newEdge.getSourceNodeObject() != null && newEdge.getDestinationNodeObject() != null
+						&& newEdge.getSourceNodeObject().getModulePrefix()
+								.equals(newEdge.getSourceNodeObject().getModulePrefix())) {
+					/* Don't add Edges between Nodes of the same Module */
+				} else {
+					edgeCollection.add(newEdge);
+				}
 				break;
 			default:
 				break;
@@ -157,11 +171,17 @@ public class Parser {
 			}
 
 			if (isDuplicate(edge.getDestinationNodeObject().getNodeLabel())) {
-				Node tempDstNode = getGlobalNodeFromNodeLabel(edge.getDestinationNodeObject().getNodeLabel());
-				edge.setDestinationNodeId(tempDstNode.getNodeId());
-				edge.setDestinationNodeObject(tempDstNode);
+				Node dstNode = getGlobalNodeFromNodeLabel(edge.getDestinationNodeObject().getNodeLabel());
+				edge.setDestinationNodeId(dstNode.getNodeId());
+				edge.setDestinationNodeObject(dstNode);
 			}
-			newCollection.add(edge);
+
+			if (edge.getSourceNodeObject() != null && edge.getDestinationNodeObject() != null && edge
+					.getSourceNodeObject().getModulePrefix().equals(edge.getSourceNodeObject().getModulePrefix())) {
+				/* Don't add Edges between Nodes of the same Module */
+			} else {
+				newCollection.add(edge);
+			}
 		}
 
 		return newCollection;

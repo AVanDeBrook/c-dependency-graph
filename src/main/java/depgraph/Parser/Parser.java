@@ -263,21 +263,28 @@ public class Parser {
 
 	/**
 	 * Determines the function name of a function from the node label in order
-	 * to determine if the function is private/public
+	 * to determine if the function is private/public.
+     *
+     * If there is no module prefix (no '_' char) then it is an RTOS function
+     * and therefore public.
 	 *
 	 * @param nodeLabel
 	 * @return whether or not the function is private/public by capitalization
 	 * from the label
 	 */
 	private Boolean getIsPublicFromNodeLabel(String nodeLabel) {
-		String functionName = "";
-		functionName = nodeLabel.substring(1, nodeLabel.indexOf('_'));
+        String functionName = "";
+
+        if (nodeLabel.indexOf('_') != -1 && nodeLabel.charAt(0) != '_') {
+            functionName = nodeLabel.substring(1, nodeLabel.indexOf('_'));
+        } else {
+            return true;
+        }
 
 		char[] charArray = functionName.toCharArray();
 
 		if (Character.isLowerCase(charArray[0])) {
 			return false;
-
 		} else {
 			return true;
 		}

@@ -4,15 +4,16 @@ package depgraph.Parser;
  *
  */
 public class Token {
-    /**
-     * Type of declaration that was found on the tokenized line.
-     * @see TokenType
-     */
-    private TokenType type;
+	/**
+	 * Type of declaration that was found on the tokenized line.
+	 * 
+	 * @see TokenType
+	 */
+	private TokenType type;
 
-    /**
-     * Value of the line that was tokenized.
-     */
+	/**
+	 * Value of the line that was tokenized.
+	 */
 	private String value;
 
 	/**
@@ -35,7 +36,7 @@ public class Token {
 		this.value = value;
 	}
 
-    /* Setters and Getters */
+	/* Setters and Getters */
 
 	public TokenType getToken() {
 		return type;
@@ -55,6 +56,6 @@ public class Token {
 
 	@Override
 	public String toString() {
-		return String.format("Type: %s\nValue: %s\n", this.type, this.value);
+		return String.format("TYPE: %s\nVALUE: %s\n", this.type, this.value);
 	}
 }

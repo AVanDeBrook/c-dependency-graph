@@ -2,28 +2,30 @@ package depgraph.Configurator;
 
 import java.io.File;
 
+// @formatter:off
 /**
- * Responsible for parsing and handling command-line arguments passed to the program.
+ * Responsible for parsing and handling command-line arguments passed to the
+ * program.
  *
  * List of possible flags:
- *     - s   dot file to process
- *     - d   directory of dot files to process.
- *     - h   print help menu
+ * - s DOT file to process
+ * - d directory of DOT files to process.
+ * - h print help menu
  *
- * Run in gradle using (replace ... with desired arguments):
- *     gradle run --args="..."
+ * Run in gradle using (replace ... with desired arguments): gradle run --args="..."
  *
  * Otherwise pass arguments normally.
  */
+// @formatter:on
 public class Configurator {
-    /**
-     * Name of file, if the passed argument is a single file.
-     */
-    private String nameOfFile;
+	/**
+	 * Name of file, if the passed argument is a single file.
+	 */
+	private String nameOfFile;
 
-    /**
-     * Name of a directory, if the passed argument is a directory.
-     */
+	/**
+	 * Name of a directory, if the passed argument is a directory.
+	 */
 	private String nameOfDirectory;
 
 	/**
@@ -100,7 +102,7 @@ public class Configurator {
 	 *
 	 * @param fileName name of the file.
 	 * @return True if param was an existing file and class attribute was set,
-	 *         false otherwise.
+	 * false otherwise.
 	 */
 	private boolean processSingleFile(String fileName) {
 		File singleFile = new File(fileName);
@@ -122,7 +124,7 @@ public class Configurator {
 	 *
 	 * @param directoryName name of the directory.
 	 * @return True if param was an existing directory and class attribute was
-	 *         set, false otherwise.
+	 * set, false otherwise.
 	 */
 	private boolean processDirectory(String directoryName) {
 		File directory = new File(directoryName);

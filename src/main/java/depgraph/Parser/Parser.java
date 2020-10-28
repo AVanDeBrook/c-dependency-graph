@@ -59,18 +59,20 @@ public class Parser {
 	}
 
 	/**
-	 * Handles individual files. Passes each line in a file to the Lexer so it
-	 * can be tokenized and handled more easily. At the moment, this function
-	 * ignores L_BRACE, R_BRACE, NODE_ATTR_STMT, EDGE_ATTR_STMT, IGNORED, and
-	 * NONE because they have no real use in the information we are storing.
+	 * Handles a single file's contents. Passes each line of the file to the
+	 * Lexer so it can be tokenized to ease handling. At the moment, this
+	 * function ignores L_BRACE, R_BRACE, NODE_ATTR_STMT, EDGE_ATTR_STMT,
+	 * IGNORED, and NONE because they have no real use in the information we are
+	 * storing.
+	 * 
+	 * When an edge is found, setting the Edge object's Node attributes may not
+	 * be possible if a node hasn't been parsed yet. We attempt by calling the
+	 * getNodeObjectFromId method, which searches for a Node object with a
+	 * matching nodeId. If there is not yet an object with a matching nodeId,
+	 * then it will throw a NPE, which is caught and effectively ignored. We try
+	 * again after we've finished parsing all of the lines in the file.
 	 *
-	 * When adding edges the getNodeObjectFromId function is called, which
-	 * searches a given array list for a specific object with a matching nodeId.
-	 * If there is no object with a matching nodeId, then it will throw a
-	 * NullPointerException, which is caught and effectively ignored.
-	 *
-	 * @param fileContents - A string containing the contents of a single DOT
-	 * file
+	 * @param fileContents A string containing the contents of a single DOT file
 	 */
 	private void parse(String fileContents) {
 		String[] lines = fileContents.split("\n");
@@ -101,12 +103,6 @@ public class Parser {
 				newEdge.setSourceNodeId(sourceNodeId);
 				newEdge.setDestinationNodeId(destinationNodeId);
 
-				/*
-				 * Setting the Edge's Node objects may not be possible if the
-				 * Node objects haven't been parsed yet. Here we attempt to, NPE
-				 * if not found, then we'll try again after escaping this loop
-				 * (finish parsing all lines)
-				 */
 				try {
 					newEdge.setSourceNodeObject(getNodeObjectFromId(nodeCollection, sourceNodeId));
 				} catch (NullPointerException ex) {
@@ -125,7 +121,7 @@ public class Parser {
 				if (newEdge.getSourceNodeObject() != null && newEdge.getDestinationNodeObject() != null
 						&& newEdge.getSourceNodeObject().getModulePrefix()
 								.equals(newEdge.getDestinationNodeObject().getModulePrefix())) {
-					/* Don't add Edges between Nodes of the same Module */
+					/* Ignored */
 				} else {
 					edgeCollection.add(newEdge);
 				}
@@ -150,9 +146,10 @@ public class Parser {
 	}
 
 	/**
-	 * Takes a collection of edges. If the source or destination node in an edge
-	 * exists in the global context, it substitutes the local value. This aids
-	 * in keeping nodes unique in the global context.
+	 * Takes a collection of Edges. If the source or destination Node in an Edge
+	 * exists in the global context, it substitutes that for what was previously
+	 * stored in the Edge. This aids in keeping nodes unique in the global
+	 * context.
 	 * 
 	 * @param oldCollection The list of Edges before updating their Nodes
 	 * @return newCollection The list of Edges after updating their Nodes
@@ -162,14 +159,13 @@ public class Parser {
 
 		for (Edge edge : oldCollection) {
 
-			/* rewrite duplicates according to the global node */
-			if (isDuplicate(edge.getSourceNodeObject().getNodeLabel())) {
+			if (existsInNodeList(edge.getSourceNodeObject().getNodeLabel())) {
 				Node srcNode = getGlobalNodeFromNodeLabel(edge.getSourceNodeObject().getNodeLabel());
 				edge.setSourceNodeId(srcNode.getNodeId());
 				edge.setSourceNodeObject(srcNode);
 			}
 
-			if (isDuplicate(edge.getDestinationNodeObject().getNodeLabel())) {
+			if (existsInNodeList(edge.getDestinationNodeObject().getNodeLabel())) {
 				Node dstNode = getGlobalNodeFromNodeLabel(edge.getDestinationNodeObject().getNodeLabel());
 				edge.setDestinationNodeId(dstNode.getNodeId());
 				edge.setDestinationNodeObject(dstNode);
@@ -178,7 +174,7 @@ public class Parser {
 			if (edge.getSourceNodeObject() != null && edge.getDestinationNodeObject() != null
 					&& edge.getSourceNodeObject().getModulePrefix()
 							.equals(edge.getDestinationNodeObject().getModulePrefix())) {
-				/* Don't add Edges between Nodes of the same Module */
+				/* Ignored */
 			} else {
 				newCollection.add(edge);
 			}
@@ -210,7 +206,7 @@ public class Parser {
 	private ArrayList<Node> cleanUpNodeCollection(ArrayList<Node> oldCollection) {
 		ArrayList<Node> newCollection = new ArrayList<Node>();
 		for (Node node : oldCollection)
-			if (!isDuplicate(node.getNodeLabel()))
+			if (!existsInNodeList(node.getNodeLabel()))
 				newCollection.add(node);
 		return newCollection;
 	}
@@ -305,7 +301,7 @@ public class Parser {
 		return foundNode;
 	}
 
-	private boolean isDuplicate(String nodeLabel) {
+	private boolean existsInNodeList(String nodeLabel) {
 		for (Node node : nodes)
 			if (node.getNodeLabel().equals(nodeLabel))
 				return true;

@@ -32,7 +32,7 @@ public class Manager {
 		 * For development only: To run Manager using Eclipse, uncomment the
 		 * following line
 		 */
-		String[] testargs = { "-s", "test\\dot-files\\algo__cfg_8c_a71940f25b478e21c90c2df689d99a4ee_cgraph.dot" };
+		String[] testargs = { "-s", "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
 
 		List<String> files = null;
 		ConfigType fileType = configurator.manageCmdLineArguments(testargs);

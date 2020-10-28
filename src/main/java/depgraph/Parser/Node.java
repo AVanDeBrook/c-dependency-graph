@@ -32,6 +32,11 @@ public class Node {
 	private boolean isRoot;
 
 	/**
+	 * If true, it is public, if false, it is private
+	 */
+	private boolean isPublic;
+
+	/**
 	 * No-arg constructor.
 	 */
 	public Node() {
@@ -70,6 +75,14 @@ public class Node {
 
 	public void setIsRoot(boolean isRoot) {
 		this.isRoot = isRoot;
+	}
+
+	public boolean isPublic() {
+		return this.isPublic;
+	}
+
+	public void setIsPublic(boolean isPublic) {
+		this.isPublic = isPublic;
 	}
 
 	@Override

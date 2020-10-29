@@ -1,0 +1,54 @@
+digraph "Parse Single String" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    split_lines [label="Split file into individual lines"];
+    create_collection [label="Create node and edge collections"];
+    loop_lines [label="Loop through each line in the file"];
+    tokenize_line [label="(function)\nTokenize line"];
+    switch_token [label="Switch on token",shape=diamond];
+    case_def [label="case: DIGRAPH_DEF"];
+    set_graph_name [label="Set/save graph name"];
+    print_graph [label="Print which graph is being parsed"];
+    case_node [label="case: NODE_STMT"];
+    create_node [label="Create new node"];
+    set_attrs [label="Set node ID, label, module prefix, root node, public/private"];
+    add_node [label="Add node to collection"];
+    case_edge [label="case: EDGE_STMT"];
+    create_edge [label="Create new edge"];
+    set_src_dest [label="Set source/destination attributes"];
+    set_src_dest_ptrs [label="Try to set source/destination pointers"];
+    add_edge [label="Add edge to edge collection"];
+    check_lines [label="Check for next line",shape=diamond];
+    loop_edges [label="Loop through edges in edge collection"];
+    check_src_ptr [label="Check if source pointer is null",shape=diamond];
+    set_src_ptr [label="Set source pointer"];
+    check_dest_ptr [label="Check if destination pointer is null",shape=diamond];
+    set_dest_ptr [label="Set destination pointer"];
+    check_edges [label="Check for next edge",shape=diamond];
+    clean_node_collection [label="Clean up node collection"];
+    clean_edge_collection [label="Clean up edge collections"];
+    add_node_collection [label="Add node collection to node list"];
+    add_edge_collection [label="Add edge collection to edge list"];
+
+    split_lines -> create_collection -> loop_lines;
+    loop_lines -> tokenize_line -> switch_token;
+    switch_token -> case_def -> set_graph_name -> print_graph;
+    switch_token -> case_node -> create_node -> set_attrs -> add_node;
+    switch_token -> case_edge -> create_edge -> set_src_dest -> set_src_dest_ptrs -> add_edge;
+    print_graph -> check_lines;
+    add_node -> check_lines;
+    add_edge -> check_lines;
+    check_lines -> loop_lines [label="True"];
+    check_lines -> loop_edges [label="False"];
+    loop_edges -> check_src_ptr;
+    check_src_ptr -> set_src_ptr [label="True"];
+    set_src_ptr -> check_dest_ptr;
+    check_src_ptr -> check_dest_ptr [label="False"];
+    check_dest_ptr -> set_dest_ptr [label="True"];
+    set_dest_ptr -> check_edges;
+    check_dest_ptr -> check_edges [label="False"];
+    check_edges -> loop_edges [label="True"];
+    check_edges -> clean_node_collection [label="False"];
+    clean_node_collection -> add_node_collection ->  clean_edge_collection -> add_edge_collection;
+}

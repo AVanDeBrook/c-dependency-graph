@@ -1,0 +1,44 @@
+digraph "Tokenize" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    split_chars [label="Split line into individual chars"];
+    loop_chars [label="Loop through each char in the line"];
+    check_quote_ws [label="Check if char is whitespace or a quote",shape=diamond];
+    add_char [label="Add char to buffer"];
+    check_bracket [label="Check for a left or right brace",shape=diamond];
+    create_token [label="Create a token for the brace and return"];
+    check_buffer_keyword [label="Check the buffer for a keyword",shape=diamond];
+    look_ahead_name [label="(function)\nLook ahead by one 'word' to get the graph name"];
+    create_keyword_token [label="Create keyword token and return"];
+    check_node_stmt [label="Check for a node statement",shape=diamond];
+    look_ahead_label [label="(function)\nLook ahead by one 'word' to get the node attributes"];
+    create_node_token [label="Create a token for the node and return it"];
+    check_edge_stmt [label="Check for an edge statement",shape=diamond];
+    look_ahead_attrs [label="(function)\nLook ahead one 'word' to get the rest of the edge statement"];
+    create_edge_token [label="Create an edge token and return it"];
+    check_chars [label="Check for next char"];
+    check_null_token [label="Check if the token has been set",shape=diamond];
+    create_ignore_token [label="Create ignore token and return it"];
+    exit [label="Return token"];
+
+    split_chars -> loop_chars -> check_quote_ws;
+    check_quote_ws -> add_char [label="False"];
+    check_quote_ws -> check_bracket [label="True"];
+    check_bracket -> create_token [label="True"];
+    check_bracket -> check_buffer_keyword [label="False"];
+    check_buffer_keyword -> look_ahead_name [label="True"];
+    look_ahead_name -> create_keyword_token;
+    check_buffer_keyword -> check_node_stmt [label="False"];
+    check_node_stmt -> look_ahead_label [label="True"];
+    look_ahead_label -> create_node_token;
+    check_node_stmt -> check_edge_stmt [label="False"];
+    check_edge_stmt -> look_ahead_attrs [label="True"];
+    look_ahead_attrs -> create_edge_token;
+    check_edge_stmt -> check_chars [label="False"];
+    check_chars -> loop_chars [label="True"];
+    check_chars -> check_null_token [label="False"];
+    check_null_token -> create_ignore_token [label="True"];
+    create_ignore_token -> exit;
+    check_null_token -> exit [label="False"];
+}

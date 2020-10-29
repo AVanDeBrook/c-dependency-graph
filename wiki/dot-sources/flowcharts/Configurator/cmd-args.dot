@@ -1,0 +1,31 @@
+digraph "Handle Command-Line Arguments" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    loop_args [label="Loop for every argument on command-line"];
+    check_arg [label="Check if argument begins with '-' and is 2 characters in length", shape=diamond, height=0.8, width=5.0];
+    switch [label="Switch on char 1",shape=diamond];
+    case_file [label="case: 's'"];
+    check_file [label="(function)\nCheck if passed file exists on disk"];
+    file_exists [label="Set return type to ConfigType.FILE"];
+    case_dir [label="case: 'd'"];
+    check_dir [label="(function)\nCheck if passed directory exists on disk"];
+    dir_exists [label="Set return type to ConfigType.DIRECTORY"];
+    case_help [label="case: 'h'"];
+    print_help [label="(function) Print help menu"];
+    next_arg [label="Check for next arg",shape=diamond];
+    return [label="Return"];
+
+    loop_args -> check_arg -> switch;
+    switch -> case_file;
+    switch -> case_dir;
+    switch -> case_help;
+    case_file -> check_file -> file_exists;
+    case_dir -> check_dir -> dir_exists;
+    case_help -> print_help;
+    file_exists -> next_arg;
+    dir_exists -> next_arg;
+    print_help -> next_arg;
+    next_arg -> loop_args;
+    next_arg -> return;
+}

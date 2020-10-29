@@ -1,0 +1,15 @@
+digraph "Process Directory" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    set_return_false [label="Set return type to false"];
+    check_dir [label="Check if directory name matches a directory on disk",shape=diamond];
+    set_attr [label="Set directory name to class attribute"];
+    set_return [label="Set return type to true"];
+    no_dir [label="Raise an error that the directory does not exist"];
+    return [label="Return"];
+
+    set_return_false -> check_dir;
+    check_dir -> set_attr -> set_return -> return;
+    check_dir -> no_dir -> return;
+}

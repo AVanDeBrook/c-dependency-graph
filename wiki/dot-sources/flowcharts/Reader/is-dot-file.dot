@@ -1,0 +1,14 @@
+digraph "Is Dot File" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    last_index [label="Find last index of '.'"];
+    save_ext [label="Save file extension"];
+    check_ext [label="Check for file extension and that it is a 'dot' extension",shape=diamond];
+    return_true [label="Return true"];
+    return_false [label="Return false"];
+
+    last_index -> save_ext -> check_ext;
+    check_ext -> return_true [label="True"];
+    check_ext -> return_false [label="False"];
+}

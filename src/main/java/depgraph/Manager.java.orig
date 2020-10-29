@@ -5,7 +5,6 @@ import java.util.List;
 import depgraph.Configurator.ConfigType;
 import depgraph.Configurator.Configurator;
 import depgraph.Parser.Edge;
-import depgraph.Parser.Module;
 import depgraph.Parser.Node;
 import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
@@ -33,10 +32,10 @@ public class Manager {
 		 * For development only: To run Manager using Eclipse, uncomment the
 		 * following line
 		 */
-//		String[] testargs = { "-s", "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
+		String[] testargs = { "-s", "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
 
 		List<String> files = null;
-		ConfigType fileType = configurator.manageCmdLineArguments(args);
+		ConfigType fileType = configurator.manageCmdLineArguments(testargs);
 
 		if (fileType == ConfigType.DIRECTORY) {
 			files = reader.readDirectory(configurator.getDirectoryName());
@@ -48,26 +47,28 @@ public class Manager {
 			parser.parse(files);
 		}
 
-<<<<<<< HEAD
 		for (Node node : parser.getNodes()) {
 			System.out.println(node.toString());
 		}
+
 		for (Edge edge : parser.getEdges()) {
 			System.out.println(edge.toString());
 		}
-=======
-		// for (Node node : parser.getNodes()) {
-		// 	System.out.println("\nNode ID: " + node.getNodeId() + "\tNode Name: " + node.getNodeLabel());
->>>>>>> c93ab3f454ff81cb1da6bce856256a4f3cd7bbca
 
+		for (depgraph.Parser.Module mod : parser.getModules()) {
+			System.out.println(mod.toString());
+		}
+
+<<<<<<< HEAD
+=======
         // }
 		// for (Edge edge : parser.getEdges()) {
-		// 	System.out.println(
-		// 			"\nSrc Node ID: " + edge.getSourceNodeId() + "\tDest Node ID: " + edge.getDestinationNodeId());
+		// 	System.out.println(edge);
         // }
         // for(Module mod : parser.getModules()){
         //     System.out.println(mod);
         // }
+>>>>>>> f2f5fab6604ccde80818e230cadb4b246040176e
 		// TODO Call graph writer
 		// TODO Call DOT runner
 	}

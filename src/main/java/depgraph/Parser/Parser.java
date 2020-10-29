@@ -72,13 +72,13 @@ public class Parser {
 		}
 
 		for (Node node : nodes) {
-			Module module = getModuleFromModulePrefix(node.getModulePrefix());
+			Module module = getModuleFromModulePrefix(node.getModulePrefix().toUpperCase());
 
 			if (node.getModulePrefix().equals(""))
 				continue;
 
 			if (module == null) {
-				module = new Module(node.getModulePrefix());
+				module = new Module(node.getModulePrefix().toUpperCase());
 				modules.add(module);
 			}
 
@@ -92,7 +92,7 @@ public class Parser {
 	 * function ignores L_BRACE, R_BRACE, NODE_ATTR_STMT, EDGE_ATTR_STMT,
 	 * IGNORED, and NONE because they have no real use in the information we are
 	 * storing.
-	 * 
+	 *
 	 * When an edge is found, setting the Edge object's Node attributes may not
 	 * be possible if a node hasn't been parsed yet. We attempt by calling the
 	 * getNodeObjectFromId method, which searches for a Node object with a

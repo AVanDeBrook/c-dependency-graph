@@ -53,8 +53,7 @@ public class Manager {
 
         // }
 		// for (Edge edge : parser.getEdges()) {
-		// 	System.out.println(
-		// 			"\nSrc Node ID: " + edge.getSourceNodeId() + "\tDest Node ID: " + edge.getDestinationNodeId());
+		// 	System.out.println(edge);
         // }
         // for(Module mod : parser.getModules()){
         //     System.out.println(mod);

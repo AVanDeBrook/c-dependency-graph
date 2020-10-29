@@ -78,6 +78,10 @@ public class Edge {
 
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		return String.format("Edge\n\tSOURCE: %s\n\tDESTINATION: %s", this.sourceNodeId, this.destinationNodeId);
+=======
+		return String.format("SOURCE: %s\nDESTINATION: %s\n", this.sourceNodeObject.getNodeLabel(), this.destinationNodeObject.getNodeLabel());
+>>>>>>> f2f5fab6604ccde80818e230cadb4b246040176e
 	}
 }

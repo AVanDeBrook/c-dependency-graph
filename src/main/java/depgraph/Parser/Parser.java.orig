@@ -46,14 +46,20 @@ public class Parser {
 	/**
 	 * No-arg constructor.
 	 */
-	private int lastNodeId;
-
+    private int lastNodeId;
 	public Parser() {
+<<<<<<< HEAD
 		lexer = new Lexer();
 		nodes = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
 		modules = new ArrayList<Module>();
-		lastNodeId = 0;
+=======
+        lexer = new Lexer();
+        nodes = new ArrayList<Node>();
+        edges = new ArrayList<Edge>();
+        modules = new ArrayList<Module>();
+        lastNodeId = 0;
+>>>>>>> c93ab3f454ff81cb1da6bce856256a4f3cd7bbca
 	}
 
 	/**
@@ -161,8 +167,8 @@ public class Parser {
 				e.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, e.getDestinationNodeId()));
 		}
 
-		nodeCollection = cleanUpNodeCollection(nodeCollection);
-		nodes.addAll(nodeCollection);
+        nodeCollection = cleanUpNodeCollection(nodeCollection);
+        nodes.addAll(nodeCollection);
 		edgeCollection = cleanUpEdgeCollection(edgeCollection);
 		edges.addAll(edgeCollection);
 	}
@@ -187,6 +193,7 @@ public class Parser {
 				edge.setSourceNodeObject(srcNode);
 			}
 
+<<<<<<< HEAD
 			if (existsInNodeList(edge.getDestinationNodeObject().getNodeLabel())) {
 				Node dstNode = getGlobalNodeFromNodeLabel(edge.getDestinationNodeObject().getNodeLabel());
 				edge.setDestinationNodeId(dstNode.getNodeId());
@@ -197,6 +204,15 @@ public class Parser {
 					.equals(edge.getDestinationNodeObject().getModulePrefix())) {
 				newCollection.add(edge);
 			}
+=======
+			if (isDuplicate(edge.getDestinationNodeObject().getNodeLabel())) {
+				Node tempDstNode = getGlobalNodeFromNodeLabel(edge.getDestinationNodeObject().getNodeLabel());
+				edge.setDestinationNodeId(tempDstNode.getNodeId());
+				edge.setDestinationNodeObject(tempDstNode);
+            }
+
+			newCollection.add(edge);
+>>>>>>> c93ab3f454ff81cb1da6bce856256a4f3cd7bbca
 		}
 
 		return newCollection;
@@ -225,11 +241,16 @@ public class Parser {
 	private ArrayList<Node> cleanUpNodeCollection(ArrayList<Node> oldCollection) {
 		ArrayList<Node> newCollection = new ArrayList<Node>();
 		for (Node node : oldCollection)
-			if (!existsInNodeList(node.getNodeLabel())) {
-				node.setNodeId("Node" + this.lastNodeId);
-				lastNodeId++;
+<<<<<<< HEAD
+			if (!existsInNodeList(node.getNodeLabel()))
 				newCollection.add(node);
-			}
+=======
+            if (!isDuplicate(node.getNodeLabel())){
+                node.setNodeId("Node"+this.lastNodeId);
+                lastNodeId++;
+                newCollection.add(node);
+            }
+>>>>>>> c93ab3f454ff81cb1da6bce856256a4f3cd7bbca
 		return newCollection;
 	}
 

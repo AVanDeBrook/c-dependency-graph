@@ -32,10 +32,10 @@ public class Manager {
 		 * For development only: To run Manager using Eclipse, uncomment the
 		 * following line
 		 */
-//		String[] testargs = { "-s", "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
+		String[] testargs = { "-s", "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
 
 		List<String> files = null;
-		ConfigType fileType = configurator.manageCmdLineArguments(args);
+		ConfigType fileType = configurator.manageCmdLineArguments(testargs);
 
 		if (fileType == ConfigType.DIRECTORY) {
 			files = reader.readDirectory(configurator.getDirectoryName());
@@ -59,6 +59,16 @@ public class Manager {
 			System.out.println(mod.toString());
 		}
 
+<<<<<<< HEAD
+=======
+        // }
+		// for (Edge edge : parser.getEdges()) {
+		// 	System.out.println(edge);
+        // }
+        // for(Module mod : parser.getModules()){
+        //     System.out.println(mod);
+        // }
+>>>>>>> f2f5fab6604ccde80818e230cadb4b246040176e
 		// TODO Call graph writer
 		// TODO Call DOT runner
 	}

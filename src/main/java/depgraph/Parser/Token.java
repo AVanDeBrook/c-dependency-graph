@@ -56,6 +56,6 @@ public class Token {
 
 	@Override
 	public String toString() {
-		return String.format("TYPE: %s\nVALUE: %s\n", this.type, this.value);
+		return String.format("Token\n\tTYPE: %s\n\tVALUE: %s", this.type, this.value);
 	}
 }

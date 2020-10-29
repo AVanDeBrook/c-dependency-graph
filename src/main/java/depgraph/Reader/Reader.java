@@ -23,7 +23,7 @@ public class Reader {
 	public List<String> readSingleFile(String filePath) throws Exception {
 		List<String> filesList = new ArrayList<String>();
 
-		System.out.println("Reading single file...");
+		System.out.println("Reading: single file");
 
 		if (isDotFile(filePath)) {
 			filesList.add(read(filePath));
@@ -48,7 +48,7 @@ public class Reader {
 		File[] filesInDir = folder.listFiles();
 		List<String> filesList = new ArrayList<String>();
 
-		System.out.println("Reading files from directory...");
+		System.out.println("Reading: directory");
 
 		for (File file : filesInDir) {
 			if (file.isFile() && isDotFile(file.toString())) {

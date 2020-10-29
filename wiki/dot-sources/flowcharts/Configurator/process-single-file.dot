@@ -1,0 +1,15 @@
+digraph "Process Single File" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    set_return_false [label="Set return type to false"];
+    check_file_name [label="Check if file name matches a file on disk",shape=diamond];
+    set_attr [label="Set file name to class attribute"];
+    set_return_true [label="Set return to true"];
+    no_file [label="Raise error that file does not exist"];
+    return [label="Return"];
+
+    set_return_false -> check_file_name;
+    check_file_name -> set_attr -> set_return_true -> return;
+    check_file_name -> no_file -> return;
+}

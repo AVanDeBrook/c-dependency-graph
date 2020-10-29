@@ -1,0 +1,27 @@
+digraph "Parse all files" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    loop_strings [label="Loop through every string in the file content strings"];
+    parse_string [label="(function)\nParse file content string"];
+    check_string [label="Check for next string",shape=diamond];
+    loop_nodes [label="Loop through every node in parsed nodes"];
+    get_module [label="(function)\nGet module based on node module prefix"];
+    check_module_exists [label="Check if module exists for module prefix",shape=diamond];
+    create_module [label="Create new module"];
+    add_module [label="Add module to module list"];
+    add_node [label="Add node to module"];
+    check_node [label="Check for next node",shape=diamond];
+    exit [label="Return"];
+
+    loop_strings -> parse_string -> check_string;
+    check_string -> loop_strings [label="True"];
+    check_string -> loop_nodes [label="False"];
+    loop_nodes -> get_module -> check_module_exists;
+    check_module_exists -> add_node [label="True"];
+    check_module_exists -> create_module [label="False"];
+    create_module -> add_module -> add_node;
+    add_node -> check_node;
+    check_node -> loop_nodes [label="True"];
+    check_node -> exit [label="False"];
+}

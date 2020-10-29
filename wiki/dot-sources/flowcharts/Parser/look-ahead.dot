@@ -1,0 +1,17 @@
+digraph "Look Ahead" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    loop_chars [label="Loop through each char in the array"];
+    check_skip [label="Check for whitespace, semi-colons, or quotes",shape=diamond];
+    add_buffer [label="Add char to buffer"];
+    check_chars [label="Check for next char"];
+    return_buffer [label="Return buffer"];
+
+    loop_chars -> check_skip;
+    check_skip -> add_buffer [label="False"];
+    add_buffer -> check_chars;
+    check_skip -> check_chars [label="True"];
+    check_chars -> loop_chars [label="True"];
+    check_chars -> return_buffer [label="False"];
+}

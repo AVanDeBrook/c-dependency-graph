@@ -1,0 +1,12 @@
+digraph "Manager" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    module_objects [label="Create static module objects"];
+    cmd_args [label="Handle command-line arguments"];
+    read_files [label="Read file(s)"];
+    parse_files [label="Parse input files into data"];
+    // TODO there will be more steps here as sprint 3 develops
+
+    module_objects -> cmd_args -> read_files -> parse_files;
+}

@@ -1,0 +1,22 @@
+digraph "Read Directory" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    print_info [label="Print info to stdout"];
+    loop_files [label="Loop for all files in directory"];
+    check_file [label="Check if file exists and that it has a dot extension",shape=diamond];
+    read_file [label="(function)\nRead file contents"];
+    add_list [label="Add file contents to file list"];
+    check_list [label="Check if file list is empty",shape=diamond];
+    throw_exception [label="Throw exception"];
+    return_list [label="Return file list"];
+    check_next_file [label="Check for next file"];
+
+    print_info -> loop_files;
+    loop_files -> check_file [label="True"];
+    check_file -> read_file -> add_list -> check_next_file;
+    check_next_file -> loop_files;
+    check_next_file -> check_list;
+    check_list -> throw_exception [label="True"];
+    check_list -> return_list [label="False"];
+}

@@ -1,0 +1,15 @@
+digraph "Read" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    loop_lines [label="Loop for each line in file"];
+    add_line [label="Add line to string contents"];
+    check_eof [label="Check for end of file marker",shape=diamond];
+    close_reader [label="Close reader buffer"];
+    return_contents [label="Return file contents"];
+
+    loop_lines -> add_line -> check_eof;
+    check_eof -> loop_lines [label="True"];
+    check_eof -> close_reader [label="False"];
+    close_reader -> return_contents;
+}

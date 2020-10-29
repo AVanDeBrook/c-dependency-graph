@@ -1,0 +1,14 @@
+digraph "Read Single File" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    print_info [label="Print info to stdout"];
+    check_dot_file [label="Check if passed file has a dot file extension",shape=diamond];
+    read_file [label="(function)\nRead file contents"];
+    add_contents [label="Add file contents to file contents list"];
+    throw_exception [label="Throw invalid extension exception"];
+    return_list [label="Return file contents in a list"];
+
+    print_info -> check_dot_file -> read_file -> add_contents -> return_list;
+    check_dot_file -> throw_exception;
+}

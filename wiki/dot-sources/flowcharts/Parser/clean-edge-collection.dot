@@ -1,0 +1,27 @@
+digraph "Clean Up Edge Colleciton" {
+    rankdir="TB";
+    node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
+
+    create_edge_collection [label="Create new edge collection"];
+    loop_edges [label="Loop through all edges in old collection"];
+    check_src_duplicate [label="Check if the edge's source node is a duplicate",shape=diamond];
+    get_src_label [label="(function)\nGet source node from node label"];
+    reset_src [label="Reset source node ID and pointer"];
+    check_dest_duplicate [label="Check if the edge's destination node is a duplicate",shape=diamond];
+    get_dest_label [label="(function)\nGet destination node from node label"];
+    reset_dest [label="Rest destination node ID and pointer"];
+    add_edge [label="Add edge to new collection"];
+    check_edge [label="Check for next edge",shape=diamond];
+    return_collection [label="Return new collection"];
+
+    create_edge_collection -> loop_edges -> check_src_duplicate;
+    check_src_duplicate -> get_src_label [label="True"];
+    get_src_label -> reset_src -> check_dest_duplicate;
+    check_src_duplicate -> check_dest_duplicate [label="False"];
+    check_dest_duplicate -> get_dest_label [label="True"];
+    get_dest_label -> reset_dest -> add_edge;
+    get_dest_label -> add_edge [label="False"];
+    add_edge -> check_edge;
+    check_edge -> loop_edges [label="True"];
+    check_edge -> return_collection [label="False"];
+}

@@ -46,11 +46,13 @@ public class Parser {
 	/**
 	 * No-arg constructor.
 	 */
+    private int lastNodeId;
 	public Parser() {
         lexer = new Lexer();
         nodes = new ArrayList<Node>();
         edges = new ArrayList<Edge>();
         modules = new ArrayList<Module>();
+        lastNodeId = 0;
 	}
 
 	/**
@@ -155,10 +157,9 @@ public class Parser {
 				e.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, e.getDestinationNodeId()));
 		}
 
-		nodeCollection = cleanUpNodeCollection(nodeCollection);
+        nodeCollection = cleanUpNodeCollection(nodeCollection);
+        nodes.addAll(nodeCollection);
 		edgeCollection = cleanUpEdgeCollection(edgeCollection);
-
-		nodes.addAll(nodeCollection);
 		edges.addAll(edgeCollection);
 	}
 
@@ -186,7 +187,8 @@ public class Parser {
 				Node tempDstNode = getGlobalNodeFromNodeLabel(edge.getDestinationNodeObject().getNodeLabel());
 				edge.setDestinationNodeId(tempDstNode.getNodeId());
 				edge.setDestinationNodeObject(tempDstNode);
-			}
+            }
+
 			newCollection.add(edge);
 		}
 
@@ -216,8 +218,11 @@ public class Parser {
 	private ArrayList<Node> cleanUpNodeCollection(ArrayList<Node> oldCollection) {
 		ArrayList<Node> newCollection = new ArrayList<Node>();
 		for (Node node : oldCollection)
-			if (!isDuplicate(node.getNodeLabel()))
-				newCollection.add(node);
+            if (!isDuplicate(node.getNodeLabel())){
+                node.setNodeId("Node"+this.lastNodeId);
+                lastNodeId++;
+                newCollection.add(node);
+            }
 		return newCollection;
 	}
 

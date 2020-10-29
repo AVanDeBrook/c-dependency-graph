@@ -50,5 +50,5 @@ digraph "Parse Single String" {
     check_dest_ptr -> check_edges [label="False"];
     check_edges -> loop_edges [label="True"];
     check_edges -> clean_node_collection [label="False"];
-    clean_node_collection -> clean_edge_collection -> add_node_collection -> add_edge_collection;
+    clean_node_collection -> add_node_collection ->  clean_edge_collection -> add_edge_collection;
 }

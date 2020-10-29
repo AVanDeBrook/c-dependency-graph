@@ -12,7 +12,7 @@ digraph "Parse Single String" {
     print_graph [label="Print which graph is being parsed"];
     case_node [label="case: NODE_STMT"];
     create_node [label="Create new node"];
-    set_attrs [label="Set node ID, label, module prefix, root node, and public/private"];
+    set_attrs [label="Set node ID, label, module prefix, root node, public/private"];
     add_node [label="Add node to collection"];
     case_edge [label="case: EDGE_STMT"];
     create_edge [label="Create new edge"];

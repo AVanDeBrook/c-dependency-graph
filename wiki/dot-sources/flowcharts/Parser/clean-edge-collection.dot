@@ -9,7 +9,7 @@ digraph "Clean Up Edge Collection" {
     reset_src [label="Reset source node ID and pointer"];
     check_dest_duplicate [label="Check if the edge's destination node is a duplicate",shape=diamond];
     get_dest_label [label="(function)\nGet destination node from node label"];
-    reset_dest [label="Rest destination node ID and pointer"];
+    reset_dest [label="Reset destination node ID and pointer"];
     add_edge [label="Add edge to new collection"];
     check_edge [label="Check for next edge",shape=diamond];
     return_collection [label="Return new collection"];

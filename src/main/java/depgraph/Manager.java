@@ -48,15 +48,15 @@ public class Manager {
 		}
 
 		for (Node node : parser.getNodes()) {
-			System.out.println(node.toString());
+			System.out.println(node);
 		}
 
 		for (Edge edge : parser.getEdges()) {
-			System.out.println(edge.toString());
+			System.out.println(edge);
 		}
 
 		for (depgraph.Parser.Module mod : parser.getModules()) {
-			System.out.println(mod.toString());
+			System.out.println(mod);
 		}
 
 		// TODO Call graph writer

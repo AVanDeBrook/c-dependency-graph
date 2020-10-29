@@ -1,4 +1,4 @@
-digraph "Clean Up Edge Colleciton" {
+digraph "Clean Up Edge Collection" {
     rankdir="TB";
     node [shape="rectangle",fixedsize=true,height=0.5,width=4.0,fontsize=12];
 

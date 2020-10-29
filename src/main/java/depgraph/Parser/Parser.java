@@ -157,10 +157,9 @@ public class Parser {
 				e.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, e.getDestinationNodeId()));
 		}
 
-		nodeCollection = cleanUpNodeCollection(nodeCollection);
+        nodeCollection = cleanUpNodeCollection(nodeCollection);
+        nodes.addAll(nodeCollection);
 		edgeCollection = cleanUpEdgeCollection(edgeCollection);
-
-		nodes.addAll(nodeCollection);
 		edges.addAll(edgeCollection);
 	}
 

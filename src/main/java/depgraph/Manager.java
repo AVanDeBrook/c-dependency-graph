@@ -5,6 +5,7 @@ import java.util.List;
 import depgraph.Configurator.ConfigType;
 import depgraph.Configurator.Configurator;
 import depgraph.Parser.Edge;
+import depgraph.Parser.Module;
 import depgraph.Parser.Node;
 import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
@@ -47,14 +48,17 @@ public class Manager {
 			parser.parse(files);
 		}
 
-		for (Node node : parser.getNodes()) {
-			System.out.println("\nNode ID: " + node.getNodeId() + "\tNode Name: " + node.getNodeLabel());
-		}
-		for (Edge edge : parser.getEdges()) {
-			System.out.println(
-					"\nSrc Node ID: " + edge.getSourceNodeId() + "\tDest Node ID: " + edge.getDestinationNodeId());
-		}
+		// for (Node node : parser.getNodes()) {
+		// 	System.out.println("\nNode ID: " + node.getNodeId() + "\tNode Name: " + node.getNodeLabel());
 
+        // }
+		// for (Edge edge : parser.getEdges()) {
+		// 	System.out.println(
+		// 			"\nSrc Node ID: " + edge.getSourceNodeId() + "\tDest Node ID: " + edge.getDestinationNodeId());
+        // }
+        // for(Module mod : parser.getModules()){
+        //     System.out.println(mod);
+        // }
 		// TODO Call graph writer
 		// TODO Call DOT runner
 	}

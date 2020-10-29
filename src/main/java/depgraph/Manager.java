@@ -32,10 +32,10 @@ public class Manager {
 		 * For development only: To run Manager using Eclipse, uncomment the
 		 * following line
 		 */
-		String[] testargs = { "-s", "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
+//		String[] testargs = { "-s", "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
 
 		List<String> files = null;
-		ConfigType fileType = configurator.manageCmdLineArguments(testargs);
+		ConfigType fileType = configurator.manageCmdLineArguments(args);
 
 		if (fileType == ConfigType.DIRECTORY) {
 			files = reader.readDirectory(configurator.getDirectoryName());

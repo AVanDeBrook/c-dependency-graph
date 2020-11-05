@@ -43,11 +43,11 @@ public class Parser {
 	 */
 	private ArrayList<Module> modules;
 
-	/**
-	 * No-arg constructor.
-	 */
 	private int lastNodeId;
 
+    /**
+	 * No-arg constructor.
+	 */
 	public Parser() {
 		lexer = new Lexer();
 		nodes = new ArrayList<Node>();
@@ -304,7 +304,7 @@ public class Parser {
 
 	/**
 	 * Determines source node from an edge_stmt. edge_stmts always take the form
-	 * src -> dest (whitespace is omitted by the Lexer).
+	 * src -&gt; dest (whitespace is omitted by the Lexer).
 	 *
 	 * @param valueString The value of a Lexer created Token which has a
 	 * TokenType of edge_stmt
@@ -316,7 +316,7 @@ public class Parser {
 
 	/**
 	 * Determines the destination node from an edge_stmt. edge_stmts always take
-	 * the form src -> dest (whitespace omitted by the Lexer).
+	 * the form src -&gt; dest (whitespace omitted by the Lexer).
 	 *
 	 * @param valueString The value of a Lexer created Token which has a
 	 * TokenType of edge_stmt

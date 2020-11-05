@@ -22,7 +22,7 @@ public class Module {
 	/**
 	 * Create an object with a specific module prefix.
 	 *
-	 * @param modulePrefix
+	 * @param modulePrefix Shorthand version of the module name (e.g. ADC, BMS, etc.)
 	 */
 	public Module(String modulePrefix) {
 		this.nodes = new ArrayList<Node>();

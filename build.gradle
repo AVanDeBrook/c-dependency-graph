@@ -22,3 +22,7 @@ test {
         // showStandardStreams true
     }
 }
+
+javadoc {
+    options.showAll()
+}

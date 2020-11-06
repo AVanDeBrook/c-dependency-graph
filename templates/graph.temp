@@ -1,0 +1,7 @@
+digraph {
+    %graph.attributes%
+    %graph.node.attributes%
+    %graph.edge.attributes%
+    %graph.subgraph_cluster%
+    %graph.edge_defs%
+}

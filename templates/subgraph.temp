@@ -1,0 +1,4 @@
+subgraph cluster_%subgraph.visibility%_%subgraph.modulePrefix% {
+    %subgraph.attributes%
+    %subgraph.node_defs%
+}

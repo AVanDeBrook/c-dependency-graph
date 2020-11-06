@@ -8,17 +8,20 @@ import depgraph.Parser.Edge;
 import depgraph.Parser.Node;
 import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
+import depgraph.GraphWriter.GraphWriter;
 
 public class Manager {
 
 	private static Configurator configurator;
 	private static Reader reader;
-	private static Parser parser;
+    private static Parser parser;
+    private static GraphWriter writer;
 
 	public static void main(String[] args) {
 		configurator = new Configurator();
 		reader = new Reader();
-		parser = new Parser();
+        parser = new Parser();
+        writer = new GraphWriter();
 
 		try {
 			start(args);
@@ -57,7 +60,9 @@ public class Manager {
 			System.out.println(mod);
 		}
 
-		// TODO Call graph writer
+        writer.readTemplates();
+        writer.drawGraph();
+
 		// TODO Call DOT runner
 	}
 }

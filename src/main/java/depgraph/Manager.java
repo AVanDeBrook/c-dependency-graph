@@ -2,8 +2,10 @@ package depgraph;
 
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 
 import depgraph.Configurator.ConfigType;
 import depgraph.Configurator.Configurator;
@@ -18,33 +20,51 @@ public class Manager {
 	private static Reader reader;
     private static Parser parser;
     private static Logger logger;
+    private static ConsoleHandler consoleHandler;
 
 	public static void main(String[] args) {
+
+        init_logger();
+        logger.finest("Program initializing ...");
 		configurator = new Configurator();
 		reader = new Reader();
         parser = new Parser();
-        logger = Logger.getLogger("depgraph");
-        logger.addHandler(new ConsoleHandler());
+
         //levels of logging include
         /* Severe / warning / info / config / fine / finer / finest */
         /*    7   /    6    /  5   /   4    /  3   /   2   /    1   */
-        //for testing
-        logger.setLevel(Level.ALL);
+
 		try {
+            logger.info("Program starting ...");
             start(args);
-            logger.finest("Program starting ...");
 		} catch (Exception e) {
             //e.printStackTrace();
             logger.log(Level.WARNING, "Start() did not run correctly", e);
 		}
 	}
 
+    private static void init_logger(){
+
+        Logger rootLogger = Logger.getLogger("");
+        Handler [] rootHandlers = rootLogger.getHandlers();
+        for (Handler h : rootHandlers){
+            h.close();
+        }
+        //make a generic logger and handler
+        logger = Logger.getLogger("depgraph"); //logger for the project overall
+        consoleHandler = new ConsoleHandler(); //std err
+
+        logger.addHandler(consoleHandler); //add an output vector
+        logger.setLevel(Level.ALL); //log all but dont print all yet
+        consoleHandler.setLevel(Level.ALL); //print all for now
+    }
 	private static void start(String[] args) throws Exception {
 
 //		String[] testArgs = { "-s", "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
 //		String[] testArgs = { "-h" };
 
-		List<String> files = null;
+        List<String> files = null;
+        logger.finest("Processing arguments ...");
 		ConfigType fileType = configurator.manageCmdLineArguments(args);
 
 		if (fileType == ConfigType.DIRECTORY) {

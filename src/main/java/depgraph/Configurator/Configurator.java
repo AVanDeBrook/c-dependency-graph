@@ -1,6 +1,8 @@
 package depgraph.Configurator;
 
 import java.io.File;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 
 // @formatter:off
 /**
@@ -28,12 +30,16 @@ public class Configurator {
 	 */
 	private String nameOfDirectory;
 
+    private static Logger logger;
+    private static Handler[] handlers;
 	/**
 	 * No-arg constructor. Initializes class attributes to null-strings.
 	 */
 	public Configurator() {
 		nameOfDirectory = "";
-		nameOfFile = "";
+        nameOfFile = "";
+      //  logger.getLogger("depgraph");
+        //handlers = logger.getHandlers();
 	}
 
 	/**

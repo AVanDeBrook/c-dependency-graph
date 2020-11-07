@@ -1,6 +1,9 @@
 package depgraph;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.ConsoleHandler;
 
 import depgraph.Configurator.ConfigType;
 import depgraph.Configurator.Configurator;
@@ -13,17 +16,26 @@ public class Manager {
 
 	private static Configurator configurator;
 	private static Reader reader;
-	private static Parser parser;
+    private static Parser parser;
+    private static Logger logger;
 
 	public static void main(String[] args) {
 		configurator = new Configurator();
 		reader = new Reader();
-		parser = new Parser();
-
+        parser = new Parser();
+        logger = Logger.getLogger("depgraph");
+        logger.addHandler(new ConsoleHandler());
+        //levels of logging include
+        /* Severe / warning / info / config / fine / finer / finest */
+        /*    7   /    6    /  5   /   4    /  3   /   2   /    1   */
+        //for testing
+        logger.setLevel(Level.ALL);
 		try {
-			start(args);
+            start(args);
+            logger.finest("Program starting ...");
 		} catch (Exception e) {
-			e.printStackTrace();
+            //e.printStackTrace();
+            logger.log(Level.WARNING, "Start() did not run correctly", e);
 		}
 	}
 
@@ -45,17 +57,17 @@ public class Manager {
 			parser.parse(files);
 		}
 
-		for (Node node : parser.getNodes()) {
-			System.out.println(node);
-		}
+		// for (Node node : parser.getNodes()) {
+		// 	System.out.println(node);
+		// }
 
-		for (Edge edge : parser.getEdges()) {
-			System.out.println(edge);
-		}
+		// for (Edge edge : parser.getEdges()) {
+		// 	System.out.println(edge);
+		// }
 
-		for (depgraph.Parser.Module mod : parser.getModules()) {
-			System.out.println(mod);
-		}
+		// for (depgraph.Parser.Module mod : parser.getModules()) {
+		// 	System.out.println(mod);
+		// }
 
 		// TODO Call graph writer
 		// TODO Call DOT runner

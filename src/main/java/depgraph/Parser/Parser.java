@@ -114,7 +114,7 @@ public class Parser {
 			switch (tokenizedLine.getToken()) {
 			case DIGRAPH_DEF:
 				graphName = tokenizedLine.getValue();
-				System.out.println("Parsing graph: " + graphName);
+				//System.out.println("Parsing graph: " + graphName);
 				break;
 			case NODE_STMT:
 				Node newNode = new Node();

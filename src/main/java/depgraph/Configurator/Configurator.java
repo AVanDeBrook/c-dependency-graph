@@ -38,8 +38,14 @@ public class Configurator {
 	public Configurator() {
 		nameOfDirectory = "";
         nameOfFile = "";
-      //  logger.getLogger("depgraph");
-        //handlers = logger.getHandlers();
+        logger.getLogger("depgraph");
+        try {
+            handlers = logger.getHandlers();
+        } catch (Exception e) {
+            //TODO: handle exception
+            System.err.println("This should be caused by a test");
+        }
+
 	}
 
 	/**

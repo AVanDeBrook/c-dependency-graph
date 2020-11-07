@@ -44,20 +44,23 @@ public class Manager {
 	}
 
     private static void init_logger(){
-
+        //removing the root logger to be able to access loggers more definitively
         Logger rootLogger = Logger.getLogger("");
         Handler [] rootHandlers = rootLogger.getHandlers();
         for (Handler h : rootHandlers){
             h.close();
+            rootLogger.removeHandler(h);
         }
+
         //make a generic logger and handler
-        logger = Logger.getLogger("depgraph"); //logger for the project overall
-        consoleHandler = new ConsoleHandler(); //std err
+        logger = Logger.getLogger("depgraph"); //logger for the overall project
+        consoleHandler = new ConsoleHandler(); //prints to std err
 
         logger.addHandler(consoleHandler); //add an output vector
         logger.setLevel(Level.ALL); //log all but dont print all yet
         consoleHandler.setLevel(Level.ALL); //print all for now
     }
+
 	private static void start(String[] args) throws Exception {
 
 //		String[] testArgs = { "-s", "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };

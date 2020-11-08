@@ -32,7 +32,7 @@ public class Manager {
 
         //levels of logging include
         /* Severe / warning / info / config / fine / finer / finest */
-        /*    7   /    6    /  5   /   4    /  3   /   2   /    1   */
+        /*    0   /    1    /  2   /   3    /  4   /   5   /    6   */
 
 		try {
             logger.info("Program starting ...");
@@ -69,7 +69,7 @@ public class Manager {
         List<String> files = null;
         logger.finest("Processing arguments ...");
 		ConfigType fileType = configurator.manageCmdLineArguments(args);
-
+        logger.finest("testing testing");
 		if (fileType == ConfigType.DIRECTORY) {
 			files = reader.readDirectory(configurator.getDirectoryName());
 		} else if (fileType == ConfigType.FILE) {

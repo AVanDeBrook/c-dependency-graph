@@ -2,6 +2,7 @@ package depgraph.Configurator;
 
 import java.io.File;
 import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 // @formatter:off
@@ -38,14 +39,9 @@ public class Configurator {
 	public Configurator() {
 		nameOfDirectory = "";
         nameOfFile = "";
-        logger.getLogger("depgraph");
-        try {
-            handlers = logger.getHandlers();
-        } catch (Exception e) {
-            //TODO: handle exception
-            System.err.println("This should be caused by a test");
-        }
-
+        //init logger to project level logger
+        logger = Logger.getLogger("depgraph");
+        handlers = logger.getHandlers();
 	}
 
 	/**
@@ -56,35 +52,43 @@ public class Configurator {
 	 */
 	public ConfigType manageCmdLineArguments(String[] args) {
 		ConfigType typeToReturn = ConfigType.NONE;
-		boolean printHelp = false;
+        boolean printHelp = false;
 
+        //errors are logged as severe here to make sure they are outputted to the user despite verbosity level
 		for (int i = 0; i < args.length; i++) {
 			if ((args[i].charAt(0) == '-') && (args[i].length() == 2)) {
 				switch (args[i].charAt(1)) {
 				case 's':
 					try {
-						if (this.processSingleFile(args[++i]))
-							typeToReturn = ConfigType.FILE;
+                        if (this.processSingleFile(args[++i])){
+                            logger.finest("Single file selected ...");
+                            typeToReturn = ConfigType.FILE;
+                        }
 					} catch (ArrayIndexOutOfBoundsException ex) {
-						System.err.println("Error (option '-s'): Incorrect format");
-						printHelp = false;
+                        logger.severe("Error (option '-s'): Incorrect format");
+                		printHelp = false;
 					}
 					break;
 				case 'd':
 					try {
-						if (this.processDirectory(args[++i]))
-							typeToReturn = ConfigType.DIRECTORY;
+                        if (this.processDirectory(args[++i])){
+                            logger.finest("Directory selected ...");
+                            typeToReturn = ConfigType.DIRECTORY;
+                        }
 					} catch (ArrayIndexOutOfBoundsException ex) {
-						System.err.println("Error (option '-d'): Incorect format");
+                        logger.severe("Error (option '-d'): Incorect format");
 						printHelp = false;
 					}
-					break;
+                    break;
+                case 'v':
+                    processVerbosity(Integer.parseInt(args[++i]));
+                    break;
 				case 'h':
 					printHelp = true;
 					break;
-				default:
-					System.err.printf("Error: Unkown option: %s\n", args[i]);
-					break;
+                default:
+                    logger.severe(String.format("Error: Unkown option: %s\n", args[i]));
+                    break;
 				}
 			} else {
 				printHelp = true;
@@ -95,7 +99,34 @@ public class Configurator {
 			this.help();
 
 		return typeToReturn;
-	}
+    }
+
+    private void processVerbosity(int levelofVerbosity){
+        /** severe / warning / info / config / fine / finer / finest */
+        /** 0 (you dont want much print statements) */
+        /** 6 (you want many print statements)      */
+        //theres only one handler -- stderr
+
+        switch(levelofVerbosity){
+            case 0: handlers[0].setLevel(Level.SEVERE);
+                break;
+            case 1: handlers[0].setLevel(Level.WARNING);
+                break;
+            case 2: handlers[0].setLevel(Level.INFO);
+                break;
+            case 3: handlers[0].setLevel(Level.CONFIG);
+                break;
+            case 4: handlers[0].setLevel(Level.FINE);
+                break;
+            case 5: handlers[0].setLevel(Level.FINER);
+                break;
+            case 6: handlers[0].setLevel(Level.FINEST);
+                break;
+            default:
+                break;
+        }
+
+    }
 
 	/**
 	 * Prints help menu to stdout.

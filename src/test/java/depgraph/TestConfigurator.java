@@ -11,7 +11,7 @@ public class TestConfigurator {
 	@Test
 	public void testSingleFileReturnsFile() {
 		String[] args = { "-s", "test/dot-files/adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot" };
-		Configurator config = new Configurator();
+        Configurator config = new Configurator();
 		assertEquals(ConfigType.FILE, config.manageCmdLineArguments(args));
 	}
 

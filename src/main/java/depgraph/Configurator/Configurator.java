@@ -60,8 +60,8 @@ public class Configurator {
 				switch (args[i].charAt(1)) {
 				case 's':
 					try {
+                        logger.finest("Single file selected ...");
                         if (this.processSingleFile(args[++i])){
-                            logger.finest("Single file selected ...");
                             typeToReturn = ConfigType.FILE;
                         }
 					} catch (ArrayIndexOutOfBoundsException ex) {
@@ -71,8 +71,8 @@ public class Configurator {
 					break;
 				case 'd':
 					try {
+                        logger.finest("Directory selected ...");
                         if (this.processDirectory(args[++i])){
-                            logger.finest("Directory selected ...");
                             typeToReturn = ConfigType.DIRECTORY;
                         }
 					} catch (ArrayIndexOutOfBoundsException ex) {

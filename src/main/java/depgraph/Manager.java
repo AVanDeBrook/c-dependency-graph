@@ -41,7 +41,14 @@ public class Manager {
             //e.printStackTrace();
             logger.log(Level.WARNING, "Start() did not run correctly", e);
 		}
-	}
+    }
+    /**
+     * This initializes our project logger named depgraph.
+     * The root logger is deleted to suppress duplicate logging/handling -- This could be handled in a variety of ways
+     * The logger can then be called by making a Logger logger = Logger.getLogger("depgraph");
+     * The initial logging level is set to all until the configurator changes it. This may result as the default value for the logger
+     * if the verbosity is not passed as an argument. This can be revised.
+     */
 
     private static void init_logger(){
         //removing the root logger to be able to access loggers more definitively

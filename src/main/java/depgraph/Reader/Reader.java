@@ -35,6 +35,7 @@ public class Reader {
             logger.finest("Reading "+filePath+" ...");
 			filesList.add(read(filePath));
 		} else {
+            logger.severe("Invalid File Extension: Must be '.dot'");
 			throw new Exception("Invalid File Extension: Must be '.dot'");
 		}
 
@@ -65,6 +66,7 @@ public class Reader {
 		}
 
 		if (filesList.isEmpty()) {
+            logger.severe("Directory did not contain any DOT files");
 			throw new Exception("Directory did not contain any DOT files.");
 		}
 

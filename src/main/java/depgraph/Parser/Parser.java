@@ -2,6 +2,8 @@ package depgraph.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The Parser is the core of the C Dependency Graph project. This class creates
@@ -43,16 +45,19 @@ public class Parser {
 	 */
 	private ArrayList<Module> modules;
 
+    private int lastNodeId;
+
+    private static Logger logger;
 	/**
 	 * No-arg constructor.
 	 */
-	private int lastNodeId;
 
 	public Parser() {
 		lexer = new Lexer();
 		nodes = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
-		modules = new ArrayList<Module>();
+        modules = new ArrayList<Module>();
+        logger = Logger.getLogger("depgraph");
 		lastNodeId = 0;
 	}
 
@@ -68,9 +73,10 @@ public class Parser {
 	 */
 	public void parse(List<String> fileContents) {
 		for (String singleFileContents : fileContents) {
+            logger.finest("Parsing a file ...");
 			this.parse(singleFileContents);
 		}
-
+        logger.finest("Organizing nodes into modules ...");
 		for (Node node : nodes) {
 			Module module = getModuleFromModulePrefix(node.getModulePrefix().toUpperCase());
 
@@ -78,7 +84,8 @@ public class Parser {
 				continue;
 
 			if (module == null) {
-				module = new Module(node.getModulePrefix().toUpperCase());
+                module = new Module(node.getModulePrefix().toUpperCase());
+                logger.finest("New module added: "+module.getModulePrefix()+" ...");
 				modules.add(module);
 			}
 
@@ -135,16 +142,18 @@ public class Parser {
 				try {
 					newEdge.setSourceNodeObject(getNodeObjectFromId(nodeCollection, sourceNodeId));
 				} catch (NullPointerException ex) {
-					/* Ignored */
+                    /* Ignored */
 				} catch (Exception ex) {
-					ex.printStackTrace();
+                    logger.log(Level.SEVERE, "Error: Edge could not set Src Node Object", ex);
+                    //ex.printStackTrace();
 				}
 				try {
 					newEdge.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, destinationNodeId));
 				} catch (NullPointerException ex) {
 					/* Ignored */
 				} catch (Exception ex) {
-					ex.printStackTrace();
+                    logger.log(Level.SEVERE, "Error: Edge could not set Dst Node Object", ex);
+                    //ex.printStackTrace();
 				}
 
 				edgeCollection.add(newEdge);
@@ -159,12 +168,24 @@ public class Parser {
 				e.setSourceNodeObject(getNodeObjectFromId(nodeCollection, e.getSourceNodeId()));
 			if (e.getDestinationNodeObject() == null)
 				e.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, e.getDestinationNodeId()));
+        }
+
+        logger.finest("Cleaning up nodes ...");
+		nodeCollection = cleanUpNodeCollection(nodeCollection);
+        nodes.addAll(nodeCollection);
+        logger.finest("Cleaning up edges ...");
+		edgeCollection = cleanUpEdgeCollection(edgeCollection);
+        edges.addAll(edgeCollection);
+
+        logger.finest("New nodes added ...");
+        for (Node node : nodeCollection) {
+			logger.finest(node);
+		}
+        logger.finest("New edges added ...");
+		for (Edge edge : edgeCollection) {
+			logger.finest(edge);
 		}
 
-		nodeCollection = cleanUpNodeCollection(nodeCollection);
-		nodes.addAll(nodeCollection);
-		edgeCollection = cleanUpEdgeCollection(edgeCollection);
-		edges.addAll(edgeCollection);
 	}
 
 	/**

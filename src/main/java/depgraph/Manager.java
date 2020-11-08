@@ -68,11 +68,12 @@ public class Manager {
 
         List<String> files = null;
         logger.finest("Processing arguments ...");
-		ConfigType fileType = configurator.manageCmdLineArguments(args);
-        logger.finest("testing testing");
+        ConfigType fileType = configurator.manageCmdLineArguments(args);
 		if (fileType == ConfigType.DIRECTORY) {
+            logger.finest("Reading directory ...");
 			files = reader.readDirectory(configurator.getDirectoryName());
 		} else if (fileType == ConfigType.FILE) {
+            logger.finest("Reading file ...");
 			files = reader.readSingleFile(configurator.getFileName());
 		}
 

@@ -109,20 +109,28 @@ public class Configurator {
 
         switch(levelofVerbosity){
             case 0: handlers[0].setLevel(Level.SEVERE);
+                logger.severe("Verbosity set to SEVERE");
                 break;
             case 1: handlers[0].setLevel(Level.WARNING);
+                logger.severe("Verbosity set to WARNING");
                 break;
             case 2: handlers[0].setLevel(Level.INFO);
+                logger.severe("Verbosity set to INFO");
                 break;
             case 3: handlers[0].setLevel(Level.CONFIG);
+                logger.severe("Verbosity set to CONFIG");
                 break;
             case 4: handlers[0].setLevel(Level.FINE);
+                logger.severe("Verbosity set to FINE");
                 break;
             case 5: handlers[0].setLevel(Level.FINER);
+                logger.severe("Verbosity set to FINER");
                 break;
             case 6: handlers[0].setLevel(Level.FINEST);
+                logger.severe("Verbosity set to FINEST");
                 break;
             default:
+                    /**what should the default be ? */
                 break;
         }
 
@@ -150,12 +158,14 @@ public class Configurator {
 	private boolean processSingleFile(String fileName) {
 		File singleFile = new File(fileName);
 		boolean success = false;
-
+        logger.finest("Validating File Input ...");
 		if (singleFile.isFile()) {
+            logger.finest("File is valid ...");
 			this.nameOfFile = fileName;
 			success = true;
 		} else {
-			System.err.println("\nError: File name provided cannot resolve to a file");
+            logger.severe("Error: File name provided cannot resolve to a file");
+			//System.err.println("\nError: File name provided cannot resolve to a file");
 		}
 
 		return success;
@@ -172,12 +182,14 @@ public class Configurator {
 	private boolean processDirectory(String directoryName) {
 		File directory = new File(directoryName);
 		boolean success = false;
-
+        logger.finest("Validating Directory Input ...");
 		if (directory.isDirectory()) {
+            logger.finest("Directory is valid ...");
 			this.nameOfDirectory = directoryName;
 			success = true;
 		} else {
-			System.err.println("\nError: Directory name provided cannot resolve to a directory");
+            logger.severe("Error: Directory name provided cannot resolve to a directory");
+			//System.err.println("\nError: Directory name provided cannot resolve to a directory");
 		}
 
 		return success;

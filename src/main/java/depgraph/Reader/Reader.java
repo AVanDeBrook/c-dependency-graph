@@ -6,11 +6,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  *
  */
 public class Reader {
+
+    private static Logger logger;
+    public Reader(){
+        logger = Logger.getLogger("depgraph");
+    }
 
 	/**
 	 * Method used to get the contents of a single DOT file at a given location.
@@ -26,6 +32,7 @@ public class Reader {
 	//	System.out.println("Reading: single file");
 
 		if (isDotFile(filePath)) {
+            logger.finest("Reading "+filePath+" ...");
 			filesList.add(read(filePath));
 		} else {
 			throw new Exception("Invalid File Extension: Must be '.dot'");
@@ -52,6 +59,7 @@ public class Reader {
 
 		for (File file : filesInDir) {
 			if (file.isFile() && isDotFile(file.toString())) {
+                logger.finest("Reading "+file.toString()+" ...");
 				filesList.add(read(file.toString()));
 			}
 		}

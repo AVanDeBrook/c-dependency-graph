@@ -61,7 +61,6 @@ public class Lexer {
 	 *
 	 * @param line A single line from the file to tokenize.
 	 * @return Token with relevant data from the tokenized line.
-	 * @see Token, Parser
 	 */
 	public Token tokenize(String line) {
 		char[] charsInLine = line.toCharArray();
@@ -129,7 +128,9 @@ public class Lexer {
 	 *
 	 * @param arr Subset of the char array from the tokenize function.
 	 * @return String representing the "word" found.
+     * @deprecated
 	 */
+    @Deprecated
 	private String lookAhead(char[] arr) {
 		String buffer = "";
 

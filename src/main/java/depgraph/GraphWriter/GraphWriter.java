@@ -5,6 +5,7 @@ import java.util.*;
 
 import depgraph.Parser.Edge;
 import depgraph.Parser.Module;
+import depgraph.Parser.Node;
 
 /**
  * Class to read graph templates, fill them out and write the resulting
@@ -54,6 +55,9 @@ public class GraphWriter {
      */
     private List<Module> modules;
 
+    /**
+     * No-arg constructor
+     */
     public GraphWriter() {
         graphTemplatePath = "templates/graph.temp";
         subgraphTemplatePath = "templates/subgraph.temp";
@@ -104,7 +108,49 @@ public class GraphWriter {
      * @throws Exception If there is an error creating the graph or writing it to a file.
      */
     public void drawGraph(String fileName) throws Exception {
-        // TODO need to figure out steps and order to effectively replace placeholders in the templates
+        ArrayList<String> publicFunctionSubgraphs = new ArrayList<String>();
+        String graph = graphTemplate;
+        String subgraphClusters = "";
+        for (Module module : modules)
+            publicFunctionSubgraphs.add(renderPublicSubgraph(module));
+
+        for (String subgraph : publicFunctionSubgraphs)
+            subgraphClusters += subgraph + "\n";
+
+        graph = graph.replaceAll("%graph.subgraph_cluster%", subgraphClusters);
+
+        writeToFile(fileName, graph);
+    }
+
+    private String renderPublicSubgraph(Module module) {
+        String nodeDefs = "";
+        String subgraph = subgraphTemplate;
+
+        for (Node node : module.getNodes()) {
+            if (node.isPublic()) {
+                String nodeString = NODE_DEFINITION;
+                nodeString = nodeString.replaceAll("%node.id%", node.getNodeId());
+                nodeString = nodeString.replaceAll("%node.label%", node.getNodeLabel());
+                nodeDefs += nodeString + "\n";
+            }
+        }
+
+        subgraph = subgraph.replaceAll("%subgraph.visibility%", "pub");
+        subgraph = subgraph.replaceAll("%subgraph.visibility_long%", "Public");
+        subgraph = subgraph.replaceAll("%subgraph.modulePrefix%", module.getModulePrefix());
+        subgraph = subgraph.replaceAll("%subgraph.node_defs%", nodeDefs);
+
+        return subgraph;
+    }
+
+    private void writeToFile(String fileName, String graph) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(fileName)));
+            writer.write(graph);
+            writer.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -121,7 +167,7 @@ public class GraphWriter {
             reader = new BufferedReader(new FileReader(new File(templatePath)));
 
             while (reader.ready())
-                template += reader.read();
+                template += (char)reader.read();
 
             reader.close();
         } catch (Exception ex) {
@@ -169,7 +215,7 @@ public class GraphWriter {
         return this.edges;
     }
 
-    public void setNodes(List<Edge> edges) {
+    public void setEdges(List<Edge> edges) {
         this.edges= edges;
     }
 }

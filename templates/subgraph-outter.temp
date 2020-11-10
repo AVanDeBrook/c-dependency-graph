@@ -1,0 +1,6 @@
+subgraph cluster_%subgraph.modulePrefix% {
+    label="%subgraph.modulePrefix%";
+    rank="same";
+    %subgraph.public_cluster%
+    %subgraph.private_cluster%
+}

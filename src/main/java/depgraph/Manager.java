@@ -60,6 +60,8 @@ public class Manager {
 			System.out.println(mod);
 		}
 
+        writer.setModules(parser.getModules());
+        writer.setEdges(parser.getEdges());
         writer.readTemplates();
         writer.drawGraph();
 

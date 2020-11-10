@@ -1,7 +1,5 @@
 digraph {
-    %graph.attributes%
-    %graph.node.attributes%
-    %graph.edge.attributes%
+    rankdir="LR";
+    compound=true;
     %graph.subgraph_cluster%
-    %graph.edge_defs%
 }

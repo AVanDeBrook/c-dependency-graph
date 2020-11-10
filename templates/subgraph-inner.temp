@@ -1,4 +1,4 @@
 subgraph cluster_%subgraph.visibility%_%subgraph.modulePrefix% {
-    %subgraph.attributes%
+    label="%subgraph.visibility_long%";
     %subgraph.node_defs%
 }

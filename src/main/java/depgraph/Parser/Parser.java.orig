@@ -45,25 +45,26 @@ public class Parser {
 	 */
 	private ArrayList<Module> modules;
 
+<<<<<<< HEAD
+    private int lastNodeId;
+
+    private static Logger logger;
 	/**
-	 * Counter used to create nodeIds that are unique.
+	 * No-arg constructor.
 	 */
+=======
 	private int lastNodeId;
+>>>>>>> d07b20d8b869cc13773c41c86b750bf55bc1cba7
 
-	/**
-	 * Logger used with levels TODO.
-	 */
-	private static Logger logger;
-
-	/**
+    /**
 	 * No-arg constructor.
 	 */
 	public Parser() {
 		lexer = new Lexer();
 		nodes = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
-		modules = new ArrayList<Module>();
-		logger = Logger.getLogger("depgraph");
+        modules = new ArrayList<Module>();
+        logger = Logger.getLogger("depgraph");
 		lastNodeId = 0;
 	}
 
@@ -79,10 +80,10 @@ public class Parser {
 	 */
 	public void parse(List<String> fileContents) {
 		for (String singleFileContents : fileContents) {
-			logger.finest("Parsing a file ...");
+            logger.finest("Parsing a file ...");
 			this.parse(singleFileContents);
 		}
-		logger.finest("Organizing nodes into modules ...");
+        logger.finest("Organizing nodes into modules ...");
 		for (Node node : nodes) {
 			Module module = getModuleFromModulePrefix(node.getModulePrefix().toUpperCase());
 
@@ -90,8 +91,8 @@ public class Parser {
 				continue;
 
 			if (module == null) {
-				module = new Module(node.getModulePrefix().toUpperCase());
-				logger.finest("New module added: " + module.getModulePrefix() + " ...");
+                module = new Module(node.getModulePrefix().toUpperCase());
+                logger.finest("New module added: "+module.getModulePrefix()+" ...");
 				modules.add(module);
 			}
 
@@ -127,7 +128,7 @@ public class Parser {
 			switch (tokenizedLine.getToken()) {
 			case DIGRAPH_DEF:
 				graphName = tokenizedLine.getValue();
-				// System.out.println("Parsing graph: " + graphName);
+				//System.out.println("Parsing graph: " + graphName);
 				break;
 			case NODE_STMT:
 				Node newNode = new Node();
@@ -148,18 +149,18 @@ public class Parser {
 				try {
 					newEdge.setSourceNodeObject(getNodeObjectFromId(nodeCollection, sourceNodeId));
 				} catch (NullPointerException ex) {
-					/* Ignored */
+                    /* Ignored */
 				} catch (Exception ex) {
-					logger.log(Level.SEVERE, "Error: Edge could not set Src Node Object", ex);
-					// ex.printStackTrace();
+                    logger.log(Level.SEVERE, "Error: Edge could not set Src Node Object", ex);
+                    //ex.printStackTrace();
 				}
 				try {
 					newEdge.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, destinationNodeId));
 				} catch (NullPointerException ex) {
 					/* Ignored */
 				} catch (Exception ex) {
-					logger.log(Level.SEVERE, "Error: Edge could not set Dst Node Object", ex);
-					// ex.printStackTrace();
+                    logger.log(Level.SEVERE, "Error: Edge could not set Dst Node Object", ex);
+                    //ex.printStackTrace();
 				}
 
 				edgeCollection.add(newEdge);
@@ -174,20 +175,20 @@ public class Parser {
 				e.setSourceNodeObject(getNodeObjectFromId(nodeCollection, e.getSourceNodeId()));
 			if (e.getDestinationNodeObject() == null)
 				e.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, e.getDestinationNodeId()));
-		}
+        }
 
-		logger.finest("Cleaning up nodes ...");
+        logger.finest("Cleaning up nodes ...");
 		nodeCollection = cleanUpNodeCollection(nodeCollection);
-		nodes.addAll(nodeCollection);
-		logger.finest("Cleaning up edges ...");
+        nodes.addAll(nodeCollection);
+        logger.finest("Cleaning up edges ...");
 		edgeCollection = cleanUpEdgeCollection(edgeCollection);
-		edges.addAll(edgeCollection);
+        edges.addAll(edgeCollection);
 
-		logger.finest("New nodes added ...");
-		for (Node node : nodeCollection) {
+        logger.finest("New nodes added ...");
+        for (Node node : nodeCollection) {
 			logger.finest(node);
 		}
-		logger.finest("New edges added ...");
+        logger.finest("New edges added ...");
 		for (Edge edge : edgeCollection) {
 			logger.finest(edge);
 		}

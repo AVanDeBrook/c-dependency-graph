@@ -54,8 +54,8 @@ public class Configurator {
 	 */
 	public ConfigType manageCmdLineArguments(String[] args) {
 		logger.fine("Processing command line arguments...");
-		ConfigType typeToReturn = ConfigType.NONE;
-
+        ConfigType typeToReturn = ConfigType.NONE;
+        boolean printHelp = false;
 		for (int i = 0; i < args.length; i++) {
 			if ((args[i].charAt(0) == '-') && (args[i].length() == 2)) {
 				switch (args[i].charAt(1)) {
@@ -66,7 +66,8 @@ public class Configurator {
 							typeToReturn = ConfigType.FILE;
 						}
 					} catch (ArrayIndexOutOfBoundsException ex) {
-						System.out.println("Incorrect format for option -s");
+                        System.out.println("Incorrect format for option -s");
+                        printHelp = false;
 					}
 					break;
 				case 'd':
@@ -76,24 +77,28 @@ public class Configurator {
 							typeToReturn = ConfigType.DIRECTORY;
 						}
 					} catch (ArrayIndexOutOfBoundsException ex) {
-						System.out.println("Incorect format for option -d");
+                        System.out.println("Incorect format for option -d");
+                        printHelp = false;
 					}
 					break;
 				case 'v':
 					processVerbosity(Integer.parseInt(args[++i]));
 					break;
-				case 'h':
-					printHelp();
+                case 'h':
+                    printHelp = true;
+                    printHelp();
 					break;
 				default:
 					System.out.println(String.format("Unkown option: %s", args[i]));
 					break;
 				}
 			} else {
-				printHelp();
+                printHelp = true;
 			}
-		}
-
+        }
+        if(printHelp){
+            printHelp();
+        }
 		return typeToReturn;
 	}
 

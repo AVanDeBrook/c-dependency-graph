@@ -29,9 +29,14 @@ public class GraphWriter {
     private String graphTemplatePath;
 
     /**
+     * TODO
+     */
+    private String outterSubgraphTemplatePath;
+
+    /**
      * Configurable path to subgraph template. Called "subgraph.temp" by default.
      */
-    private String subgraphTemplatePath;
+    private String innerSubgraphTemplatePath;
 
     /**
      * Contents of the graph template file for reference throughout the class.
@@ -39,9 +44,14 @@ public class GraphWriter {
     private String graphTemplate;
 
     /**
+     * TODO
+     */
+    private String outterSubgraphTemplate;
+
+    /**
      * Contents of the subgraph template file for reference throughout the class.
      */
-    private String subgraphTemplate;
+    private String innerSubgraphTemplate;
 
     /**
      * List of edges created by the Parser class. Needed when creating the
@@ -60,9 +70,11 @@ public class GraphWriter {
      */
     public GraphWriter() {
         graphTemplatePath = "templates/graph.temp";
-        subgraphTemplatePath = "templates/subgraph.temp";
+        innerSubgraphTemplatePath = "templates/subgraph-inner.temp";
+        outterSubgraphTemplatePath = "templates/subgraph-outter.temp";
         graphTemplate = "";
-        subgraphTemplate = "";
+        innerSubgraphTemplate = "";
+        outterSubgraphTemplate = "";
     }
 
     /**
@@ -73,9 +85,11 @@ public class GraphWriter {
      */
     public GraphWriter(List<Module> modules, List<Edge> edges) {
         graphTemplatePath = "templates/graph.temp";
-        subgraphTemplatePath = "templates/subgraph.temp";
+        outterSubgraphTemplatePath = "templates/subgraph-outter.temp";
+        innerSubgraphTemplatePath = "templates/subgraph-inner.temp";
         graphTemplate = "";
-        subgraphTemplate = "";
+        innerSubgraphTemplate = "";
+        outterSubgraphTemplate = "";
 
         this.edges = edges;
         this.modules = modules;
@@ -87,11 +101,12 @@ public class GraphWriter {
      */
     public void readTemplates() {
         graphTemplate = readTemplate(graphTemplatePath);
-        subgraphTemplate = readTemplate(subgraphTemplatePath);
+        outterSubgraphTemplate = readTemplate(outterSubgraphTemplatePath);
+        innerSubgraphTemplate = readTemplate(innerSubgraphTemplatePath);
     }
 
     /**
-     * Draws graph with a the default name.
+     * Draws graph with a default name.
      *
      * @throws Exception when there is an error creating the output file.
      */
@@ -108,41 +123,65 @@ public class GraphWriter {
      * @throws Exception If there is an error creating the graph or writing it to a file.
      */
     public void drawGraph(String fileName) throws Exception {
-        ArrayList<String> publicFunctionSubgraphs = new ArrayList<String>();
+        ArrayList<String> moduleCluster = new ArrayList<String>();
         String graph = graphTemplate;
         String subgraphClusters = "";
-        for (Module module : modules)
-            publicFunctionSubgraphs.add(renderPublicSubgraph(module));
 
-        for (String subgraph : publicFunctionSubgraphs)
-            subgraphClusters += subgraph + "\n";
+        for (Module module : modules) {
+            String nodeClusters = renderSubgraph(module);
+            String subgraphCluster = outterSubgraphTemplate;
+            subgraphCluster = subgraphCluster.replaceAll("%subgraph.modulePrefix%", module.getModulePrefix());
+            subgraphCluster = subgraphCluster.replaceAll("%subgraph.node_clusters%", nodeClusters);
+            moduleCluster.add(subgraphCluster);
+        }
+
+        for (String cluster : moduleCluster)
+            subgraphClusters += cluster;
 
         graph = graph.replaceAll("%graph.subgraph_cluster%", subgraphClusters);
 
         writeToFile(fileName, graph);
     }
 
-    private String renderPublicSubgraph(Module module) {
-        String nodeDefs = "";
-        String subgraph = subgraphTemplate;
+    /**
+     * TODO Render is an inaccurate word to use in this context. Consider renaming.
+     * @param module
+     * @return
+     */
+    private String renderSubgraph(Module module) {
+        String privateNodeDefs = "";
+        String publicNodeDefs = "";
+        String privateSubgraph = innerSubgraphTemplate;
+        String publicSubgraph = innerSubgraphTemplate;
 
         for (Node node : module.getNodes()) {
-            if (node.isPublic()) {
-                String nodeString = NODE_DEFINITION;
-                nodeString = nodeString.replaceAll("%node.id%", node.getNodeId());
-                nodeString = nodeString.replaceAll("%node.label%", node.getNodeLabel());
-                nodeDefs += nodeString + "\n";
-            }
+            String nodeDef = NODE_DEFINITION;
+            nodeDef = nodeDef.replaceAll("%node.id%", node.getNodeId());
+            nodeDef = nodeDef.replaceAll("%node.label%", node.getNodeLabel());
+
+            if (node.isPublic())
+                publicNodeDefs += nodeDef + "\n";
+            else
+                privateNodeDefs += nodeDef + "\n";
         }
 
-        subgraph = subgraph.replaceAll("%subgraph.visibility%", "pub");
-        subgraph = subgraph.replaceAll("%subgraph.visibility_long%", "Public");
-        subgraph = subgraph.replaceAll("%subgraph.modulePrefix%", module.getModulePrefix());
-        subgraph = subgraph.replaceAll("%subgraph.node_defs%", nodeDefs);
+        publicSubgraph = publicSubgraph.replaceAll("%subgraph.visibility%", "pub");
+        privateSubgraph = privateSubgraph.replaceAll("%subgraph.visibility%", "priv");
+        publicSubgraph = publicSubgraph.replaceAll("%subgraph.visibility_long%", "Public");
+        privateSubgraph = privateSubgraph.replaceAll("%subgraph.visibility_long%", "Private");
+        publicSubgraph = publicSubgraph.replaceAll("%subgraph.modulePrefix%", module.getModulePrefix());
+        privateSubgraph = privateSubgraph.replaceAll("%subgraph.modulePrefix%", module.getModulePrefix());
+        publicSubgraph = publicSubgraph.replaceAll("%subgraph.node_defs%", publicNodeDefs);
+        privateSubgraph = privateSubgraph.replaceAll("%subgraph.node_defs%", privateNodeDefs);
 
-        return subgraph;
+        return (publicSubgraph + privateSubgraph);
     }
 
+    /**
+     * TODO
+     * @param fileName
+     * @param graph
+     */
     private void writeToFile(String fileName, String graph) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(fileName)));
@@ -187,20 +226,32 @@ public class GraphWriter {
         this.graphTemplatePath = graphTemplatePath;
     }
 
-    public String getSubgraphTemplatePath() {
-        return this.subgraphTemplatePath;
+    public String getInnerSubgraphTemplatePath() {
+        return this.innerSubgraphTemplatePath;
     }
 
-    public void setSubgraphTemplatePath(String subgraphTemplatePath) {
-        this.subgraphTemplatePath = subgraphTemplatePath;
+    public void setInnerSubgraphTemplatePath(String innerSubgraphTemplatePath) {
+        this.innerSubgraphTemplatePath = innerSubgraphTemplatePath;
+    }
+
+    public String getOutterSubgraphTemplatePath() {
+        return this.outterSubgraphTemplatePath;
+    }
+
+    public void setOutterSubgraphTemplatePath(String outterSubgraphTemplatePath) {
+        this.outterSubgraphTemplatePath = outterSubgraphTemplatePath;
     }
 
     public String getGraphTemplate() {
         return this.graphTemplate;
     }
 
-    public String getSubgraphTemplate() {
-        return this.subgraphTemplate;
+    public String getInnerSubgraphTemplate() {
+        return this.innerSubgraphTemplate;
+    }
+
+    public String getOutterSubgraphTemplate() {
+        return this.outterSubgraphTemplate;
     }
 
     public List<Module> getModules() {

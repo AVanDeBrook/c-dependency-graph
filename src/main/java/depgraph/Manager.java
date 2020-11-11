@@ -14,8 +14,8 @@ public class Manager {
 
 	private static Configurator configurator;
 	private static Reader reader;
-    private static Parser parser;
-    private static GraphWriter writer;
+	private static Parser parser;
+	private static GraphWriter writer;
 
 	public static void main(String[] args) {
 		configurator = new Configurator();

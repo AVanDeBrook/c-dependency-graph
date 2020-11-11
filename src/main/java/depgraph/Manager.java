@@ -40,12 +40,12 @@ public class Manager {
 	 * Initializes our project logger named depgraph. Removes root logger to
 	 * suppress duplicate logging/handling. Prints to std err. Sets initial
 	 * logging level to INFO until the configurator changes it.
-	 * 
+	 *
 	 * Syntax for use: Logger logger = Logger.getLogger("depgraph");
 	 * logger.log(Level.XXX, "message"); logger.xxx("message");
-	 * 
+	 *
 	 * Log levels currently in use: SEVERE, WARNING, INFO, FINE
-	 * 
+	 *
 	 * NOTE: Output to the user that should run no matter what (expected
 	 * functionality) should use System.out.println("message") rather than
 	 * logging
@@ -59,7 +59,7 @@ public class Manager {
 		}
 
 		logger = Logger.getLogger("depgraph");
-		consoleHandler = new ConsoleHandler();
+        consoleHandler = new ConsoleHandler();
 		logger.addHandler(consoleHandler);
 		logger.setLevel(Level.INFO);
 		consoleHandler.setLevel(Level.INFO);

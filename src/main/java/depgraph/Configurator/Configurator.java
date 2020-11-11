@@ -2,6 +2,7 @@ package depgraph.Configurator;
 
 import java.io.File;
 import java.util.logging.Handler;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,7 +25,9 @@ public class Configurator {
 
 	private static Logger logger;
 
-	private static Handler[] handlers;
+    private static Handler[] handlers;
+
+    private static FileHandler fileHandler;
 
 	/**
 	 * Name of file, if the passed argument is a single file.
@@ -87,7 +90,17 @@ public class Configurator {
                 case 'h':
                     printHelp = true;
                     printHelp();
-					break;
+                    break;
+                case 'L':
+                    try {
+                        //log file prints next to manager in the project tree
+                        fileHandler = new FileHandler("./src/main/java/depgraph/"+args[++i]);
+                    } catch (Exception e) {
+                       logger.log(Level.SEVERE, "Error: File Handler could not be created", e);
+                    }
+                    fileHandler.setLevel(handlers[0].getLevel());
+                    logger.addHandler(fileHandler);
+                    break;
 				default:
 					System.out.println(String.format("Unkown option: %s", args[i]));
 					break;
@@ -104,20 +117,28 @@ public class Configurator {
 
 	private void processVerbosity(int levelofVerbosity) {
 		switch (levelofVerbosity) {
-		case 0:
-			handlers[0].setLevel(Level.SEVERE);
+        case 0:
+            for(Handler handy : logger.getHandlers()){
+                handy.setLevel(Level.SEVERE);
+            }
 			System.out.println("Verbosity set to SEVERE");
 			break;
-		case 1:
-			handlers[0].setLevel(Level.WARNING);
+        case 1:
+            for(Handler handy : logger.getHandlers()){
+                handy.setLevel(Level.WARNING);
+            }
 			System.out.println("Verbosity set to WARNING");
 			break;
 		case 2:
-			handlers[0].setLevel(Level.INFO);
+            for(Handler handy : logger.getHandlers()){
+                handy.setLevel(Level.INFO);
+            }
 			System.out.println("Verbosity set to INFO");
 			break;
 		case 3:
-			handlers[0].setLevel(Level.FINE);
+            for(Handler handy : logger.getHandlers()){
+                handy.setLevel(Level.FINE);
+            }
 			System.out.println("Verbosity set to FINE");
 			break;
 		default:

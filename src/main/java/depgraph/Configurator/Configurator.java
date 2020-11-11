@@ -21,6 +21,11 @@ import java.util.logging.Logger;
  */
 // @formatter:on
 public class Configurator {
+
+	private static Logger logger;
+
+	private static Handler[] handlers;
+
 	/**
 	 * Name of file, if the passed argument is a single file.
 	 */
@@ -31,17 +36,14 @@ public class Configurator {
 	 */
 	private String nameOfDirectory;
 
-    private static Logger logger;
-    private static Handler[] handlers;
 	/**
 	 * No-arg constructor. Initializes class attributes to null-strings.
 	 */
 	public Configurator() {
 		nameOfDirectory = "";
-        nameOfFile = "";
-        //init logger to project level logger
-        logger = Logger.getLogger("depgraph");
-        handlers = logger.getHandlers();
+		nameOfFile = "";
+		logger = Logger.getLogger("depgraph");
+		handlers = logger.getHandlers();
 	}
 
 	/**
@@ -51,101 +53,88 @@ public class Configurator {
 	 * @return Type of handle for the reader to process (FILE, DIRECTORY, NONE)
 	 */
 	public ConfigType manageCmdLineArguments(String[] args) {
+		logger.fine("Processing command line arguments...");
 		ConfigType typeToReturn = ConfigType.NONE;
-        boolean printHelp = false;
 
-        //errors are logged as severe here to make sure they are outputted to the user despite verbosity level
 		for (int i = 0; i < args.length; i++) {
 			if ((args[i].charAt(0) == '-') && (args[i].length() == 2)) {
 				switch (args[i].charAt(1)) {
 				case 's':
 					try {
-                        logger.finest("Single file selected ...");
-                        if (this.processSingleFile(args[++i])){
-                            typeToReturn = ConfigType.FILE;
-                        }
+						logger.fine("Single file selected...");
+						if (this.processSingleFile(args[++i])) {
+							typeToReturn = ConfigType.FILE;
+						}
 					} catch (ArrayIndexOutOfBoundsException ex) {
-                        logger.severe("Error (option '-s'): Incorrect format");
-                		printHelp = false;
+						System.out.println("Incorrect format for option -s");
 					}
 					break;
 				case 'd':
 					try {
-                        logger.finest("Directory selected ...");
-                        if (this.processDirectory(args[++i])){
-                            typeToReturn = ConfigType.DIRECTORY;
-                        }
+						logger.fine("Directory selected...");
+						if (this.processDirectory(args[++i])) {
+							typeToReturn = ConfigType.DIRECTORY;
+						}
 					} catch (ArrayIndexOutOfBoundsException ex) {
-                        logger.severe("Error (option '-d'): Incorect format");
-						printHelp = false;
+						System.out.println("Incorect format for option -d");
 					}
-                    break;
-                case 'v':
-                    processVerbosity(Integer.parseInt(args[++i]));
-                    break;
-				case 'h':
-					printHelp = true;
 					break;
-                default:
-                    logger.severe(String.format("Error: Unkown option: %s\n", args[i]));
-                    break;
+				case 'v':
+					processVerbosity(Integer.parseInt(args[++i]));
+					break;
+				case 'h':
+					printHelp();
+					break;
+				default:
+					System.out.println(String.format("Unkown option: %s", args[i]));
+					break;
 				}
 			} else {
-				printHelp = true;
+				printHelp();
 			}
 		}
 
-		if (printHelp)
-			this.help();
-
 		return typeToReturn;
-    }
+	}
 
-    private void processVerbosity(int levelofVerbosity){
-        /** severe / warning / info / config / fine / finer / finest */
-        /** 0 (you dont want much print statements) */
-        /** 6 (you want many print statements)      */
-        //theres only one handler -- stderr
+	private void processVerbosity(int levelofVerbosity) {
+		switch (levelofVerbosity) {
+		case 0:
+			handlers[0].setLevel(Level.SEVERE);
+			System.out.println("Verbosity set to SEVERE");
+			break;
+		case 1:
+			handlers[0].setLevel(Level.WARNING);
+			System.out.println("Verbosity set to WARNING");
+			break;
+		case 2:
+			handlers[0].setLevel(Level.INFO);
+			System.out.println("Verbosity set to INFO");
+			break;
+		case 3:
+			handlers[0].setLevel(Level.FINE);
+			System.out.println("Verbosity set to FINE");
+			break;
+		default:
+			System.out.println("Verbosity set to default INFO");
+			break;
+		}
 
-        switch(levelofVerbosity){
-            case 0: handlers[0].setLevel(Level.SEVERE);
-                logger.severe("Verbosity set to SEVERE");
-                break;
-            case 1: handlers[0].setLevel(Level.WARNING);
-                logger.severe("Verbosity set to WARNING");
-                break;
-            case 2: handlers[0].setLevel(Level.INFO);
-                logger.severe("Verbosity set to INFO");
-                break;
-            case 3: handlers[0].setLevel(Level.CONFIG);
-                logger.severe("Verbosity set to CONFIG");
-                break;
-            case 4: handlers[0].setLevel(Level.FINE);
-                logger.severe("Verbosity set to FINE");
-                break;
-            case 5: handlers[0].setLevel(Level.FINER);
-                logger.severe("Verbosity set to FINER");
-                break;
-            case 6: handlers[0].setLevel(Level.FINEST);
-                logger.severe("Verbosity set to FINEST");
-                break;
-            default:
-                    /**what should the default be ? */
-                break;
-        }
-
-    }
+	}
 
 	/**
 	 * Prints help menu to stdout.
 	 */
-	private void help() {
-		System.out.println("USAGE: [ -s <file name> | -d <directory name> | -h ]\n");
-		System.out.println("Welcome to the C Dependency Graph Tool.\n");
-		System.out.println("FLAG\tDESCRIPTION");
-		System.out.println("-h\tPrint the help menu");
-		System.out.println("-s\tProcess a single file");
-		System.out.println("-d\tProcess a directory");
+	private void printHelp() {
+		System.out.println("\nWelcome to the C Dependency Graph Tool!\n");
+		System.out.println("FLAG\tDESCRIPTION\t\tUSAGE");
+		System.out.println("-h\tPrint the help menu\t-h");
+		System.out.println("-s\tProcess a single file\t-s <file path with extension .dot>");
+		System.out.println("-d\tProcess a directory\t-d <directory path>");
+		System.out.println("-v\tSet logging verbosity\t-v <0-3>");
+		System.out.println("-L\tSet logger output file\t-L <file path>");
+		System.out.println("-o\tName program output\t-v <name>");
+		System.out.println();
 	}
 
 	/**
@@ -158,14 +147,13 @@ public class Configurator {
 	private boolean processSingleFile(String fileName) {
 		File singleFile = new File(fileName);
 		boolean success = false;
-        logger.finest("Validating File Input ...");
+		logger.fine("Validating file input...");
 		if (singleFile.isFile()) {
-            logger.finest("File is valid ...");
+			logger.fine("File is valid");
 			this.nameOfFile = fileName;
 			success = true;
 		} else {
-            logger.severe("Error: File name provided cannot resolve to a file");
-			//System.err.println("\nError: File name provided cannot resolve to a file");
+			System.out.println("File name provided cannot resolve to a file");
 		}
 
 		return success;
@@ -182,14 +170,13 @@ public class Configurator {
 	private boolean processDirectory(String directoryName) {
 		File directory = new File(directoryName);
 		boolean success = false;
-        logger.finest("Validating Directory Input ...");
+		logger.fine("Validating directory input...");
 		if (directory.isDirectory()) {
-            logger.finest("Directory is valid ...");
+			logger.fine("Directory is valid");
 			this.nameOfDirectory = directoryName;
 			success = true;
 		} else {
-            logger.severe("Error: Directory name provided cannot resolve to a directory");
-			//System.err.println("\nError: Directory name provided cannot resolve to a directory");
+			System.out.println("Directory name provided cannot resolve to a directory");
 		}
 
 		return success;

@@ -1,11 +1,10 @@
 package depgraph;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import depgraph.Configurator.ConfigType;
 import depgraph.Configurator.Configurator;
@@ -18,89 +17,84 @@ public class Manager {
 
 	private static Configurator configurator;
 	private static Reader reader;
-    private static Parser parser;
-    private static Logger logger;
-    private static ConsoleHandler consoleHandler;
+	private static Parser parser;
+	private static Logger logger;
+	private static ConsoleHandler consoleHandler;
 
 	public static void main(String[] args) {
 
-        init_logger();
-        logger.finest("Program initializing ...");
+		initLogger();
+		logger.info("Program start, logger initialized");
 		configurator = new Configurator();
 		reader = new Reader();
-        parser = new Parser();
-
-        //levels of logging include
-        /* Severe / warning / info / config / fine / finer / finest */
-        /*    0   /    1    /  2   /   3    /  4   /   5   /    6   */
+		parser = new Parser();
 
 		try {
-            logger.info("Program starting ...");
-            start(args);
+			start(args);
 		} catch (Exception e) {
-            //e.printStackTrace();
-            logger.log(Level.WARNING, "Start() did not run correctly", e);
+			logger.severe("Exception occurred at program start: " + e);
 		}
-    }
-    /**
-     * This initializes our project logger named depgraph.
-     * The root logger is deleted to suppress duplicate logging/handling -- This could be handled in a variety of ways
-     * The logger can then be called by making a Logger logger = Logger.getLogger("depgraph");
-     * The initial logging level is set to all until the configurator changes it. This may result as the default value for the logger
-     * if the verbosity is not passed as an argument. This can be revised.
-     */
+	}
 
-    private static void init_logger(){
-        //removing the root logger to be able to access loggers more definitively
-        Logger rootLogger = Logger.getLogger("");
-        Handler [] rootHandlers = rootLogger.getHandlers();
-        for (Handler h : rootHandlers){
-            h.close();
-            rootLogger.removeHandler(h);
-        }
+	/**
+	 * Initializes our project logger named depgraph. Removes root logger to
+	 * suppress duplicate logging/handling. Prints to std err. Sets initial
+	 * logging level to INFO until the configurator changes it.
+	 * 
+	 * Syntax for use: Logger logger = Logger.getLogger("depgraph");
+	 * logger.log(Level.XXX, "message"); logger.xxx("message");
+	 * 
+	 * Log levels currently in use: SEVERE, WARNING, INFO, FINE
+	 * 
+	 * NOTE: Output to the user that should run no matter what (expected
+	 * functionality) should use System.out.println("message") rather than
+	 * logging
+	 */
+	private static void initLogger() {
+		Logger rootLogger = Logger.getLogger("");
+		Handler[] rootHandlers = rootLogger.getHandlers();
+		for (Handler h : rootHandlers) {
+			h.close();
+			rootLogger.removeHandler(h);
+		}
 
-        //make a generic logger and handler
-        logger = Logger.getLogger("depgraph"); //logger for the overall project
-        consoleHandler = new ConsoleHandler(); //prints to std err
-
-        logger.addHandler(consoleHandler); //add an output vector
-        logger.setLevel(Level.ALL); //log all but dont print all yet
-        consoleHandler.setLevel(Level.ALL); //print all for now
-    }
+		logger = Logger.getLogger("depgraph");
+		consoleHandler = new ConsoleHandler();
+		logger.addHandler(consoleHandler);
+		logger.setLevel(Level.INFO);
+		consoleHandler.setLevel(Level.INFO);
+	}
 
 	private static void start(String[] args) throws Exception {
-
 //		String[] testArgs = { "-s", "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
+//		String[] testArgs = { "-d", "test\\dot-files" };
 //		String[] testArgs = { "-h" };
+//		String[] testArgs = { "-v", "3" };
 
-        List<String> files = null;
-        logger.finest("Processing arguments ...");
-        ConfigType fileType = configurator.manageCmdLineArguments(args);
+		List<String> files = null;
+		ConfigType fileType = configurator.manageCmdLineArguments(args);
 		if (fileType == ConfigType.DIRECTORY) {
-            logger.finest("Reading directory ...");
 			files = reader.readDirectory(configurator.getDirectoryName());
 		} else if (fileType == ConfigType.FILE) {
-            logger.finest("Reading file ...");
 			files = reader.readSingleFile(configurator.getFileName());
 		}
 
 		if (files != null) {
 			parser.parse(files);
 		}
-
-		// for (Node node : parser.getNodes()) {
-		// 	System.out.println(node);
-		// }
-
-		// for (Edge edge : parser.getEdges()) {
-		// 	System.out.println(edge);
-		// }
-
-		// for (depgraph.Parser.Module mod : parser.getModules()) {
-		// 	System.out.println(mod);
-		// }
+		for (Node node : parser.getNodes()) {
+			logger.fine(node.toString());
+		}
+		for (Edge edge : parser.getEdges()) {
+			logger.fine(edge.toString());
+		}
+		for (depgraph.Parser.Module mod : parser.getModules()) {
+			logger.fine(mod.toString());
+		}
 
 		// TODO Call graph writer
 		// TODO Call DOT runner
+
+		logger.info("Program end");
 	}
 }

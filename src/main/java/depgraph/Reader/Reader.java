@@ -13,10 +13,11 @@ import java.util.logging.Logger;
  */
 public class Reader {
 
-    private static Logger logger;
-    public Reader(){
-        logger = Logger.getLogger("depgraph");
-    }
+	private static Logger logger;
+
+	public Reader() {
+		logger = Logger.getLogger("depgraph");
+	}
 
 	/**
 	 * Method used to get the contents of a single DOT file at a given location.
@@ -27,15 +28,14 @@ public class Reader {
 	 * @throws Exception if passed file is not a dot file.
 	 */
 	public List<String> readSingleFile(String filePath) throws Exception {
+		logger.fine("Reading single file...");
 		List<String> filesList = new ArrayList<String>();
 
-	//	System.out.println("Reading: single file");
-
 		if (isDotFile(filePath)) {
-            logger.finest("Reading "+filePath+" ...");
+			logger.info("Reading file: " + filePath);
 			filesList.add(read(filePath));
 		} else {
-            logger.severe("Invalid File Extension: Must be '.dot'");
+			System.out.println("Invalid File Extension: Must be '.dot'");
 			throw new Exception("Invalid File Extension: Must be '.dot'");
 		}
 
@@ -52,22 +52,21 @@ public class Reader {
 	 * @throws Exception if directory does not contain DOT files.
 	 */
 	public List<String> readDirectory(String directory) throws Exception {
+		logger.fine("Reading directory...");
 		File folder = new File(directory);
 		File[] filesInDir = folder.listFiles();
 		List<String> filesList = new ArrayList<String>();
 
-		//System.out.println("Reading: directory");
-
 		for (File file : filesInDir) {
 			if (file.isFile() && isDotFile(file.toString())) {
-                logger.finest("Reading "+file.toString()+" ...");
+				logger.info("Reading file: " + file.toString());
 				filesList.add(read(file.toString()));
 			}
 		}
 
 		if (filesList.isEmpty()) {
-            logger.severe("Directory did not contain any DOT files");
-			throw new Exception("Directory did not contain any DOT files.");
+			System.out.println("Directory did not contain any DOT files");
+			throw new Exception("Directory did not contain any DOT files");
 		}
 
 		return filesList;

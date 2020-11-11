@@ -2,7 +2,6 @@ package depgraph.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -51,7 +50,7 @@ public class Parser {
 	private int lastNodeId;
 
 	/**
-	 * Logger used with levels TODO.
+	 * Logger used with levels SEVERE, WARNING, INFO, and FINE.
 	 */
 	private static Logger logger;
 
@@ -79,10 +78,10 @@ public class Parser {
 	 */
 	public void parse(List<String> fileContents) {
 		for (String singleFileContents : fileContents) {
-			logger.finest("Parsing a file ...");
 			this.parse(singleFileContents);
 		}
-		logger.finest("Organizing nodes into modules ...");
+
+		logger.fine("Grouping Nodes into Modules...");
 		for (Node node : nodes) {
 			Module module = getModuleFromModulePrefix(node.getModulePrefix().toUpperCase());
 
@@ -91,8 +90,8 @@ public class Parser {
 
 			if (module == null) {
 				module = new Module(node.getModulePrefix().toUpperCase());
-				logger.finest("New module added: " + module.getModulePrefix() + " ...");
 				modules.add(module);
+				logger.fine("New module found: " + module.getModulePrefix());
 			}
 
 			module.add(node);
@@ -127,7 +126,7 @@ public class Parser {
 			switch (tokenizedLine.getToken()) {
 			case DIGRAPH_DEF:
 				graphName = tokenizedLine.getValue();
-				// System.out.println("Parsing graph: " + graphName);
+				logger.info("Parsing graph: " + graphName);
 				break;
 			case NODE_STMT:
 				Node newNode = new Node();
@@ -150,16 +149,14 @@ public class Parser {
 				} catch (NullPointerException ex) {
 					/* Ignored */
 				} catch (Exception ex) {
-					logger.log(Level.SEVERE, "Error: Edge could not set Src Node Object", ex);
-					// ex.printStackTrace();
+					logger.warning("Edge could not set Source Node object: " + ex);
 				}
 				try {
 					newEdge.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, destinationNodeId));
 				} catch (NullPointerException ex) {
 					/* Ignored */
 				} catch (Exception ex) {
-					logger.log(Level.SEVERE, "Error: Edge could not set Dst Node Object", ex);
-					// ex.printStackTrace();
+					logger.warning("Edge could not set Destination Node Object: " + ex);
 				}
 
 				edgeCollection.add(newEdge);
@@ -176,22 +173,10 @@ public class Parser {
 				e.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, e.getDestinationNodeId()));
 		}
 
-		logger.finest("Cleaning up nodes ...");
 		nodeCollection = cleanUpNodeCollection(nodeCollection);
 		nodes.addAll(nodeCollection);
-		logger.finest("Cleaning up edges ...");
 		edgeCollection = cleanUpEdgeCollection(edgeCollection);
 		edges.addAll(edgeCollection);
-
-		logger.finest("New nodes added ...");
-		for (Node node : nodeCollection) {
-			logger.finest(node);
-		}
-		logger.finest("New edges added ...");
-		for (Edge edge : edgeCollection) {
-			logger.finest(edge);
-		}
-
 	}
 
 	/**
@@ -204,6 +189,7 @@ public class Parser {
 	 * @return newCollection The list of Edges after updating their Nodes
 	 */
 	private ArrayList<Edge> cleanUpEdgeCollection(ArrayList<Edge> oldCollection) {
+		logger.fine("Cleaning up Edges...");
 		ArrayList<Edge> newCollection = new ArrayList<Edge>();
 
 		for (Edge edge : oldCollection) {
@@ -250,6 +236,7 @@ public class Parser {
 	 * @return newCollection The list of Nodes after updating
 	 */
 	private ArrayList<Node> cleanUpNodeCollection(ArrayList<Node> oldCollection) {
+		logger.fine("Cleaning up Nodes...");
 		ArrayList<Node> newCollection = new ArrayList<Node>();
 		for (Node node : oldCollection)
 			if (!existsInNodeList(node.getNodeLabel())) {
@@ -371,7 +358,7 @@ public class Parser {
 				output = node;
 
 		if (output == null)
-			throw new NullPointerException("Could not find node: " + nodeId + "\n");
+			throw new NullPointerException("Could not find node: " + nodeId);
 
 		return output;
 	}

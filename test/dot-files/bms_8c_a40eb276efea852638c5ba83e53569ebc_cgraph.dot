@@ -7,7 +7,7 @@ digraph "BMS_SetStateRequest"
   Node135 -> Node136 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node136 [label="OS_TaskEnter_Critical",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a5573d7c2221a3f3b9cfe5c109603b441",tooltip="Enter Critical interface function for use in FreeRTOS-Tasks and FreeRTOS-ISR. "];
   Node135 -> Node137 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node137 [label="BMS_CheckStateRequest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$bms_8c.html#a619db2b25db4bb9b7f5f4564bf6291c9",tooltip="checks the state requests that are made. "];
+  Node137 [label="bms_CheckStateRequest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$bms_8c.html#a9ae7959d86dc7025185c8a87d87038bc",tooltip="checks the state requests that are made. "];
   Node135 -> Node138 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node138 [label="OS_TaskExit_Critical",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$os_8c.html#a7e5b7892152952d2109c89baa0add1a8",tooltip="Exit Critical interface function for use in FreeRTOS-Tasks and FreeRTOS-ISR. "];
 }

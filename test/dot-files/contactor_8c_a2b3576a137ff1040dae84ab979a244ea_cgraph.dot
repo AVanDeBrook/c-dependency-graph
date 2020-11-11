@@ -1,0 +1,9 @@
+digraph "CNT_GetOneContactorFeedback"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node77 [label="CNT_GetOneContactorFeedback",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node77 -> Node78 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node78 [label="IO_ReadPin",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$io_8c.html#aa0f7f326f4e3dc599c3e47be410a460b",tooltip="Returns the state of a pin. "];
+}

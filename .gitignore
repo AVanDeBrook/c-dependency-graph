@@ -23,3 +23,6 @@ bin
 .settings
 .classpath
 .project
+
+# VsCode Extension files
+debug.log

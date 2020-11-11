@@ -19,9 +19,9 @@ digraph "SYS_Trigger"
   Node10 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node23 [label="ILCK_GetState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interlock_8h.html#af3194f3e84a7a0a097d9c9c9f6b7330e",tooltip="gets the current state. "];
   Node10 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node24 [label="CONT_SetStateRequest",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$contactor_8c.html#ada308aa02debcd131b6be7cfdff748c2",tooltip="Sets the current state request of the state variable cont_state. "];
+  Node24 [label="CNT_SetStateRequest",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$contactor_8c.html#a6ff577c362c356e0bfae9b40377c1a99",tooltip="Sets the current state request of the state variable cont_state. "];
   Node10 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node26 [label="CONT_GetInitializationState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$contactor_8c.html#ae914a68e1a34a1c5c76a13f6e58c4b62",tooltip="Gets the initialization state. "];
+  Node26 [label="CNT_GetInitializationState",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$contactor_8c.html#a35d04443a2932ccdf949058e3d460230",tooltip="Gets the initialization state. "];
   Node10 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node27 [label="BAL_SetStateRequest",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$bal_8c.html#a1e9d7cabf5fbe4f033dc95ed554abd77",tooltip="sets the current state request of the state variable bal_state. "];
   Node10 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

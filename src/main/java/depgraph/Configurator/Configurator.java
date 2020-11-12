@@ -16,6 +16,8 @@ import java.util.logging.SimpleFormatter;
  * - s DOT file to process
  * - d directory of DOT files to process.
  * - h print help menu
+ * - v verbosity of logger
+ * - L specify output file used by the logger
  *
  * Run in gradle using (replace ... with desired arguments): gradle run --args="..."
  *
@@ -98,7 +100,8 @@ public class Configurator {
 					break;
 				case 'L':
 					try {
-						// log file prints next to manager in the project tree
+                        // log file prints next to manager in the project tree
+                        //overwrites file if it exists
 						fileHandler = new FileHandler("./src/main/java/depgraph/" + args[++i] + ".log");
                     }catch (ArrayIndexOutOfBoundsException ex){
                         System.out.println("Incorect format for option -L");
@@ -172,7 +175,7 @@ public class Configurator {
 		System.out.println("-d\tProcess a directory\t-d <directory path>");
 		System.out.println("-v\tSet logging verbosity\t-v <0-3>");
 		System.out.println("-L\tSet logger output file\t-L <file path>");
-		System.out.println("-o\tName program output\t-v <name>");
+		System.out.println("-o\tName program output\t-o <name>");
 		System.out.println();
 	}
 

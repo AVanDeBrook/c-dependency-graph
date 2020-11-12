@@ -2,6 +2,7 @@ package depgraph.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * The Parser is the core of the C Dependency Graph project. This class creates
@@ -43,9 +44,17 @@ public class Parser {
 	 */
 	private ArrayList<Module> modules;
 
+	/**
+	 * Counter used to create nodeIds that are unique.
+	 */
 	private int lastNodeId;
 
-    /**
+	/**
+	 * Logger used with levels SEVERE, WARNING, INFO, and FINE.
+	 */
+	private static Logger logger;
+
+	/**
 	 * No-arg constructor.
 	 */
 	public Parser() {
@@ -53,6 +62,7 @@ public class Parser {
 		nodes = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
 		modules = new ArrayList<Module>();
+		logger = Logger.getLogger("depgraph");
 		lastNodeId = 0;
 	}
 
@@ -71,6 +81,7 @@ public class Parser {
 			this.parse(singleFileContents);
 		}
 
+		logger.fine("Grouping Nodes into Modules...");
 		for (Node node : nodes) {
 			Module module = getModuleFromModulePrefix(node.getModulePrefix().toUpperCase());
 
@@ -80,6 +91,7 @@ public class Parser {
 			if (module == null) {
 				module = new Module(node.getModulePrefix().toUpperCase());
 				modules.add(module);
+				logger.fine("New module found: " + module.getModulePrefix());
 			}
 
 			module.add(node);
@@ -114,7 +126,7 @@ public class Parser {
 			switch (tokenizedLine.getToken()) {
 			case DIGRAPH_DEF:
 				graphName = tokenizedLine.getValue();
-				System.out.println("Parsing graph: " + graphName);
+				logger.info("Parsing graph: " + graphName);
 				break;
 			case NODE_STMT:
 				Node newNode = new Node();
@@ -137,14 +149,14 @@ public class Parser {
 				} catch (NullPointerException ex) {
 					/* Ignored */
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					logger.warning("Edge could not set Source Node object: " + ex);
 				}
 				try {
 					newEdge.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, destinationNodeId));
 				} catch (NullPointerException ex) {
 					/* Ignored */
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					logger.warning("Edge could not set Destination Node Object: " + ex);
 				}
 
 				edgeCollection.add(newEdge);
@@ -165,6 +177,16 @@ public class Parser {
 		nodes.addAll(nodeCollection);
 		edgeCollection = cleanUpEdgeCollection(edgeCollection);
 		edges.addAll(edgeCollection);
+
+		// logger.finest("New nodes added ...");
+		// for (Node node : nodeCollection) {
+		// logger.finest(node.toString());
+		// }
+		// logger.finest("New edges added ...");
+		// for (Edge edge : edgeCollection) {
+		// logger.finest(edge.toString());
+		// }
+
 	}
 
 	/**
@@ -177,6 +199,7 @@ public class Parser {
 	 * @return newCollection The list of Edges after updating their Nodes
 	 */
 	private ArrayList<Edge> cleanUpEdgeCollection(ArrayList<Edge> oldCollection) {
+		logger.fine("Cleaning up Edges...");
 		ArrayList<Edge> newCollection = new ArrayList<Edge>();
 
 		for (Edge edge : oldCollection) {
@@ -223,6 +246,7 @@ public class Parser {
 	 * @return newCollection The list of Nodes after updating
 	 */
 	private ArrayList<Node> cleanUpNodeCollection(ArrayList<Node> oldCollection) {
+		logger.fine("Cleaning up Nodes...");
 		ArrayList<Node> newCollection = new ArrayList<Node>();
 		for (Node node : oldCollection)
 			if (!existsInNodeList(node.getNodeLabel())) {
@@ -344,7 +368,7 @@ public class Parser {
 				output = node;
 
 		if (output == null)
-			throw new NullPointerException("Could not find node: " + nodeId + "\n");
+			throw new NullPointerException("Could not find node: " + nodeId);
 
 		return output;
 	}

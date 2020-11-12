@@ -26,3 +26,9 @@ test {
 javadoc {
     options.showAll()
 }
+
+clean{
+    delete fileTree("${projectDir}/src/main/java/depgraph").matching{
+          include "*.log"
+    }
+}

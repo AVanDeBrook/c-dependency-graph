@@ -101,7 +101,7 @@ public class Configurator {
                 case 'L':
                     try {
                         //log file prints next to manager in the project tree
-                        fileHandler = new FileHandler("./src/main/java/depgraph/"+args[++i]+".txt");
+                        fileHandler = new FileHandler("./src/main/java/depgraph/"+args[++i]+".log");
                     } catch (Exception e) {
                        logger.log(Level.SEVERE, "Error: File Handler could not be created", e);
                     }

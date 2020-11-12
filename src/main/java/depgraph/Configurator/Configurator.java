@@ -1,11 +1,11 @@
 package depgraph.Configurator;
 
 import java.io.File;
-import java.util.logging.Handler;
 import java.util.logging.FileHandler;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 // @formatter:off
 /**
@@ -26,15 +26,13 @@ public class Configurator {
 
 	private static Logger logger;
 
-    private static Handler[] handlers;
+	private static Handler[] handlers;
 
-    private static FileHandler fileHandler;
+	private static FileHandler fileHandler;
 
-
-    static{
-        System.setProperty("java.util.logging.SimpleFormatter.format",
-        "[%1$tc]\nSource: %2$s\n%4$s:\t%5$s\n%6$s\n\n");
-    }
+	static {
+		System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc]\nSource: %2$s\n%4$s:\t%5$s\n%6$s\n\n");
+	}
 
 	/**
 	 * Name of file, if the passed argument is a single file.
@@ -53,7 +51,7 @@ public class Configurator {
 		nameOfDirectory = "";
 		nameOfFile = "";
 		logger = Logger.getLogger("depgraph");
-        handlers = logger.getHandlers();
+		handlers = logger.getHandlers();
 	}
 
 	/**
@@ -64,8 +62,8 @@ public class Configurator {
 	 */
 	public ConfigType manageCmdLineArguments(String[] args) {
 		logger.fine("Processing command line arguments...");
-        ConfigType typeToReturn = ConfigType.NONE;
-        boolean printHelp = false;
+		ConfigType typeToReturn = ConfigType.NONE;
+		boolean printHelp = false;
 		for (int i = 0; i < args.length; i++) {
 			if ((args[i].charAt(0) == '-') && (args[i].length() == 2)) {
 				switch (args[i].charAt(1)) {
@@ -76,8 +74,8 @@ public class Configurator {
 							typeToReturn = ConfigType.FILE;
 						}
 					} catch (ArrayIndexOutOfBoundsException ex) {
-                        System.out.println("Incorrect format for option -s");
-                        printHelp = false;
+						System.out.println("Incorrect format for option -s");
+						printHelp = false;
 					}
 					break;
 				case 'd':
@@ -87,70 +85,73 @@ public class Configurator {
 							typeToReturn = ConfigType.DIRECTORY;
 						}
 					} catch (ArrayIndexOutOfBoundsException ex) {
-                        System.out.println("Incorect format for option -d");
-                        printHelp = false;
+						System.out.println("Incorect format for option -d");
+						printHelp = false;
 					}
 					break;
 				case 'v':
 					processVerbosity(Integer.parseInt(args[++i]));
 					break;
-                case 'h':
-                    printHelp = true;
-                    printHelp();
-                    break;
-                case 'L':
-                    try {
-                        //log file prints next to manager in the project tree
-                        fileHandler = new FileHandler("./src/main/java/depgraph/"+args[++i]+".log");
-                    } catch (Exception e) {
-                       logger.log(Level.SEVERE, "Error: File Handler could not be created", e);
-                    }
-                    fileHandler.setLevel(handlers[0].getLevel());
-                    fileHandler.setFormatter(new SimpleFormatter());
-                    logger.addHandler(fileHandler);
-                    break;
+				case 'h':
+					printHelp = true;
+					printHelp();
+					break;
+				case 'L':
+					try {
+						// log file prints next to manager in the project tree
+						fileHandler = new FileHandler("./src/main/java/depgraph/" + args[++i] + ".log");
+					} catch (Exception e) {
+						logger.severe("File Handler could not be created" + e);
+					}
+					fileHandler.setLevel(handlers[0].getLevel());
+					fileHandler.setFormatter(new SimpleFormatter());
+					logger.addHandler(fileHandler);
+					break;
 				default:
 					System.out.println(String.format("Unkown option: %s", args[i]));
 					break;
 				}
 			} else {
-                printHelp = true;
+				printHelp = true;
 			}
-        }
-        if(printHelp){
-            printHelp();
-        }
+		}
+		if (printHelp) {
+			printHelp();
+		}
 		return typeToReturn;
 	}
 
 	private void processVerbosity(int levelofVerbosity) {
 		switch (levelofVerbosity) {
-        case 0:
-            for(Handler handy : logger.getHandlers()){
-                handy.setLevel(Level.SEVERE);
-            }
+		case 0:
+			for (Handler handy : logger.getHandlers()) {
+				handy.setLevel(Level.SEVERE);
+			}
 			System.out.println("Verbosity set to SEVERE");
 			break;
-        case 1:
-            for(Handler handy : logger.getHandlers()){
-                handy.setLevel(Level.WARNING);
-            }
+		case 1:
+			for (Handler handy : logger.getHandlers()) {
+				handy.setLevel(Level.WARNING);
+			}
 			System.out.println("Verbosity set to WARNING");
 			break;
 		case 2:
-            for(Handler handy : logger.getHandlers()){
-                handy.setLevel(Level.INFO);
-            }
+			for (Handler handy : logger.getHandlers()) {
+				handy.setLevel(Level.INFO);
+			}
 			System.out.println("Verbosity set to INFO");
 			break;
 		case 3:
-            for(Handler handy : logger.getHandlers()){
-                handy.setLevel(Level.FINE);
-            }
+			for (Handler handy : logger.getHandlers()) {
+				handy.setLevel(Level.FINE);
+			}
 			System.out.println("Verbosity set to FINE");
 			break;
 		default:
-			System.out.println("Verbosity set to default INFO");
+			for (Handler handy : logger.getHandlers()) {
+				handy.setLevel(Level.INFO);
+			}
+			System.out.println("Verbosity defaulted to INFO");
 			break;
 		}
 

@@ -176,15 +176,15 @@ public class Parser {
 		nodeCollection = cleanUpNodeCollection(nodeCollection);
 		nodes.addAll(nodeCollection);
 		edgeCollection = cleanUpEdgeCollection(edgeCollection);
-        edges.addAll(edgeCollection);
+		edges.addAll(edgeCollection);
 
-        // logger.finest("New nodes added ...");
-        // for (Node node : nodeCollection) {
-		// 	logger.finest(node.toString());
+		// logger.finest("New nodes added ...");
+		// for (Node node : nodeCollection) {
+		// logger.finest(node.toString());
 		// }
-        // logger.finest("New edges added ...");
+		// logger.finest("New edges added ...");
 		// for (Edge edge : edgeCollection) {
-		// 	logger.finest(edge.toString());
+		// logger.finest(edge.toString());
 		// }
 
 	}

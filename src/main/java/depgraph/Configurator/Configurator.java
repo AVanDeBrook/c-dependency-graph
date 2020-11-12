@@ -100,14 +100,13 @@ public class Configurator {
 					break;
 				case 'L':
 					try {
-                        // log file prints next to manager in the project tree
-                        //overwrites file if it exists
+						// log file prints next to manager in the project tree
+						// overwrites file if it exists
 						fileHandler = new FileHandler("./src/main/java/depgraph/" + args[++i] + ".log");
-                    }catch (ArrayIndexOutOfBoundsException ex){
-                        System.out.println("Incorect format for option -L");
+					} catch (ArrayIndexOutOfBoundsException ex) {
+						System.out.println("Incorect format for option -L");
 						printHelp = false;
-                    }
-                    catch (Exception e) {
+					} catch (Exception e) {
 						logger.severe("File Handler could not be created" + e);
 					}
 					fileHandler.setLevel(handlers[0].getLevel());

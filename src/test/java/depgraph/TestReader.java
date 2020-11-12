@@ -1,18 +1,13 @@
 package depgraph;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import depgraph.Reader.Reader;
 
 public class TestReader {
-
-	@Test
-	public void testReadSingleFileThrowsExceptionOnBadFile() {
-		Reader reader = new Reader();
-		assertThrows(Exception.class, () -> reader.readSingleFile("dummy/file/path"));
-	}
 
 	@Test
 	public void testReadSingleFileDoesNotThrowException() {
@@ -22,14 +17,20 @@ public class TestReader {
 	}
 
 	@Test
-	public void testReadSingleDirectoryThrowsExceptionOnBadDirectory() {
+	public void testReadBadSingleFileThrowsException() {
 		Reader reader = new Reader();
-		assertThrows(Exception.class, () -> reader.readDirectory("dummy/file/path"));
+		assertThrows(Exception.class, () -> reader.readSingleFile("dummy/file/path"));
 	}
 
 	@Test
-	public void testReadSingleDirectoryDoesNotThrowException() {
+	public void testReadDirectoryDoesNotThrowException() {
 		Reader reader = new Reader();
 		assertDoesNotThrow(() -> reader.readDirectory("test/dot-files"));
+	}
+
+	@Test
+	public void testReadBadDirectoryThrowsException() {
+		Reader reader = new Reader();
+		assertThrows(Exception.class, () -> reader.readDirectory("dummy/file/path"));
 	}
 }

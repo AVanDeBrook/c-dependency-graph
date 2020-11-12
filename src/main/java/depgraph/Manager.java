@@ -81,7 +81,7 @@ public class Manager {
 
 		if (files != null) {
 			parser.parse(files);
-        }
+		}
 
 		for (Node node : parser.getNodes()) {
 			logger.fine(node.toString());

@@ -20,8 +20,8 @@ public class Manager {
 	public static void main(String[] args) {
 		configurator = new Configurator();
 		reader = new Reader();
-        parser = new Parser();
-        writer = new GraphWriter();
+		parser = new Parser();
+		writer = new GraphWriter();
 
 		try {
 			start(args);
@@ -32,8 +32,9 @@ public class Manager {
 
 	private static void start(String[] args) throws Exception {
 
-//		String[] testArgs = { "-s", "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
-//		String[] testArgs = { "-h" };
+		// String[] testArgs = { "-s",
+		// "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
+		// String[] testArgs = { "-h" };
 
 		List<String> files = null;
 		ConfigType fileType = configurator.manageCmdLineArguments(args);
@@ -60,10 +61,10 @@ public class Manager {
 			System.out.println(mod);
 		}
 
-        writer.setModules(parser.getModules());
-        writer.setEdges(parser.getEdges());
-        writer.readTemplates();
-        writer.drawGraph();
+		writer.setModules(parser.getModules());
+		writer.setEdges(parser.getEdges());
+		writer.readTemplates();
+		writer.writeGraph();
 
 		// TODO Call DOT runner
 	}

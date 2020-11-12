@@ -61,7 +61,7 @@ public class Manager {
 		logger = Logger.getLogger("depgraph");
 		consoleHandler = new ConsoleHandler();
 		logger.addHandler(consoleHandler);
-		logger.setLevel(Level.INFO);
+		logger.setLevel(Level.ALL);
 		consoleHandler.setLevel(Level.INFO);
 	}
 
@@ -81,7 +81,7 @@ public class Manager {
 
 		if (files != null) {
 			parser.parse(files);
-		}
+        }
 
 		for (Node node : parser.getNodes()) {
 			logger.fine(node.toString());

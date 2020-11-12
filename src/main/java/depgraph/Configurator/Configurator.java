@@ -3,6 +3,7 @@ package depgraph.Configurator;
 import java.io.File;
 import java.util.logging.Handler;
 import java.util.logging.FileHandler;
+import java.util.logging.SimpleFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +30,12 @@ public class Configurator {
 
     private static FileHandler fileHandler;
 
+
+    static{
+        System.setProperty("java.util.logging.SimpleFormatter.format",
+        "[%1$tc]\nSource: %2$s\n%4$s:\t%5$s\n%6$s\n\n");
+    }
+
 	/**
 	 * Name of file, if the passed argument is a single file.
 	 */
@@ -46,7 +53,7 @@ public class Configurator {
 		nameOfDirectory = "";
 		nameOfFile = "";
 		logger = Logger.getLogger("depgraph");
-		handlers = logger.getHandlers();
+        handlers = logger.getHandlers();
 	}
 
 	/**
@@ -94,11 +101,12 @@ public class Configurator {
                 case 'L':
                     try {
                         //log file prints next to manager in the project tree
-                        fileHandler = new FileHandler("./src/main/java/depgraph/"+args[++i]);
+                        fileHandler = new FileHandler("./src/main/java/depgraph/"+args[++i]+".txt");
                     } catch (Exception e) {
                        logger.log(Level.SEVERE, "Error: File Handler could not be created", e);
                     }
                     fileHandler.setLevel(handlers[0].getLevel());
+                    fileHandler.setFormatter(new SimpleFormatter());
                     logger.addHandler(fileHandler);
                     break;
 				default:

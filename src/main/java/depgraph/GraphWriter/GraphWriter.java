@@ -2,6 +2,7 @@ package depgraph.GraphWriter;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import depgraph.Parser.Edge;
 import depgraph.Parser.Module;
@@ -12,11 +13,6 @@ import depgraph.Parser.Node;
  * DOT graph to a ".dot" file.
  */
 public class GraphWriter {
-
-	/**
-	 * General form of an edge definition in DOT based on the official grammar.
-	 */
-	public final String EDGE_DEFINITION = "%edge.src.id% -> %edge.dest.id%;";
 
 	/**
 	 * Configurable path to the graph template. Called "graph.temp" by default.
@@ -70,6 +66,9 @@ public class GraphWriter {
 		graphTemplate = "";
 		innerSubgraphTemplate = "";
 		outterSubgraphTemplate = "";
+
+		this.edges = null;
+		this.modules = null;
 	}
 
 	/**
@@ -121,8 +120,8 @@ public class GraphWriter {
 	 */
 	public void writeGraph(String fileName) throws Exception {
 		ArrayList<String> moduleCluster = new ArrayList<String>();
+		ArrayList<String> nodeDefs = new ArrayList<String>();
 		String graph = graphTemplate;
-		String subgraphClusters = "";
 
 		for (Module module : modules) {
 			String nodeClusters = getInnerSubgraph(module);
@@ -132,12 +131,24 @@ public class GraphWriter {
 			moduleCluster.add(subgraphCluster);
 		}
 
-		for (String cluster : moduleCluster)
-			subgraphClusters += cluster;
+		for (Edge edge : edges)
+			nodeDefs.add(createNodeDefString(edge));
 
-		graph = graph.replaceAll("%graph.subgraph_cluster%", subgraphClusters);
+		graph = graph.replaceAll("%graph.subgraph_cluster%", moduleCluster.stream().collect(Collectors.joining()));
+		graph = graph.replaceAll("%graph.edge_defs%", nodeDefs.stream().collect(Collectors.joining()));
 
 		writeToFile(fileName, graph);
+	}
+
+	/**
+	 * TODO
+	 *
+	 * @param edge
+	 * @return
+	 */
+	private String createNodeDefString(Edge edge) {
+		return String.format("%s -> %s;", edge.getSourceNodeObject().getNodeLabel(),
+				edge.getDestinationNodeObject().getNodeLabel());
 	}
 
 	/**
@@ -172,7 +183,7 @@ public class GraphWriter {
 	 * @return
 	 */
 	private String createNodeString(Node node) {
-		return String.format("%s [label=\"%s\"];", node.getNodeId(), node.getNodeLabel());
+		return String.format("%s [label=\"%s\"];", node.getNodeLabel(), node.getNodeLabel());
 	}
 
 	/**

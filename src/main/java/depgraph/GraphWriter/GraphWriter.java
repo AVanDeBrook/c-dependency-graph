@@ -174,14 +174,14 @@ public class GraphWriter {
 
 	/**
 	 * Helper function to consistently create a node defintion with a guarantee of
-	 * correct syntax.
-	 *
+	 * correct syntax. <br>
+	 * <br>
 	 * <strong>Note:</strong> There may be bugs with nodes being rendered outside of
 	 * modules, because the DOT grammar says to use node_ids in edge definitions,
 	 * they are used here as well. When a node is rendered in the wrong spot it
 	 * tends to show up with no label and so, instead, will have a default label of
-	 * the node_id (usually something along the lines of "Node#").
-	 *
+	 * the node_id (usually something along the lines of "Node#"). <br>
+	 * <br>
 	 * To help with debugging change edge.getSourceNodeId() and
 	 * edge.getDestinationNodeId() to edge.getSourceNodeObject().getNodeLabel() and
 	 * edge.getDestinationNodeObject().getNodeLabel(), respectively.

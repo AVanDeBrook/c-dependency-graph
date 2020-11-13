@@ -57,13 +57,13 @@ loadScripts(document, 'script');</script>
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#enum.constant.summary">Enum Constants</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li><a href="#enum.constant.detail">Enum Constants</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
@@ -165,6 +165,81 @@ extends java.lang.Enum&lt;<a href="TokenType.html" title="enum in depgraph.Parse
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#R_BRACE">R_BRACE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</li>
+<!-- =========== FIELD SUMMARY =========== -->
+<li class="blockList">
+<section class="fieldSummary"><a id="field.summary">
+<!--   -->
+</a>
+<h2>Field Summary</h2>
+<div class="memberSummary">
+<table>
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<thead>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>private java.lang.Integer</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#id">id</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private static java.util.HashMap&lt;java.lang.Integer,&#8203;<a href="TokenType.html" title="enum in depgraph.Parser">TokenType</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#idToTypeLookup">idToTypeLookup</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#keyword">keyword</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private static java.util.HashMap&lt;java.lang.String,&#8203;<a href="TokenType.html" title="enum in depgraph.Parser">TokenType</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#keywordToTypeLookup">keywordToTypeLookup</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private static java.util.HashMap&lt;<a href="TokenType.html" title="enum in depgraph.Parser">TokenType</a>,&#8203;java.lang.Integer&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeToIdLookup">typeToIdLookup</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</li>
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<li class="blockList">
+<section class="constructorSummary"><a id="constructor.summary">
+<!--   -->
+</a>
+<h2>Constructor Summary</h2>
+<div class="memberSummary">
+<table>
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<thead>
+<tr>
+<th class="colFirst" scope="col">Modifier</th>
+<th class="colSecond" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>private </code></td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.Integer,java.lang.String)">TokenType</a></span>&#8203;(java.lang.Integer&nbsp;id,
+java.lang.String&nbsp;keyword)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
@@ -316,6 +391,63 @@ the order they are declared.</div>
 </ul>
 </section>
 </li>
+<!-- ============ FIELD DETAIL =========== -->
+<li class="blockList">
+<section class="fieldDetails"><a id="field.detail">
+<!--   -->
+</a>
+<h2>Field Details</h2>
+<ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="id">id</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">java.lang.Integer</span>&nbsp;<span class="memberName">id</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="keyword">keyword</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">keyword</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="idToTypeLookup">idToTypeLookup</a></h3>
+<div class="memberSignature"><span class="modifiers">private static final</span>&nbsp;<span class="returnType">java.util.HashMap&lt;java.lang.Integer,&#8203;<a href="TokenType.html" title="enum in depgraph.Parser">TokenType</a>&gt;</span>&nbsp;<span class="memberName">idToTypeLookup</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="typeToIdLookup">typeToIdLookup</a></h3>
+<div class="memberSignature"><span class="modifiers">private static final</span>&nbsp;<span class="returnType">java.util.HashMap&lt;<a href="TokenType.html" title="enum in depgraph.Parser">TokenType</a>,&#8203;java.lang.Integer&gt;</span>&nbsp;<span class="memberName">typeToIdLookup</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="keywordToTypeLookup">keywordToTypeLookup</a></h3>
+<div class="memberSignature"><span class="modifiers">private static final</span>&nbsp;<span class="returnType">java.util.HashMap&lt;java.lang.String,&#8203;<a href="TokenType.html" title="enum in depgraph.Parser">TokenType</a>&gt;</span>&nbsp;<span class="memberName">keywordToTypeLookup</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<li class="blockList">
+<section class="constructorDetails"><a id="constructor.detail">
+<!--   -->
+</a>
+<h2>Constructor Details</h2>
+<ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="&lt;init&gt;(java.lang.Integer,java.lang.String)">TokenType</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="memberName">TokenType</span>&#8203;(<span class="arguments">java.lang.Integer&nbsp;id,
+java.lang.String&nbsp;keyword)</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
 <li class="blockList">
 <section class="methodDetails"><a id="method.detail">
@@ -425,13 +557,13 @@ not permitted.)</div>
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#enum.constant.summary">Enum Constants</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li><a href="#enum.constant.detail">Enum Constants</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>

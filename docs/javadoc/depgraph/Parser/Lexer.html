@@ -19,8 +19,8 @@
 <script type="text/javascript" src="../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+<script type="text/javascript">var data = {"i0":10,"i1":42,"i2":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -56,13 +56,13 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -104,6 +104,64 @@ extends java.lang.Object</pre>
 </section>
 <section class="summary">
 <ul class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<li class="blockList">
+<section class="fieldSummary"><a id="field.summary">
+<!--   -->
+</a>
+<h2>Field Summary</h2>
+<div class="memberSummary">
+<table>
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<thead>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>private java.util.regex.Pattern</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#edgePattern">edgePattern</a></span></code></th>
+<td class="colLast">
+<div class="block">Regex pattern to check for edge_stmts with attribute lists.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private java.util.regex.Pattern</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#edgePattern2">edgePattern2</a></span></code></th>
+<td class="colLast">
+<div class="block">Regex pattern to check for edge_stmts without attribute lists.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#endOfLine">endOfLine</a></span></code></th>
+<td class="colLast">
+<div class="block">Used for some statements where the attribute string may have been omitted
+ in the Token value.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private java.util.regex.Pattern</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#nodePattern">nodePattern</a></span></code></th>
+<td class="colLast">
+<div class="block">Regex pattern to check for node_stmts with attribute lists.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private java.util.regex.Pattern</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#nodePattern2">nodePattern2</a></span></code></th>
+<td class="colLast">
+<div class="block">Regex pattern to check for node_stmts without attribute lists.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li class="blockList">
 <section class="constructorSummary"><a id="constructor.summary">
@@ -139,7 +197,7 @@ extends java.lang.Object</pre>
 </a>
 <h2>Method Summary</h2>
 <div class="memberSummary">
-<div role="tablist" aria-orientation="horizontal"><button role="tab" aria-selected="true" aria-controls="memberSummary_tabpanel" tabindex="0" onkeydown="switchTab(event)" id="t0" class="activeTableTab">All Methods</button><button role="tab" aria-selected="false" aria-controls="memberSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t2" class="tableTab" onclick="show(2);">Instance Methods</button><button role="tab" aria-selected="false" aria-controls="memberSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t4" class="tableTab" onclick="show(8);">Concrete Methods</button></div>
+<div role="tablist" aria-orientation="horizontal"><button role="tab" aria-selected="true" aria-controls="memberSummary_tabpanel" tabindex="0" onkeydown="switchTab(event)" id="t0" class="activeTableTab">All Methods</button><button role="tab" aria-selected="false" aria-controls="memberSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t2" class="tableTab" onclick="show(2);">Instance Methods</button><button role="tab" aria-selected="false" aria-controls="memberSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t4" class="tableTab" onclick="show(8);">Concrete Methods</button><button role="tab" aria-selected="false" aria-controls="memberSummary_tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t6" class="tableTab" onclick="show(32);">Deprecated Methods</button></div>
 <div id="memberSummary_tabpanel" role="tabpanel">
 <table aria-labelledby="t0">
 <thead>
@@ -159,6 +217,13 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
+<td class="colFirst"><code>private java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lookAhead(char%5B%5D)">lookAhead</a></span>&#8203;(char[]&nbsp;arr)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
+</tr>
+<tr class="altColor" id="i2">
 <td class="colFirst"><code><a href="Token.html" title="class in depgraph.Parser">Token</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tokenize(java.lang.String)">tokenize</a></span>&#8203;(java.lang.String&nbsp;line)</code></th>
 <td class="colLast">
@@ -180,6 +245,55 @@ extends java.lang.Object</pre>
 </section>
 <section class="details">
 <ul class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<li class="blockList">
+<section class="fieldDetails"><a id="field.detail">
+<!--   -->
+</a>
+<h2>Field Details</h2>
+<ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="nodePattern">nodePattern</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">java.util.regex.Pattern</span>&nbsp;<span class="memberName">nodePattern</span></div>
+<div class="block">Regex pattern to check for node_stmts with attribute lists.</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="nodePattern2">nodePattern2</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">java.util.regex.Pattern</span>&nbsp;<span class="memberName">nodePattern2</span></div>
+<div class="block">Regex pattern to check for node_stmts without attribute lists.</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="edgePattern">edgePattern</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">java.util.regex.Pattern</span>&nbsp;<span class="memberName">edgePattern</span></div>
+<div class="block">Regex pattern to check for edge_stmts with attribute lists.</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="edgePattern2">edgePattern2</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">java.util.regex.Pattern</span>&nbsp;<span class="memberName">edgePattern2</span></div>
+<div class="block">Regex pattern to check for edge_stmts without attribute lists.</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="endOfLine">endOfLine</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">endOfLine</span></div>
+<div class="block">Used for some statements where the attribute string may have been omitted
+ in the Token value.
+
+ May change this in the future to grab the attribute string for every
+ value, so that the calling context can grab it if needed.</div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li class="blockList">
 <section class="constructorDetails"><a id="constructor.detail">
@@ -216,6 +330,22 @@ extends java.lang.Object</pre>
 <dd><code>line</code> - A single line from the file to tokenize.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Token with relevant data from the tokenized line.</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="lookAhead(char[])">lookAhead</a></h3>
+<div class="memberSignature"><span class="annotations">@Deprecated
+</span><span class="modifiers">private</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">lookAhead</span>&#8203;(<span class="arguments">char[]&nbsp;arr)</span></div>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block">Scans forward by one "word" and returns the result. Skips white space and
+ semi-colons (end of line char).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>arr</code> - Subset of the char array from the tokenize function.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>String representing the "word" found.</dd>
 </dl>
 </section>
 </li>
@@ -266,13 +396,13 @@ extends java.lang.Object</pre>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

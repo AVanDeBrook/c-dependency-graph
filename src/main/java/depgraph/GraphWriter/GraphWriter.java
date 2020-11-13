@@ -9,8 +9,33 @@ import depgraph.Parser.Module;
 import depgraph.Parser.Node;
 
 /**
- * Class to read graph templates, fill them out and write the resulting graphviz
- * DOT graph to a ".dot" file.
+ * Class to read templates and create the module based dependency graph in the
+ * DOT language. This can be renered by dot (program) afterwards to create the
+ * desired image.
+ *
+ * There are three templates that this class uses called graph.temp,
+ * subgraph-inner.temp, and subgraph-outter.temp. These templates specifiy the
+ * syntax and styles that are wanted in the resulting image with some special
+ * tokens that this class replaces with the proper definitions while creating
+ * the final graph.
+ *
+ * List of all special tokens handled by this class:
+ * <ul>
+ * <li>%graph.subgraph_cluster% - clusters of subgraphs to render in that
+ * specific spot in the graph (note that this is the combination of the inner
+ * and outter most subgraphs)</li>
+ * <li>%graph.edge_defs% - series of edge definitions (see DOT grammar)</li>
+ * <li>%subgraph.visibility% - visibility of the function nodes in the subgraph
+ * (e.g. public or private)</li>
+ * <li>%subgraph.modulePrefix% - shorthand version of the module name (e.g. ADC,
+ * BAL, BMS, etc.)</li>
+ * <li>%subgraph.node_defs% - definition of every node in the subgraph</li>
+ * <li>%subgraph.node_clusters% - the public/private graphs that contain the
+ * actual function nodes (assembled from subgraph-inner.temp)</li>
+ * </ul>
+ *
+ * TODO the writeGraph functions are supposed to throw Exceptions when there is
+ * an error creating the graph(s). This is currently not implemented.
  */
 public class GraphWriter {
 
@@ -20,12 +45,14 @@ public class GraphWriter {
 	private String graphTemplatePath;
 
 	/**
-	 * TODO
+	 * Configurable path to the outter-most subgraph template. Called
+	 * "subgraph-outter.temp" by default.
 	 */
 	private String outterSubgraphTemplatePath;
 
 	/**
-	 * Configurable path to subgraph template. Called "subgraph.temp" by default.
+	 * Configurable path to inner-most subgraph template. Called
+	 * "subgraph-inner.temp" by default.
 	 */
 	private String innerSubgraphTemplatePath;
 
@@ -35,12 +62,16 @@ public class GraphWriter {
 	private String graphTemplate;
 
 	/**
-	 * TODO
+	 * Contents of the outter-most subgraph template file for reference throughout
+	 * the class. Refer to test/example/bms-bal-cnt-example.dot for the rationale on
+	 * why there is an inner and outter subgraph template.
 	 */
 	private String outterSubgraphTemplate;
 
 	/**
-	 * Contents of the subgraph template file for reference throughout the class.
+	 * Contents of teh inner-most subgraph template file for reference throughout
+	 * the class. Refer the test/example/bms-bal-cnt-example.dot for the retaionale
+	 * on why there is an inner and outter subgraph template.
 	 */
 	private String innerSubgraphTemplate;
 
@@ -110,9 +141,10 @@ public class GraphWriter {
 	}
 
 	/**
-	 * Core function to build and write the rearranged graph.
-	 *
-	 * TODO details on drawGraph function
+	 * Core function to build and write the rearranged graph. This function
+	 * gets/creates all relevant definitions in the graph such as the node, edge,
+	 * graph, and subgraph definitions, then arranges them in the proper order and
+	 * writes the graph to a file with the specified name.
 	 *
 	 * @param fileName Name of the file to write to.
 	 * @throws Exception If there is an error creating the graph or writing it to a
@@ -141,21 +173,34 @@ public class GraphWriter {
 	}
 
 	/**
-	 * TODO
+	 * Helper function to consistently create a node defintion with a guarantee of
+	 * correct syntax.
 	 *
-	 * @param edge
-	 * @return
+	 * <strong>Note:</strong> There may be bugs with nodes being rendered outside of
+	 * modules, because the DOT grammar says to use node_ids in edge definitions,
+	 * they are used here as well. When a node is rendered in the wrong spot it
+	 * tends to show up with no label and so, instead, will have a default label of
+	 * the node_id (usually something along the lines of "Node#").
+	 *
+	 * To help with debugging change edge.getSourceNodeId() and
+	 * edge.getDestinationNodeId() to edge.getSourceNodeObject().getNodeLabel() and
+	 * edge.getDestinationNodeObject().getNodeLabel(), respectively.
+	 *
+	 * @param edge Edge object to create a node definition from.
+	 * @return String representation of an edge definition according to the DOT
+	 *         grammar.
 	 */
 	private String createNodeDefString(Edge edge) {
-		return String.format("%s -> %s;", edge.getSourceNodeObject().getNodeLabel(),
-				edge.getDestinationNodeObject().getNodeLabel());
+		return String.format("%s -> %s;", edge.getSourceNodeId(), edge.getDestinationNodeId());
 	}
 
 	/**
-	 * TODO
+	 * Assembles the inner subgraph into its public and private function boxes.
 	 *
-	 * @param module
-	 * @return
+	 * @param module Module object to separate into public/private function nodes
+	 *               and node_defs.
+	 * @return String representation of the public/private functions in a module.
+	 *         Note that these are concatenated on return.
 	 */
 	private String getInnerSubgraph(Module module) {
 		String[] subgraphs = { "", "" };
@@ -177,43 +222,43 @@ public class GraphWriter {
 	}
 
 	/**
-	 * TODO
+	 * Helper function to consistently create a node definition from a Node object.
 	 *
-	 * @param node
-	 * @return
+	 * @param node Node object to create a node definition based on.
+	 * @return String representation of the node according to the DOT grammar.
 	 */
 	private String createNodeString(Node node) {
 		return String.format("%s [label=\"%s\"];", node.getNodeLabel(), node.getNodeLabel());
 	}
 
 	/**
-	 * TODO
+	 * Helper function to generalize the process of assembling the inner-most part
+	 * of the subgraph.
 	 *
-	 * @param module
-	 * @param nodesDefs
-	 * @param isPublic
-	 * @return
+	 * @param module   Module to assemble into subgraphs.
+	 * @param nodeDefs Node definitions (created before with help from the
+	 *                 createNodeString function) to assemble into the subgraph.
+	 * @param isPublic Boolean representing whether the passed functions are public
+	 *                 or private.
+	 * @return String representation of the inner-most subgraph according to the DOT
+	 *         grammar.
 	 */
-	private String createInnerSubgraphString(Module module, ArrayList<String> nodesDefs, boolean isPublic) {
+	private String createInnerSubgraphString(Module module, ArrayList<String> nodeDefs, boolean isPublic) {
 		String visibility = (isPublic) ? "Public" : "Private";
-		String nodes = "";
 		String subgraph = "";
-
-		for (String def : nodesDefs)
-			nodes += def;
 
 		subgraph = innerSubgraphTemplate.replaceAll("%subgraph.visibility%", visibility);
 		subgraph = subgraph.replaceAll("%subgraph.modulePrefix%", module.getModulePrefix());
-		subgraph = subgraph.replaceAll("%subgraph.node_defs%", nodes);
+		subgraph = subgraph.replaceAll("%subgraph.node_defs%", nodeDefs.stream().collect(Collectors.joining()));
 
 		return subgraph;
 	}
 
 	/**
-	 * TODO
+	 * Helper function to write the resulting graph to a file.
 	 *
-	 * @param fileName
-	 * @param graph
+	 * @param fileName Name of the file to write.
+	 * @param graph    Graph to write to the file.
 	 */
 	private void writeToFile(String fileName, String graph) {
 		try {

@@ -1,8 +1,8 @@
 package depgraph;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import depgraph.Parser.Lexer;
 import depgraph.Parser.Token;

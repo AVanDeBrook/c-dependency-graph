@@ -27,8 +27,8 @@ public class Parser {
 	private Lexer lexer;
 
 	/**
-	 * Collection of Node objects created based on the contents of the DOT
-	 * file(s) passed to the program.
+	 * Collection of Node objects created based on the contents of the DOT file(s)
+	 * passed to the program.
 	 */
 	private ArrayList<Node> nodes;
 
@@ -39,8 +39,8 @@ public class Parser {
 	private ArrayList<Edge> edges;
 
 	/**
-	 * Collection of Module objects created based on the module prefixes parsed
-	 * when the nodes are created.
+	 * Collection of Module objects created based on the module prefixes parsed when
+	 * the nodes are created.
 	 */
 	private ArrayList<Module> modules;
 
@@ -69,12 +69,11 @@ public class Parser {
 	/**
 	 * Kick off point for parsing, used by Manager.
 	 *
-	 * Parses every individual file handed to the program into nodes and edges,
-	 * then separates those nodes into modules based on the parsed module
-	 * prefix.
+	 * Parses every individual file handed to the program into nodes and edges, then
+	 * separates those nodes into modules based on the parsed module prefix.
 	 *
-	 * @param fileContents File contents created by the Reader. In List form,
-	 * each String contains the contents of one file.
+	 * @param fileContents File contents created by the Reader. In List form, each
+	 *                     String contains the contents of one file.
 	 */
 	public void parse(List<String> fileContents) {
 		for (String singleFileContents : fileContents) {
@@ -99,18 +98,17 @@ public class Parser {
 	}
 
 	/**
-	 * Handles a single file's contents. Passes each line of the file to the
-	 * Lexer so it can be tokenized to ease handling. At the moment, this
-	 * function ignores L_BRACE, R_BRACE, NODE_ATTR_STMT, EDGE_ATTR_STMT,
-	 * IGNORED, and NONE because they have no real use in the information we are
-	 * storing.
+	 * Handles a single file's contents. Passes each line of the file to the Lexer
+	 * so it can be tokenized to ease handling. At the moment, this function ignores
+	 * L_BRACE, R_BRACE, NODE_ATTR_STMT, EDGE_ATTR_STMT, IGNORED, and NONE because
+	 * they have no real use in the information we are storing.
 	 *
-	 * When an edge is found, setting the Edge object's Node attributes may not
-	 * be possible if a node hasn't been parsed yet. We attempt by calling the
-	 * getNodeObjectFromId method, which searches for a Node object with a
-	 * matching nodeId. If there is not yet an object with a matching nodeId,
-	 * then it will throw a NPE, which is caught and effectively ignored. We try
-	 * again after we've finished parsing all of the lines in the file.
+	 * When an edge is found, setting the Edge object's Node attributes may not be
+	 * possible if a node hasn't been parsed yet. We attempt by calling the
+	 * getNodeObjectFromId method, which searches for a Node object with a matching
+	 * nodeId. If there is not yet an object with a matching nodeId, then it will
+	 * throw a NPE, which is caught and effectively ignored. We try again after
+	 * we've finished parsing all of the lines in the file.
 	 *
 	 * @param fileContents A string containing the contents of a single DOT file
 	 */
@@ -192,8 +190,7 @@ public class Parser {
 	/**
 	 * Takes a collection of Edges. If the source or destination Node in an Edge
 	 * exists in the global context, it substitutes that for what was previously
-	 * stored in the Edge. This aids in keeping nodes unique in the global
-	 * context.
+	 * stored in the Edge. This aids in keeping nodes unique in the global context.
 	 *
 	 * @param oldCollection The list of Edges before updating their Nodes
 	 * @return newCollection The list of Edges after updating their Nodes
@@ -239,8 +236,8 @@ public class Parser {
 	}
 
 	/**
-	 * Removes nodes in a collection that are already accounted for in the
-	 * global context
+	 * Removes nodes in a collection that are already accounted for in the global
+	 * context
 	 *
 	 * @param oldCollection The list of Nodes before updating
 	 * @return newCollection The list of Nodes after updating
@@ -260,8 +257,8 @@ public class Parser {
 	/**
 	 * Determines the node_id from a node_stmt.
 	 *
-	 * @param valueString The value of a Lexer created Token which has a
-	 * TokenType of node_stmt
+	 * @param valueString The value of a Lexer created Token which has a TokenType
+	 *                    of node_stmt
 	 * @return node_id as defined in the official DOT language grammar
 	 */
 	private String getNodeIdFromString(String valueString) {
@@ -269,8 +266,8 @@ public class Parser {
 	}
 
 	/**
-	 * Determines the label of a node from the attribute list (will always be
-	 * the first attribute in a node_stmt).
+	 * Determines the label of a node from the attribute list (will always be the
+	 * first attribute in a node_stmt).
 	 *
 	 * @param valueString Either an attribute list, or the entire node_stmt line
 	 * @return Label of the function
@@ -284,8 +281,8 @@ public class Parser {
 	/**
 	 * Determines the module prefix of a function from the node label.
 	 *
-	 * @param nodeLabel Label of the node (easiest to use the
-	 * getNodeLabelFromString function first and pass the result here).
+	 * @param nodeLabel Label of the node (easiest to use the getNodeLabelFromString
+	 *                  function first and pass the result here).
 	 * @return Module prefix of a function (e.g. BAL, BMS, CONT, etc.)
 	 */
 	private String getModulePrefixFromNodeLabel(String nodeLabel) {
@@ -298,15 +295,15 @@ public class Parser {
 	}
 
 	/**
-	 * Determines if a function is public or private based on the function
-	 * name's capitalization.
+	 * Determines if a function is public or private based on the function name's
+	 * capitalization.
 	 *
-	 * If there is no module prefix (no '_' char) then it is an RTOS function
-	 * and therefore public.
+	 * If there is no module prefix (no '_' char) then it is an RTOS function and
+	 * therefore public.
 	 *
 	 * @param nodeLabel the label of the node, in the form MOD_FunctionName
 	 * @return True if the function is public, False if private, based on
-	 * capitalization of the function name in nodeLabel
+	 *         capitalization of the function name in nodeLabel
 	 */
 	private Boolean getIsPublicFromNodeLabel(String nodeLabel) {
 		String functionName = "";
@@ -327,11 +324,11 @@ public class Parser {
 	}
 
 	/**
-	 * Determines source node from an edge_stmt. edge_stmts always take the form
-	 * src -&gt; dest (whitespace is omitted by the Lexer).
+	 * Determines source node from an edge_stmt. edge_stmts always take the form src
+	 * -&gt; dest (whitespace is omitted by the Lexer).
 	 *
-	 * @param valueString The value of a Lexer created Token which has a
-	 * TokenType of edge_stmt
+	 * @param valueString The value of a Lexer created Token which has a TokenType
+	 *                    of edge_stmt
 	 * @return node_id of the source node in the edge_stmt
 	 */
 	private String getSourceNodeIdFromString(String valueString) {
@@ -339,11 +336,11 @@ public class Parser {
 	}
 
 	/**
-	 * Determines the destination node from an edge_stmt. edge_stmts always take
-	 * the form src -&gt; dest (whitespace omitted by the Lexer).
+	 * Determines the destination node from an edge_stmt. edge_stmts always take the
+	 * form src -&gt; dest (whitespace omitted by the Lexer).
 	 *
-	 * @param valueString The value of a Lexer created Token which has a
-	 * TokenType of edge_stmt
+	 * @param valueString The value of a Lexer created Token which has a TokenType
+	 *                    of edge_stmt
 	 * @return node_id of the destination node in the edge_stmt
 	 */
 	private String getDestinationNodeIdFromString(String valueString) {
@@ -351,15 +348,15 @@ public class Parser {
 	}
 
 	/**
-	 * Simple search function to find a node that matches a specific ID (nodeId)
-	 * in a list. Both the list and ID need to passed to this function, however,
-	 * it works for both source and destination nodes.
+	 * Simple search function to find a node that matches a specific ID (nodeId) in
+	 * a list. Both the list and ID need to passed to this function, however, it
+	 * works for both source and destination nodes.
 	 *
 	 * @param nodeCollection ArrayList of nodes to search through.
-	 * @param nodeId Specific ID to match.
+	 * @param nodeId         Specific ID to match.
 	 * @return The node with a matching ID.
-	 * @throws NullPointerException If a node with a matching ID cannot be
-	 * found, then a NullPointerException is thrown.
+	 * @throws NullPointerException If a node with a matching ID cannot be found,
+	 *                              then a NullPointerException is thrown.
 	 */
 	private Node getNodeObjectFromId(ArrayList<Node> nodeCollection, String nodeId) throws NullPointerException {
 		Node output = null;
@@ -374,8 +371,8 @@ public class Parser {
 	}
 
 	/**
-	 * Helper function to scan the "global" list of nodes and check if there is
-	 * a duplicate of the given node label.
+	 * Helper function to scan the "global" list of nodes and check if there is a
+	 * duplicate of the given node label.
 	 *
 	 * @param nodeLabel The node label (aka function name) to check against.
 	 * @return true if there is a match, false otherwise.
@@ -388,13 +385,13 @@ public class Parser {
 	}
 
 	/**
-	 * Scans the "global" list of modules to find a Module object matching with
-	 * a matching module prefix.
+	 * Scans the "global" list of modules to find a Module object matching with a
+	 * matching module prefix.
 	 *
 	 * @param modulePrefix Specific module prefix to search for (e.g. ADC, BAL,
-	 * etc.).
-	 * @return Module object with the matching module prefix, null if one
-	 * doesn't exist.
+	 *                     etc.).
+	 * @return Module object with the matching module prefix, null if one doesn't
+	 *         exist.
 	 */
 	private Module getModuleFromModulePrefix(String modulePrefix) {
 		Module module = null;

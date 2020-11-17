@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -56,13 +56,13 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -107,6 +107,42 @@ extends java.lang.Object</pre>
 </section>
 <section class="summary">
 <ul class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<li class="blockList">
+<section class="fieldSummary"><a id="field.summary">
+<!--   -->
+</a>
+<h2>Field Summary</h2>
+<div class="memberSummary">
+<table>
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<thead>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>private java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#nameOfDirectory">nameOfDirectory</a></span></code></th>
+<td class="colLast">
+<div class="block">Name of a directory, if the passed argument is a directory.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#nameOfFile">nameOfFile</a></span></code></th>
+<td class="colLast">
+<div class="block">Name of file, if the passed argument is a single file.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li class="blockList">
 <section class="constructorSummary"><a id="constructor.summary">
@@ -163,10 +199,32 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor" id="i2">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#help()">help</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Prints help menu to stdout.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code><a href="ConfigType.html" title="enum in depgraph.Configurator">ConfigType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#manageCmdLineArguments(java.lang.String%5B%5D)">manageCmdLineArguments</a></span>&#8203;(java.lang.String[]&nbsp;args)</code></th>
 <td class="colLast">
 <div class="block">Parses command-line arguments and processes/responds to them.</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
+<td class="colFirst"><code>private boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processDirectory(java.lang.String)">processDirectory</a></span>&#8203;(java.lang.String&nbsp;directoryName)</code></th>
+<td class="colLast">
+<div class="block">Checks if the passed directory exists and sets the class attribute if it
+ does.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i5">
+<td class="colFirst"><code>private boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processSingleFile(java.lang.String)">processSingleFile</a></span>&#8203;(java.lang.String&nbsp;fileName)</code></th>
+<td class="colLast">
+<div class="block">Checks if the passed file exists and sets the class attribute if it does.</div>
 </td>
 </tr>
 </tbody>
@@ -184,6 +242,30 @@ extends java.lang.Object</pre>
 </section>
 <section class="details">
 <ul class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<li class="blockList">
+<section class="fieldDetails"><a id="field.detail">
+<!--   -->
+</a>
+<h2>Field Details</h2>
+<ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="nameOfFile">nameOfFile</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">nameOfFile</span></div>
+<div class="block">Name of file, if the passed argument is a single file.</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="nameOfDirectory">nameOfDirectory</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">nameOfDirectory</span></div>
+<div class="block">Name of a directory, if the passed argument is a directory.</div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li class="blockList">
 <section class="constructorDetails"><a id="constructor.detail">
@@ -218,6 +300,42 @@ extends java.lang.Object</pre>
 <dd><code>args</code> - Command-line arguments passed from main.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Type of handle for the reader to process (FILE, DIRECTORY, NONE)</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="help()">help</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">help</span>()</div>
+<div class="block">Prints help menu to stdout.</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="processSingleFile(java.lang.String)">processSingleFile</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">processSingleFile</span>&#8203;(<span class="arguments">java.lang.String&nbsp;fileName)</span></div>
+<div class="block">Checks if the passed file exists and sets the class attribute if it does.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>fileName</code> - name of the file.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if param was an existing file and class attribute was set,
+ false otherwise.</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="processDirectory(java.lang.String)">processDirectory</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">processDirectory</span>&#8203;(<span class="arguments">java.lang.String&nbsp;directoryName)</span></div>
+<div class="block">Checks if the passed directory exists and sets the class attribute if it
+ does.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>directoryName</code> - name of the directory.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if param was an existing directory and class attribute was
+ set, false otherwise.</dd>
 </dl>
 </section>
 </li>
@@ -266,13 +384,13 @@ extends java.lang.Object</pre>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

@@ -12,12 +12,14 @@ import depgraph.Parser.Edge;
 import depgraph.Parser.Node;
 import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
+import depgraph.GraphWriter.GraphWriter;
 
 public class Manager {
 
 	private static Configurator configurator;
 	private static Reader reader;
 	private static Parser parser;
+	private static GraphWriter writer;
 	private static Logger logger;
 	private static ConsoleHandler consoleHandler;
 
@@ -28,6 +30,7 @@ public class Manager {
 		configurator = new Configurator();
 		reader = new Reader();
 		parser = new Parser();
+		writer = new GraphWriter();
 
 		try {
 			start(args);
@@ -38,8 +41,8 @@ public class Manager {
 
 	/**
 	 * Initializes our project logger named depgraph. Removes root logger to
-	 * suppress duplicate logging/handling. Prints to std err. Sets initial
-	 * logging level to INFO until the configurator changes it.
+	 * suppress duplicate logging/handling. Prints to std err. Sets initial logging
+	 * level to INFO until the configurator changes it.
 	 *
 	 * Syntax for use: Logger logger = Logger.getLogger("depgraph");
 	 * logger.log(Level.XXX, "message"); logger.xxx("message");
@@ -47,8 +50,7 @@ public class Manager {
 	 * Log levels currently in use: SEVERE, WARNING, INFO, FINE
 	 *
 	 * NOTE: Output to the user that should run no matter what (expected
-	 * functionality) should use System.out.println("message") rather than
-	 * logging
+	 * functionality) should use System.out.println("message") rather than logging
 	 */
 	private static void initLogger() {
 		Logger rootLogger = Logger.getLogger("");
@@ -66,10 +68,11 @@ public class Manager {
 	}
 
 	private static void start(String[] args) throws Exception {
-//		String[] testArgs = { "-s", "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
-//		String[] testArgs = { "-d", "test\\dot-files" };
-//		String[] testArgs = { "-h" };
-//		String[] testArgs = { "-v", "3" };
+		// String[] testArgs = { "-s",
+		// "test\\dot-files\\bms_8c_a40eb276efea852638c5ba83e53569ebc_cgraph.dot" };
+		// String[] testArgs = { "-d", "test\\dot-files" };
+		// String[] testArgs = { "-h" };
+		// String[] testArgs = { "-v", "3" };
 
 		List<String> files = null;
 		ConfigType fileType = configurator.manageCmdLineArguments(args);
@@ -81,7 +84,7 @@ public class Manager {
 
 		if (files != null) {
 			parser.parse(files);
-        }
+		}
 
 		for (Node node : parser.getNodes()) {
 			logger.fine(node.toString());
@@ -93,7 +96,11 @@ public class Manager {
 			logger.fine(mod.toString());
 		}
 
-		// TODO Call graph writer
+		writer.setModules(parser.getModules());
+		writer.setEdges(parser.getEdges());
+		writer.readTemplates();
+		writer.writeGraph();
+
 		// TODO Call DOT runner
 
 		logger.info("Program end");

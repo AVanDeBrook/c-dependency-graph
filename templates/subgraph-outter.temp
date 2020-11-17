@@ -1,0 +1,5 @@
+subgraph cluster_%subgraph.modulePrefix% {
+    label="%subgraph.modulePrefix%";
+    rank="same";
+    %subgraph.node_clusters%
+}

@@ -164,7 +164,7 @@ public class GraphWriter {
 		}
 
 		for (Edge edge : edges)
-			nodeDefs.add(createNodeDefString(edge));
+			nodeDefs.add(createEdgeDefString(edge));
 
 		graph = graph.replaceAll("%graph.subgraph_cluster%", moduleCluster.stream().collect(Collectors.joining()));
 		graph = graph.replaceAll("%graph.edge_defs%", nodeDefs.stream().collect(Collectors.joining()));
@@ -190,7 +190,7 @@ public class GraphWriter {
 	 * @return String representation of an edge definition according to the DOT
 	 *         grammar.
 	 */
-	private String createNodeDefString(Edge edge) {
+	private String createEdgeDefString(Edge edge) {
 		return String.format("%s -> %s;", edge.getSourceNodeId(), edge.getDestinationNodeId());
 	}
 
@@ -228,7 +228,7 @@ public class GraphWriter {
 	 * @return String representation of the node according to the DOT grammar.
 	 */
 	private String createNodeString(Node node) {
-		return String.format("%s [label=\"%s\"];", node.getNodeLabel(), node.getNodeLabel());
+		return String.format("%s [label=\"%s\"];", node.getNodeId(), node.getNodeLabel());
 	}
 
 	/**

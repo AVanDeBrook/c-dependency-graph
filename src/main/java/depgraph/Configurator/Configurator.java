@@ -6,6 +6,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.ArrayList;
 
 // @formatter:off
 /**
@@ -46,6 +47,12 @@ public class Configurator {
 	 */
 	private String nameOfDirectory;
 
+	private boolean filtered;
+
+	private ArrayList<String> sourceFilterList;
+
+	private ArrayList<String> destinationFilterList;
+
 	/**
 	 * No-arg constructor. Initializes class attributes to null-strings.
 	 */
@@ -54,6 +61,9 @@ public class Configurator {
 		nameOfFile = "";
 		logger = Logger.getLogger("depgraph");
 		handlers = logger.getHandlers();
+		filtered = false;
+		sourceFilterList = new ArrayList<String>();
+		destinationFilterList = new ArrayList<String>();
 	}
 
 	/**
@@ -100,19 +110,27 @@ public class Configurator {
 					break;
 				case 'L':
 					try {
-                        // log file prints next to manager in the project tree
-                        //overwrites file if it exists
+						// log file prints next to manager in the project tree
+						// overwrites file if it exists
 						fileHandler = new FileHandler("./src/main/java/depgraph/" + args[++i] + ".log");
-                    }catch (ArrayIndexOutOfBoundsException ex){
-                        System.out.println("Incorect format for option -L");
+					} catch (ArrayIndexOutOfBoundsException ex) {
+						System.out.println("Incorect format for option -L");
 						printHelp = false;
-                    }
-                    catch (Exception e) {
+					} catch (Exception e) {
 						logger.severe("File Handler could not be created" + e);
 					}
 					fileHandler.setLevel(handlers[0].getLevel());
 					fileHandler.setFormatter(new SimpleFormatter());
 					logger.addHandler(fileHandler);
+					break;
+				case 'F':
+					String filterArg = "";
+					filtered = true;
+					for (int j = i + 1; j < args.length; j++, i++) {
+						if (!(args[j].charAt(0) == '-') || args[j].equals("->"))
+							filterArg += args[j];
+					}
+					getModuleFilters(filterArg.replaceAll(" ", ""));
 					break;
 				default:
 					System.out.println(String.format("Unkown option: %s", args[i]));
@@ -183,8 +201,8 @@ public class Configurator {
 	 * Checks if the passed file exists and sets the class attribute if it does.
 	 *
 	 * @param fileName name of the file.
-	 * @return True if param was an existing file and class attribute was set,
-	 * false otherwise.
+	 * @return True if param was an existing file and class attribute was set, false
+	 *         otherwise.
 	 */
 	private boolean processSingleFile(String fileName) {
 		File singleFile = new File(fileName);
@@ -206,8 +224,8 @@ public class Configurator {
 	 * does.
 	 *
 	 * @param directoryName name of the directory.
-	 * @return True if param was an existing directory and class attribute was
-	 * set, false otherwise.
+	 * @return True if param was an existing directory and class attribute was set,
+	 *         false otherwise.
 	 */
 	private boolean processDirectory(String directoryName) {
 		File directory = new File(directoryName);
@@ -224,6 +242,36 @@ public class Configurator {
 		return success;
 	}
 
+	private void getModuleFilters(String arg) {
+		String[] filters = arg.split("->");
+
+		if (filters[0].startsWith("{")) {
+			for (String key : filters[0].split(",")) {
+				if (key.contains("{"))
+					sourceFilterList.add(key.replaceAll("\\{", ""));
+				else if (key.contains("}"))
+					sourceFilterList.add(key.replaceAll("\\}", ""));
+				else
+					sourceFilterList.add(key);
+			}
+		} else {
+			sourceFilterList.add(filters[0]);
+		}
+
+		if (filters[1].startsWith("{")) {
+			for (String key : filters[1].split(",")) {
+				if (key.contains("{"))
+					destinationFilterList.add(key.replaceAll("\\{", ""));
+				else if (key.contains("}"))
+					destinationFilterList.add(key.replaceAll("\\}", ""));
+				else
+					destinationFilterList.add(key);
+			}
+		} else {
+			destinationFilterList.add(filters[1]);
+		}
+	}
+
 	/* Setters and Getters */
 
 	public String getFileName() {
@@ -232,5 +280,17 @@ public class Configurator {
 
 	public String getDirectoryName() {
 		return nameOfDirectory;
+	}
+
+	public boolean isFiltered() {
+		return filtered;
+	}
+
+	public ArrayList<String> getSourceFilterList() {
+		return sourceFilterList;
+	}
+
+	public ArrayList<String> getDestinationFilterList() {
+		return destinationFilterList;
 	}
 }

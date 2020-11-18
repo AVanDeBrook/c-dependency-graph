@@ -26,3 +26,6 @@ bin
 
 # VsCode Extension files
 debug.log
+
+# Explicitly Include Graphviz Linux and Windows Library Binaries
+!lib/bin

@@ -19,7 +19,7 @@ C_FLAGS=-g $(INCLUDE) -Wall
 .PHONY: clean
 
 all:
-	make dll
+	make lib
 	make test
 
 lib: wrapper.o

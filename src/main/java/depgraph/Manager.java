@@ -13,8 +13,13 @@ import depgraph.Parser.Node;
 import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
 import depgraph.GraphWriter.GraphWriter;
+import depgraph.ImageRenderer.ImageRenderer;
 
 public class Manager {
+
+	static {
+		System.setProperty("jna.library.path", "lib");
+	}
 
 	private static Configurator configurator;
 	private static Reader reader;
@@ -22,6 +27,7 @@ public class Manager {
 	private static GraphWriter writer;
 	private static Logger logger;
 	private static ConsoleHandler consoleHandler;
+	private static ImageRenderer render;
 
 	public static void main(String[] args) {
 
@@ -31,6 +37,7 @@ public class Manager {
 		reader = new Reader();
 		parser = new Parser();
 		writer = new GraphWriter();
+		render = new ImageRenderer();
 
 		try {
 			start(args);
@@ -101,7 +108,9 @@ public class Manager {
 		writer.readTemplates();
 		writer.writeGraph();
 
-		// TODO Call DOT runner
+		render.readGraph(writer.getGraph());
+		render.renderImage("pdf", "out.pdf");
+		render.close();
 
 		logger.info("Program end");
 	}

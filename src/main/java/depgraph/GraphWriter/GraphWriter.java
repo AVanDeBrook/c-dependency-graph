@@ -87,6 +87,8 @@ public class GraphWriter {
 	 */
 	private List<Module> modules;
 
+	private String graph;
+
 	/**
 	 * No-arg constructor
 	 */
@@ -97,6 +99,7 @@ public class GraphWriter {
 		graphTemplate = "";
 		innerSubgraphTemplate = "";
 		outterSubgraphTemplate = "";
+		graph = "";
 
 		this.edges = null;
 		this.modules = null;
@@ -115,6 +118,7 @@ public class GraphWriter {
 		graphTemplate = "";
 		innerSubgraphTemplate = "";
 		outterSubgraphTemplate = "";
+		graph = "";
 
 		this.edges = edges;
 		this.modules = modules;
@@ -168,6 +172,8 @@ public class GraphWriter {
 
 		graph = graph.replaceAll("%graph.subgraph_cluster%", moduleCluster.stream().collect(Collectors.joining()));
 		graph = graph.replaceAll("%graph.edge_defs%", nodeDefs.stream().collect(Collectors.joining()));
+
+		this.graph = graph;
 
 		writeToFile(fileName, graph);
 	}
@@ -347,5 +353,9 @@ public class GraphWriter {
 
 	public void setEdges(List<Edge> edges) {
 		this.edges = edges;
+	}
+
+	public String getGraph() {
+		return this.graph;
 	}
 }

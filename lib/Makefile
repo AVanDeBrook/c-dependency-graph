@@ -12,8 +12,8 @@ all:
 	make dll
 	make test
 
-dll: wrapper.o
-	$(CC) -shared $(C_FLAGS) $(OUT_DIR)/$^ $(LIB_FLAGS) -o wrapper.dll
+lib: wrapper.o
+	$(CC) -shared $(C_FLAGS) $(OUT_DIR)/$^ $(LIB_FLAGS) -o libgw.so
 
 test:
 	$(CC) $(C_FLAGS) -DTEST $(SOURCE_DIR)/wrapper.c $(LIB_FLAGS) -o $@
@@ -24,4 +24,4 @@ test:
 clean:
 	rm -rf out/*.o
 	rm -rf test
-	rm -rf wrapper.dll
+	rm -rf libgw.so

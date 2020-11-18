@@ -228,7 +228,7 @@ public class GraphWriter {
 	 * @return String representation of the node according to the DOT grammar.
 	 */
 	private String createNodeString(Node node) {
-		return String.format("%s [label=\"%s\"];", node.getNodeLabel(), node.getNodeLabel());
+		return String.format("%s [label=\"%s\"];", node.getNodeId(), node.getNodeLabel());
 	}
 
 	/**

@@ -18,6 +18,7 @@ import java.util.logging.SimpleFormatter;
  * - h print help menu
  * - v verbosity of logger
  * - L specify output file used by the logger
+ * - o specify output file for final graph
  *
  * Run in gradle using (replace ... with desired arguments): gradle run --args="..."
  *
@@ -31,6 +32,8 @@ public class Configurator {
 	private static Handler[] handlers;
 
 	private static FileHandler fileHandler;
+
+	private static String pathForOutputGraph;
 
 	static {
 		System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc]\nSource: %2$s\n%4$s:\t%5$s\n%6$s\n\n");
@@ -52,6 +55,7 @@ public class Configurator {
 	public Configurator() {
 		nameOfDirectory = "";
 		nameOfFile = "";
+		pathForOutputGraph = "";
 		logger = Logger.getLogger("depgraph");
 		handlers = logger.getHandlers();
 	}
@@ -100,19 +104,26 @@ public class Configurator {
 					break;
 				case 'L':
 					try {
-                        // log file prints next to manager in the project tree
-                        //overwrites file if it exists
+						// log file prints next to manager in the project tree
+						// overwrites file if it exists
 						fileHandler = new FileHandler("./src/main/java/depgraph/" + args[++i] + ".log");
-                    }catch (ArrayIndexOutOfBoundsException ex){
-                        System.out.println("Incorect format for option -L");
+					} catch (ArrayIndexOutOfBoundsException ex) {
+						System.out.println("Incorect format for option -L");
 						printHelp = false;
-                    }
-                    catch (Exception e) {
+					} catch (Exception e) {
 						logger.severe("File Handler could not be created" + e);
 					}
 					fileHandler.setLevel(handlers[0].getLevel());
 					fileHandler.setFormatter(new SimpleFormatter());
 					logger.addHandler(fileHandler);
+					break;
+				case 'o':
+					try {
+						pathForOutputGraph = args[++i];
+					} catch (ArrayIndexOutOfBoundsException ex) {
+						System.out.println("Incorect format for option -o");
+						printHelp = false;
+					}
 					break;
 				default:
 					System.out.println(String.format("Unkown option: %s", args[i]));
@@ -183,8 +194,8 @@ public class Configurator {
 	 * Checks if the passed file exists and sets the class attribute if it does.
 	 *
 	 * @param fileName name of the file.
-	 * @return True if param was an existing file and class attribute was set,
-	 * false otherwise.
+	 * @return True if param was an existing file and class attribute was set, false
+	 *         otherwise.
 	 */
 	private boolean processSingleFile(String fileName) {
 		File singleFile = new File(fileName);
@@ -206,8 +217,8 @@ public class Configurator {
 	 * does.
 	 *
 	 * @param directoryName name of the directory.
-	 * @return True if param was an existing directory and class attribute was
-	 * set, false otherwise.
+	 * @return True if param was an existing directory and class attribute was set,
+	 *         false otherwise.
 	 */
 	private boolean processDirectory(String directoryName) {
 		File directory = new File(directoryName);
@@ -232,5 +243,9 @@ public class Configurator {
 
 	public String getDirectoryName() {
 		return nameOfDirectory;
+	}
+
+	public String getOutputPath() {
+		return pathForOutputGraph;
 	}
 }

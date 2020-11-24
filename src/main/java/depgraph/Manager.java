@@ -13,6 +13,7 @@ import depgraph.Parser.Node;
 import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
 import depgraph.GraphWriter.GraphWriter;
+import depgraph.ImageRenderer.ImageRenderer;
 
 public class Manager {
 
@@ -22,6 +23,7 @@ public class Manager {
 	private static GraphWriter writer;
 	private static Logger logger;
 	private static ConsoleHandler consoleHandler;
+	private static ImageRenderer renderer;
 
 	public static void main(String[] args) {
 
@@ -31,6 +33,7 @@ public class Manager {
 		reader = new Reader();
 		parser = new Parser();
 		writer = new GraphWriter();
+		renderer = new ImageRenderer();
 
 		try {
 			start(args);
@@ -101,7 +104,7 @@ public class Manager {
 		writer.readTemplates();
 		writer.writeGraph();
 
-		// TODO Call DOT runner
+		renderer.renderImage("pdf", "out.pdf");
 
 		logger.info("Program end");
 	}

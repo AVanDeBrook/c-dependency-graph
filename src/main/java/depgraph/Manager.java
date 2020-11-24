@@ -106,8 +106,13 @@ public class Manager {
 		System.out.println("Output path: " + configurator.getOutputPath());
 
 		if (!configurator.getOutputPath().equals("")) {
-			writer.writeGraph(configurator.getOutputPath().split("\\.")[0]);
-			renderer.renderImage(configurator.getOutputPath());
+			String outFile = configurator.getOutputPath();
+			if (outFile.contains(".")) {
+				writer.writeGraph(outFile.split("\\.")[0]);
+				renderer.renderImage(outFile);
+			} else {
+				System.out.println("Error: Output file must have a file extension.");
+			}
 		} else {
 			writer.writeGraph();
 			renderer.renderImage();

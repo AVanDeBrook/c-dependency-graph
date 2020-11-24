@@ -124,8 +124,6 @@ public class Parser {
 				logger.info("Parsing graph: " + graphName);
 				break;
 			case NODE_STMT:
-				if (getNodeLabelFromString(tokenizedLine.getValue()).equals("__attribute__"))
-					return;
 				Node newNode = new Node();
 				newNode.setNodeId(getNodeIdFromString(tokenizedLine.getValue()));
 				newNode.setNodeLabel(getNodeLabelFromString(tokenizedLine.getValue()));
@@ -169,6 +167,15 @@ public class Parser {
 			if (e.getDestinationNodeObject() == null)
 				e.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, e.getDestinationNodeId()));
 		}
+
+		for (Edge edge : edgeCollection)
+			if (edge.getSourceNodeObject().getNodeLabel().equals("__attribute__")
+					|| edge.getDestinationNodeObject().getNodeLabel().equals("__attribute__"))
+				edgeCollection.remove(edge);
+
+		for (Node node : nodeCollection)
+			if (node.getNodeLabel().equals("__attribute__"))
+				nodeCollection.remove(node);
 
 		nodeCollection = cleanUpNodeCollection(nodeCollection);
 		nodes.addAll(nodeCollection);
@@ -263,6 +270,7 @@ public class Parser {
 				lastNodeId++;
 				newCollection.add(node);
 			}
+
 		return newCollection;
 	}
 

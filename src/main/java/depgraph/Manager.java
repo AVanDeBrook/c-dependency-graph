@@ -1,6 +1,7 @@
 package depgraph;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -10,6 +11,7 @@ import depgraph.Configurator.ConfigType;
 import depgraph.Configurator.Configurator;
 import depgraph.Parser.Edge;
 import depgraph.Parser.Node;
+import depgraph.Parser.Module;
 import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
 import depgraph.GraphWriter.GraphWriter;
@@ -75,6 +77,9 @@ public class Manager {
 		// String[] testArgs = { "-v", "3" };
 
 		List<String> files = null;
+		ArrayList<Module> filteredModuleList = new ArrayList<Module>();
+		ArrayList<Edge> filteredEdgeList = new ArrayList<Edge>();
+
 		ConfigType fileType = configurator.manageCmdLineArguments(args);
 		if (fileType == ConfigType.DIRECTORY) {
 			files = reader.readDirectory(configurator.getDirectoryName());
@@ -92,12 +97,13 @@ public class Manager {
 		for (Edge edge : parser.getEdges()) {
 			logger.fine(edge.toString());
 		}
-		for (depgraph.Parser.Module mod : parser.getModules()) {
+		for (Module mod : parser.getModules()) {
 			logger.fine(mod.toString());
 		}
 
 		writer.setModules(parser.getModules());
 		writer.setEdges(parser.getEdges());
+
 		writer.readTemplates();
 		writer.writeGraph();
 

@@ -101,34 +101,8 @@ public class Manager {
 			logger.fine(mod.toString());
 		}
 
-		if (configurator.isFiltered()) {
-			for (Module module : parser.getModules()) {
-				if (configurator.getSourceFilterList().contains(module.getModulePrefix())) {
-					filteredModuleList.add(module);
-				} else if (configurator.getDestinationFilterList().contains(module.getModulePrefix())) {
-					filteredModuleList.add(module);
-				}
-			}
-
-			for (Edge edge : parser.getEdges()) {
-				if (configurator.getSourceFilterList().contains(edge.getSourceNodeObject().getModulePrefix())
-						&& configurator.getSourceFilterList()
-								.contains(edge.getDestinationNodeObject().getModulePrefix()))
-					filteredEdgeList.add(edge);
-				else if (configurator.getDestinationFilterList().contains(edge.getSourceNodeObject().getModulePrefix())
-						&& configurator.getDestinationFilterList()
-								.contains(edge.getDestinationNodeObject().getModulePrefix()))
-					filteredEdgeList.add(edge);
-			}
-		}
-
-		if (configurator.isFiltered()) {
-			writer.setModules(filteredModuleList);
-			writer.setEdges(filteredEdgeList);
-		} else {
-			writer.setModules(parser.getModules());
-			writer.setEdges(parser.getEdges());
-		}
+		writer.setModules(parser.getModules());
+		writer.setEdges(parser.getEdges());
 
 		writer.readTemplates();
 		writer.writeGraph();

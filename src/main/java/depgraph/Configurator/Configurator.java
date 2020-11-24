@@ -6,7 +6,6 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import java.util.ArrayList;
 
 // @formatter:off
 /**
@@ -19,6 +18,7 @@ import java.util.ArrayList;
  * - h print help menu
  * - v verbosity of logger
  * - L specify output file used by the logger
+ * - o specify output file for final graph
  *
  * Run in gradle using (replace ... with desired arguments): gradle run --args="..."
  *
@@ -32,6 +32,8 @@ public class Configurator {
 	private static Handler[] handlers;
 
 	private static FileHandler fileHandler;
+
+	private static String pathForOutputGraph;
 
 	static {
 		System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc]\nSource: %2$s\n%4$s:\t%5$s\n%6$s\n\n");
@@ -47,23 +49,15 @@ public class Configurator {
 	 */
 	private String nameOfDirectory;
 
-	private boolean filtered;
-
-	private ArrayList<String> sourceFilterList;
-
-	private ArrayList<String> destinationFilterList;
-
 	/**
 	 * No-arg constructor. Initializes class attributes to null-strings.
 	 */
 	public Configurator() {
 		nameOfDirectory = "";
 		nameOfFile = "";
+		pathForOutputGraph = "";
 		logger = Logger.getLogger("depgraph");
 		handlers = logger.getHandlers();
-		filtered = false;
-		sourceFilterList = new ArrayList<String>();
-		destinationFilterList = new ArrayList<String>();
 	}
 
 	/**
@@ -123,14 +117,13 @@ public class Configurator {
 					fileHandler.setFormatter(new SimpleFormatter());
 					logger.addHandler(fileHandler);
 					break;
-				case 'F':
-					String filterArg = "";
-					filtered = true;
-					for (int j = i + 1; j < args.length; j++, i++) {
-						if (!(args[j].charAt(0) == '-') || args[j].equals("->"))
-							filterArg += args[j];
+				case 'o':
+					try {
+						pathForOutputGraph = args[++i];
+					} catch (ArrayIndexOutOfBoundsException ex) {
+						System.out.println("Incorect format for option -o");
+						printHelp = false;
 					}
-					getModuleFilters(filterArg.replaceAll(" ", ""));
 					break;
 				default:
 					System.out.println(String.format("Unkown option: %s", args[i]));
@@ -242,36 +235,6 @@ public class Configurator {
 		return success;
 	}
 
-	private void getModuleFilters(String arg) {
-		String[] filters = arg.split("->");
-
-		if (filters[0].startsWith("{")) {
-			for (String key : filters[0].split(",")) {
-				if (key.contains("{"))
-					sourceFilterList.add(key.replaceAll("\\{", ""));
-				else if (key.contains("}"))
-					sourceFilterList.add(key.replaceAll("\\}", ""));
-				else
-					sourceFilterList.add(key);
-			}
-		} else {
-			sourceFilterList.add(filters[0]);
-		}
-
-		if (filters[1].startsWith("{")) {
-			for (String key : filters[1].split(",")) {
-				if (key.contains("{"))
-					destinationFilterList.add(key.replaceAll("\\{", ""));
-				else if (key.contains("}"))
-					destinationFilterList.add(key.replaceAll("\\}", ""));
-				else
-					destinationFilterList.add(key);
-			}
-		} else {
-			destinationFilterList.add(filters[1]);
-		}
-	}
-
 	/* Setters and Getters */
 
 	public String getFileName() {
@@ -282,15 +245,7 @@ public class Configurator {
 		return nameOfDirectory;
 	}
 
-	public boolean isFiltered() {
-		return filtered;
-	}
-
-	public ArrayList<String> getSourceFilterList() {
-		return sourceFilterList;
-	}
-
-	public ArrayList<String> getDestinationFilterList() {
-		return destinationFilterList;
+	public String getOutputPath() {
+		return pathForOutputGraph;
 	}
 }

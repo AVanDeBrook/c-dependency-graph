@@ -114,6 +114,7 @@ public class TestConfigurator {
 
 	@Test
 	public void testInvalidHelpMenu() {
+		System.out.println("HERE");
 		String[] args = { "-h", "invalid text following flag" };
 		Configurator config = new Configurator();
 		assertEquals(ConfigType.NONE, config.manageCmdLineArguments(args));

@@ -102,9 +102,16 @@ public class Manager {
 		writer.setModules(parser.getModules());
 		writer.setEdges(parser.getEdges());
 		writer.readTemplates();
-		writer.writeGraph();
 
-		renderer.renderImage("pdf", "out.pdf");
+		System.out.println("Output path: " + configurator.getOutputPath());
+
+		if (!configurator.getOutputPath().equals("")) {
+			writer.writeGraph(configurator.getOutputPath().split("\\.")[0]);
+			renderer.renderImage(configurator.getOutputPath());
+		} else {
+			writer.writeGraph();
+			renderer.renderImage();
+		}
 
 		logger.info("Program end");
 	}

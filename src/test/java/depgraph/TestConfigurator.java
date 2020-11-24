@@ -2,12 +2,19 @@ package depgraph;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.junit.jupiter.api.Test;
 
 import depgraph.Configurator.ConfigType;
 import depgraph.Configurator.Configurator;
 
 public class TestConfigurator {
+
+	private static Logger logger = Logger.getLogger("depgraph");
+
 	@Test
 	public void testSingleFileReturnsFile() {
 		String[] args = { "-s", "test/dot-files/adc_8c_ae0b9ae6e4ef2dbf771dcc0ea30901ae2_cgraph.dot" };
@@ -37,12 +44,23 @@ public class TestConfigurator {
 	}
 
 	@Test
+	public void testDefaultVerbosity() {
+		String[] args = { "-h" };
+		Configurator config = new Configurator();
+		assertEquals(ConfigType.NONE, config.manageCmdLineArguments(args));
+		for (Handler handy : logger.getHandlers()) {
+			assertEquals(handy.getLevel(), Level.INFO);
+		}
+	}
+
+	@Test
 	public void testSevereVerbosity() {
 		String[] args = { "-v", "0" };
 		Configurator config = new Configurator();
 		assertEquals(ConfigType.NONE, config.manageCmdLineArguments(args));
-
-		// TODO run app and check verbosity level
+		for (Handler handy : logger.getHandlers()) {
+			assertEquals(handy.getLevel(), Level.SEVERE);
+		}
 	}
 
 	@Test
@@ -50,8 +68,9 @@ public class TestConfigurator {
 		String[] args = { "-v", "1" };
 		Configurator config = new Configurator();
 		assertEquals(ConfigType.NONE, config.manageCmdLineArguments(args));
-
-		// TODO run app and check verbosity level
+		for (Handler handy : logger.getHandlers()) {
+			assertEquals(handy.getLevel(), Level.WARNING);
+		}
 	}
 
 	@Test
@@ -59,8 +78,9 @@ public class TestConfigurator {
 		String[] args = { "-v", "2" };
 		Configurator config = new Configurator();
 		assertEquals(ConfigType.NONE, config.manageCmdLineArguments(args));
-
-		// TODO run app and check verbosity level
+		for (Handler handy : logger.getHandlers()) {
+			assertEquals(handy.getLevel(), Level.INFO);
+		}
 	}
 
 	@Test
@@ -68,8 +88,9 @@ public class TestConfigurator {
 		String[] args = { "-v", "3" };
 		Configurator config = new Configurator();
 		assertEquals(ConfigType.NONE, config.manageCmdLineArguments(args));
-
-		// TODO run app and check verbosity level
+		for (Handler handy : logger.getHandlers()) {
+			assertEquals(handy.getLevel(), Level.FINE);
+		}
 	}
 
 	@Test
@@ -77,8 +98,9 @@ public class TestConfigurator {
 		String[] args = { "-v", "4" };
 		Configurator config = new Configurator();
 		assertEquals(ConfigType.NONE, config.manageCmdLineArguments(args));
-
-		// TODO
+		for (Handler handy : logger.getHandlers()) {
+			assertEquals(handy.getLevel(), Level.INFO);
+		}
 	}
 
 	@Test

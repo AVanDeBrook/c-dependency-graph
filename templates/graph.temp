@@ -1,0 +1,6 @@
+digraph {
+    rankdir="LR";
+    compound=true;
+    %graph.subgraph_cluster%
+	%graph.edge_defs%
+}

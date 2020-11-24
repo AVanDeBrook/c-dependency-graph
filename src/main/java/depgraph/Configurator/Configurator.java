@@ -6,7 +6,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import java.util.ArrayList;
+import java.util.*;
 
 // @formatter:off
 /**
@@ -106,7 +106,6 @@ public class Configurator {
 					break;
 				case 'h':
 					printHelp = true;
-					printHelp();
 					break;
 				case 'L':
 					try {
@@ -125,12 +124,21 @@ public class Configurator {
 					break;
 				case 'F':
 					String filterArg = "";
-					filtered = true;
+
 					for (int j = i + 1; j < args.length; j++, i++) {
-						if (!(args[j].charAt(0) == '-') || args[j].equals("->"))
+						if (args[j].charAt(0) == '-')
+							break;
+						else
 							filterArg += args[j];
 					}
-					getModuleFilters(filterArg.replaceAll(" ", ""));
+
+					try {
+						getModuleFilters(filterArg.replaceAll(" ", ""));
+						filtered = true;
+					} catch (Exception ex) {
+						System.out.println("Incorrect format for option -F. Ignoring filter.");
+						filtered = false;
+					}
 					break;
 				default:
 					System.out.println(String.format("Unkown option: %s", args[i]));
@@ -140,9 +148,8 @@ public class Configurator {
 				printHelp = true;
 			}
 		}
-		if (printHelp) {
+		if (printHelp)
 			printHelp();
-		}
 		return typeToReturn;
 	}
 
@@ -194,6 +201,7 @@ public class Configurator {
 		System.out.println("-v\tSet logging verbosity\t-v <0-3>");
 		System.out.println("-L\tSet logger output file\t-L <file path>");
 		System.out.println("-o\tName program output\t-o <name>");
+		System.out.println("-F\tFilter expression\t-F {<module name>,...} => {<module name>,...}");
 		System.out.println();
 	}
 
@@ -242,33 +250,30 @@ public class Configurator {
 		return success;
 	}
 
-	private void getModuleFilters(String arg) {
-		String[] filters = arg.split("->");
+	/**
+	 * Parses the modules out of the entered filter expression.
+	 *
+	 * @param filter Filter expression entered by the user.
+	 * @throws Exception When the entered expression is invalid.
+	 */
+	private void getModuleFilters(String filter) throws Exception {
+		String[] filters = filter.split("=>");
+		List<String> modules;
 
-		if (filters[0].startsWith("{")) {
-			for (String key : filters[0].split(",")) {
-				if (key.contains("{"))
-					sourceFilterList.add(key.replaceAll("\\{", ""));
-				else if (key.contains("}"))
-					sourceFilterList.add(key.replaceAll("\\}", ""));
-				else
-					sourceFilterList.add(key);
-			}
-		} else {
-			sourceFilterList.add(filters[0]);
-		}
+		if (filters.length != 2)
+			throw new Exception("Invalid filter expression");
 
-		if (filters[1].startsWith("{")) {
-			for (String key : filters[1].split(",")) {
-				if (key.contains("{"))
-					destinationFilterList.add(key.replaceAll("\\{", ""));
-				else if (key.contains("}"))
-					destinationFilterList.add(key.replaceAll("\\}", ""));
-				else
-					destinationFilterList.add(key);
-			}
-		} else {
-			destinationFilterList.add(filters[1]);
+		for (int i = 0; i < filters.length; i++) {
+			if (filters[i].contains("{"))
+				modules = Arrays
+						.asList(filters[i].substring(filters[i].indexOf('{') + 1, filters[i].indexOf('}')).split(","));
+			else
+				modules = Arrays.asList(filters[i]);
+
+			if (i == 0)
+				this.sourceFilterList.addAll(modules);
+			else
+				this.destinationFilterList.addAll(modules);
 		}
 	}
 

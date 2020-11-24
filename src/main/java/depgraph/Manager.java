@@ -38,6 +38,7 @@ public class Manager {
 			start(args);
 		} catch (Exception e) {
 			logger.severe("Exception occurred at program start: " + e);
+			e.printStackTrace();
 		}
 	}
 
@@ -77,14 +78,19 @@ public class Manager {
 		// String[] testArgs = { "-v", "3" };
 
 		List<String> files = null;
-		ArrayList<Module> filteredModuleList = new ArrayList<Module>();
-		ArrayList<Edge> filteredEdgeList = new ArrayList<Edge>();
 
 		ConfigType fileType = configurator.manageCmdLineArguments(args);
 		if (fileType == ConfigType.DIRECTORY) {
 			files = reader.readDirectory(configurator.getDirectoryName());
 		} else if (fileType == ConfigType.FILE) {
 			files = reader.readSingleFile(configurator.getFileName());
+		}
+
+		if (configurator.isFiltered()) {
+			System.out.println("Source Filter List:");
+			configurator.getSourceFilterList().stream().forEach((String s) -> System.out.println(s));
+			System.out.println("Destination Filter List:");
+			configurator.getDestinationFilterList().forEach((String s) -> System.out.println(s));
 		}
 
 		if (files != null) {
@@ -101,35 +107,8 @@ public class Manager {
 			logger.fine(mod.toString());
 		}
 
-		if (configurator.isFiltered()) {
-			for (Module module : parser.getModules()) {
-				if (configurator.getSourceFilterList().contains(module.getModulePrefix())) {
-					filteredModuleList.add(module);
-				} else if (configurator.getDestinationFilterList().contains(module.getModulePrefix())) {
-					filteredModuleList.add(module);
-				}
-			}
-
-			for (Edge edge : parser.getEdges()) {
-				if (configurator.getSourceFilterList().contains(edge.getSourceNodeObject().getModulePrefix())
-						&& configurator.getSourceFilterList()
-								.contains(edge.getDestinationNodeObject().getModulePrefix()))
-					filteredEdgeList.add(edge);
-				else if (configurator.getDestinationFilterList().contains(edge.getSourceNodeObject().getModulePrefix())
-						&& configurator.getDestinationFilterList()
-								.contains(edge.getDestinationNodeObject().getModulePrefix()))
-					filteredEdgeList.add(edge);
-			}
-		}
-
-		if (configurator.isFiltered()) {
-			writer.setModules(filteredModuleList);
-			writer.setEdges(filteredEdgeList);
-		} else {
-			writer.setModules(parser.getModules());
-			writer.setEdges(parser.getEdges());
-		}
-
+		writer.setModules(parser.getModules());
+		writer.setEdges(parser.getEdges());
 		writer.readTemplates();
 		writer.writeGraph();
 

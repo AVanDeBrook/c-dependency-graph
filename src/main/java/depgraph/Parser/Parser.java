@@ -84,11 +84,8 @@ public class Parser {
 		for (Node node : nodes) {
 			Module module = getModuleFromModulePrefix(node.getModulePrefix().toUpperCase());
 
-			if (node.getModulePrefix().equals(""))
-				continue;
-
 			if (module == null) {
-				module = new Module(node.getModulePrefix().toUpperCase());
+				module = new Module(node.getModulePrefix());
 				modules.add(module);
 				logger.fine("New module found: " + module.getModulePrefix());
 			}
@@ -127,6 +124,8 @@ public class Parser {
 				logger.info("Parsing graph: " + graphName);
 				break;
 			case NODE_STMT:
+				if (getNodeLabelFromString(tokenizedLine.getValue()).equals("__attribute__"))
+					return;
 				Node newNode = new Node();
 				newNode.setNodeId(getNodeIdFromString(tokenizedLine.getValue()));
 				newNode.setNodeLabel(getNodeLabelFromString(tokenizedLine.getValue()));
@@ -291,7 +290,7 @@ public class Parser {
 			modulePrefix = "RTOS";
 		else
 			modulePrefix = nodeLabel.substring(0, nodeLabel.indexOf('_'));
-		return modulePrefix;
+		return modulePrefix.toUpperCase();
 	}
 
 	/**

@@ -82,13 +82,10 @@ public class Parser {
 
 		logger.fine("Grouping Nodes into Modules...");
 		for (Node node : nodes) {
-			Module module = getModuleFromModulePrefix(node.getModulePrefix().toUpperCase());
-
-			if (node.getModulePrefix().equals(""))
-				continue;
+			Module module = getModuleFromModulePrefix(node.getModulePrefix());
 
 			if (module == null) {
-				module = new Module(node.getModulePrefix().toUpperCase());
+				module = new Module(node.getModulePrefix());
 				modules.add(module);
 				logger.fine("New module found: " + module.getModulePrefix());
 			}
@@ -171,6 +168,15 @@ public class Parser {
 				e.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, e.getDestinationNodeId()));
 		}
 
+		for (Edge edge : edgeCollection)
+			if (edge.getSourceNodeObject().getNodeLabel().equals("__attribute__")
+					|| edge.getDestinationNodeObject().getNodeLabel().equals("__attribute__"))
+				edgeCollection.remove(edge);
+
+		for (Node node : nodeCollection)
+			if (node.getNodeLabel().equals("__attribute__"))
+				nodeCollection.remove(node);
+
 		nodeCollection = cleanUpNodeCollection(nodeCollection);
 		nodes.addAll(nodeCollection);
 		edgeCollection = cleanUpEdgeCollection(edgeCollection);
@@ -214,12 +220,25 @@ public class Parser {
 			}
 
 			if (!edge.getSourceNodeObject().getModulePrefix()
-					.equals(edge.getDestinationNodeObject().getModulePrefix())) {
-				newCollection.add(edge);
+					.equalsIgnoreCase(edge.getDestinationNodeObject().getModulePrefix())) {
+				if (!existsInEdgeList(edge.getSourceNodeObject(), edge.getDestinationNodeObject())) {
+					newCollection.add(edge);
+				}
 			}
 		}
 
 		return newCollection;
+	}
+
+	private boolean existsInEdgeList(Node src, Node dst) {
+		for (Edge edge : edges) {
+			if (edge.getSourceNodeObject().getNodeLabel().equals(src.getNodeLabel())) {
+				if (edge.getDestinationNodeObject().getNodeLabel().equals(dst.getNodeLabel())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -251,6 +270,7 @@ public class Parser {
 				lastNodeId++;
 				newCollection.add(node);
 			}
+
 		return newCollection;
 	}
 
@@ -291,7 +311,7 @@ public class Parser {
 			modulePrefix = "RTOS";
 		else
 			modulePrefix = nodeLabel.substring(0, nodeLabel.indexOf('_'));
-		return modulePrefix;
+		return modulePrefix.toUpperCase();
 	}
 
 	/**

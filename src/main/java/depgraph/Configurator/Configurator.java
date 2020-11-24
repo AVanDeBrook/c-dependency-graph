@@ -19,6 +19,7 @@ import java.util.*;
  * - h print help menu
  * - v verbosity of logger
  * - L specify output file used by the logger
+ * - o specify output file for final graph
  *
  * Run in gradle using (replace ... with desired arguments): gradle run --args="..."
  *
@@ -32,6 +33,8 @@ public class Configurator {
 	private static Handler[] handlers;
 
 	private static FileHandler fileHandler;
+
+	private static String pathForOutputGraph;
 
 	static {
 		System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc]\nSource: %2$s\n%4$s:\t%5$s\n%6$s\n\n");
@@ -59,11 +62,12 @@ public class Configurator {
 	public Configurator() {
 		nameOfDirectory = "";
 		nameOfFile = "";
-		logger = Logger.getLogger("depgraph");
-		handlers = logger.getHandlers();
+		pathForOutputGraph = "";
 		filtered = false;
 		sourceFilterList = new ArrayList<String>();
 		destinationFilterList = new ArrayList<String>();
+		logger = Logger.getLogger("depgraph");
+		handlers = logger.getHandlers();
 	}
 
 	/**
@@ -138,6 +142,13 @@ public class Configurator {
 					} catch (Exception ex) {
 						System.out.println("Incorrect format for option -F. Ignoring filter.");
 						filtered = false;
+					}
+				case 'o':
+					try {
+						pathForOutputGraph = args[++i];
+					} catch (ArrayIndexOutOfBoundsException ex) {
+						System.out.println("Incorect format for option -o");
+						printHelp = false;
 					}
 					break;
 				default:
@@ -285,6 +296,10 @@ public class Configurator {
 
 	public String getDirectoryName() {
 		return nameOfDirectory;
+	}
+
+	public String getOutputPath() {
+		return pathForOutputGraph;
 	}
 
 	public boolean isFiltered() {

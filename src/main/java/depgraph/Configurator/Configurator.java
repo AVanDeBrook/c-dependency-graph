@@ -137,12 +137,13 @@ public class Configurator {
 					}
 
 					try {
-						getModuleFilters(filterArg.replaceAll(" ", ""));
+						getModuleFilters(filterArg);
 						filtered = true;
 					} catch (Exception ex) {
 						System.out.println("Incorrect format for option -F. Ignoring filter.");
 						filtered = false;
 					}
+					break;
 				case 'o':
 					try {
 						pathForOutputGraph = args[++i];

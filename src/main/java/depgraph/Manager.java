@@ -87,14 +87,26 @@ public class Manager {
 
 		if (configurator.isFiltered()) {
 			System.out.println("Source Filter List:");
-			configurator.getSourceFilterList().stream().forEach((String s) -> System.out.println(s));
+			for (String s : configurator.getSourceFilterList()) {
+				for (char c : s.toCharArray()) {
+					System.out.printf("'%c' ", c);
+				}
+				System.out.println();
+			}
 			System.out.println("Destination Filter List:");
-			configurator.getDestinationFilterList().forEach((String s) -> System.out.println(s));
+			for (String s : configurator.getDestinationFilterList()) {
+				for (char c : s.toCharArray()) {
+					System.out.printf("'%c' ", c);
+				}
+				System.out.println();
+			}
 		}
 
-		if (files != null) {
-			parser.parse(files);
-		}
+		if (files != null)
+			if (configurator.isFiltered())
+				parser.parse(files, configurator.getSourceFilterList(), configurator.getDestinationFilterList());
+			else
+				parser.parse(files);
 
 		for (Node node : parser.getNodes()) {
 			logger.fine(node.toString());

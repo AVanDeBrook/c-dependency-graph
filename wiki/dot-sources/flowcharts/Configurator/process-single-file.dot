@@ -10,6 +10,8 @@ digraph "Process Single File" {
     return [label="Return"];
 
     set_return_false -> check_file_name;
-    check_file_name -> set_attr -> set_return_true -> return;
-    check_file_name -> no_file -> return;
+    check_file_name -> set_attr [label="True"];
+	set_attr -> set_return_true -> return;
+    check_file_name -> no_file [label="False"];
+	no_file -> return;
 }

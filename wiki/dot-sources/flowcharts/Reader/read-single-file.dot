@@ -9,6 +9,9 @@ digraph "Read Single File" {
     throw_exception [label="Throw invalid extension exception"];
     return_list [label="Return file contents in a list"];
 
-    print_info -> check_dot_file -> read_file -> add_contents -> return_list;
-    check_dot_file -> throw_exception;
+    print_info -> check_dot_file;
+	check_dot_file -> read_file [label="True"];
+	read_file -> add_contents;
+	add_contents -> return_list;
+    check_dot_file -> throw_exception [label="False"];
 }

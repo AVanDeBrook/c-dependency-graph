@@ -95,6 +95,35 @@ public class Parser {
 	}
 
 	/**
+	 * Alternative parse function for parsing according to a set of filters.
+	 *
+	 * @param fileContents       Set of files to parser through.
+	 * @param sourceFilters      Source modules to filter.
+	 * @param destinationFilters Destination modules to filter.
+	 */
+	public void parse(List<String> fileContents, ArrayList<String> sourceFilters,
+			ArrayList<String> destinationFilters) {
+		this.parse(fileContents);
+		ArrayList<Module> moduleList = new ArrayList<Module>();
+		ArrayList<Edge> edgeList = new ArrayList<Edge>();
+
+		for (Module module : modules) {
+			if (sourceFilters.contains(module.getModulePrefix()) && !moduleList.contains(module))
+				moduleList.add(module);
+			if (destinationFilters.contains(module.getModulePrefix()) && !moduleList.contains(module))
+				moduleList.add(module);
+		}
+
+		for (Edge edge : edges)
+			if (sourceFilters.contains(edge.getSourceNodeObject().getModulePrefix())
+					&& destinationFilters.contains(edge.getDestinationNodeObject().getModulePrefix()))
+				edgeList.add(edge);
+
+		modules = moduleList;
+		edges = edgeList;
+	}
+
+	/**
 	 * Handles a single file's contents. Passes each line of the file to the Lexer
 	 * so it can be tokenized to ease handling. At the moment, this function ignores
 	 * L_BRACE, R_BRACE, NODE_ATTR_STMT, EDGE_ATTR_STMT, IGNORED, and NONE because
@@ -114,6 +143,8 @@ public class Parser {
 		String graphName = null;
 		ArrayList<Node> nodeCollection = new ArrayList<Node>();
 		ArrayList<Edge> edgeCollection = new ArrayList<Edge>();
+		ArrayList<Node> nodeRemovalList = new ArrayList<Node>();
+		ArrayList<Edge> edgeRemovalList = new ArrayList<Edge>();
 
 		for (String line : lines) {
 			Token tokenizedLine = lexer.tokenize(line);

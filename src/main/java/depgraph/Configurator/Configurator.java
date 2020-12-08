@@ -6,6 +6,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.*;
 
 // @formatter:off
 /**
@@ -49,6 +50,12 @@ public class Configurator {
 	 */
 	private String nameOfDirectory;
 
+	private boolean filtered;
+
+	private ArrayList<String> sourceFilterList;
+
+	private ArrayList<String> destinationFilterList;
+
 	/**
 	 * No-arg constructor. Initializes class attributes to null-strings.
 	 */
@@ -56,6 +63,9 @@ public class Configurator {
 		nameOfDirectory = "";
 		nameOfFile = "";
 		pathForOutputGraph = "";
+		filtered = false;
+		sourceFilterList = new ArrayList<String>();
+		destinationFilterList = new ArrayList<String>();
 		logger = Logger.getLogger("depgraph");
 		handlers = logger.getHandlers();
 	}
@@ -100,7 +110,6 @@ public class Configurator {
 					break;
 				case 'h':
 					printHelp = true;
-					printHelp();
 					break;
 				case 'L':
 					try {
@@ -116,6 +125,24 @@ public class Configurator {
 					fileHandler.setLevel(handlers[0].getLevel());
 					fileHandler.setFormatter(new SimpleFormatter());
 					logger.addHandler(fileHandler);
+					break;
+				case 'F':
+					String filterArg = "";
+
+					for (int j = i + 1; j < args.length; j++, i++) {
+						if (args[j].charAt(0) == '-')
+							break;
+						else
+							filterArg += args[j];
+					}
+
+					try {
+						getModuleFilters(filterArg);
+						filtered = true;
+					} catch (Exception ex) {
+						System.out.println("Incorrect format for option -F. Ignoring filter.");
+						filtered = false;
+					}
 					break;
 				case 'o':
 					try {
@@ -133,9 +160,8 @@ public class Configurator {
 				printHelp = true;
 			}
 		}
-		if (printHelp) {
+		if (printHelp)
 			printHelp();
-		}
 		return typeToReturn;
 	}
 
@@ -187,6 +213,7 @@ public class Configurator {
 		System.out.println("-v\tSet logging verbosity\t-v <0-3>");
 		System.out.println("-L\tSet logger output file\t-L <file path>");
 		System.out.println("-o\tName program output\t-o <name>");
+		System.out.println("-F\tFilter expression\t-F {<module name>,...} => {<module name>,...}");
 		System.out.println();
 	}
 
@@ -235,6 +262,33 @@ public class Configurator {
 		return success;
 	}
 
+	/**
+	 * Parses the modules out of the entered filter expression.
+	 *
+	 * @param filter Filter expression entered by the user.
+	 * @throws Exception When the entered expression is invalid.
+	 */
+	private void getModuleFilters(String filter) throws Exception {
+		String[] filters = filter.split("=>");
+		List<String> modules;
+
+		if (filters.length != 2)
+			throw new Exception("Invalid filter expression");
+
+		for (int i = 0; i < filters.length; i++) {
+			if (filters[i].contains("{"))
+				modules = Arrays
+						.asList(filters[i].substring(filters[i].indexOf('{') + 1, filters[i].indexOf('}')).split(","));
+			else
+				modules = Arrays.asList(filters[i]);
+
+			if (i == 0)
+				this.sourceFilterList.addAll(modules);
+			else
+				this.destinationFilterList.addAll(modules);
+		}
+	}
+
 	/* Setters and Getters */
 
 	public String getFileName() {
@@ -247,5 +301,17 @@ public class Configurator {
 
 	public String getOutputPath() {
 		return pathForOutputGraph;
+	}
+
+	public boolean isFiltered() {
+		return filtered;
+	}
+
+	public ArrayList<String> getSourceFilterList() {
+		return sourceFilterList;
+	}
+
+	public ArrayList<String> getDestinationFilterList() {
+		return destinationFilterList;
 	}
 }

@@ -103,19 +103,26 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">No-arg constructor.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="depgraph/Manager.html#consoleHandler">consoleHandler</a></span> - Static variable in class depgraph.<a href="depgraph/Manager.html" title="class in depgraph">Manager</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="depgraph/GraphWriter/GraphWriter.html#createEdgeDefString(depgraph.Parser.Edge)">createEdgeDefString(Edge)</a></span> - Method in class depgraph.GraphWriter.<a href="depgraph/GraphWriter/GraphWriter.html" title="class in depgraph.GraphWriter">GraphWriter</a></dt>
+<dd>
+<div class="block">Helper function to consistently create a node defintion with a guarantee of
+ correct syntax.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="depgraph/GraphWriter/GraphWriter.html#createInnerSubgraphString(depgraph.Parser.Module,java.util.ArrayList,boolean)">createInnerSubgraphString(Module, ArrayList&lt;String&gt;, boolean)</a></span> - Method in class depgraph.GraphWriter.<a href="depgraph/GraphWriter/GraphWriter.html" title="class in depgraph.GraphWriter">GraphWriter</a></dt>
 <dd>
 <div class="block">Helper function to generalize the process of assembling the inner-most part
  of the subgraph.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="depgraph/GraphWriter/GraphWriter.html#createNodeDefString(depgraph.Parser.Edge)">createNodeDefString(Edge)</a></span> - Method in class depgraph.GraphWriter.<a href="depgraph/GraphWriter/GraphWriter.html" title="class in depgraph.GraphWriter">GraphWriter</a></dt>
-<dd>
-<div class="block">Helper function to consistently create a node defintion with a guarantee of
- correct syntax.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="depgraph/GraphWriter/GraphWriter.html#createNodeString(depgraph.Parser.Node)">createNodeString(Node)</a></span> - Method in class depgraph.GraphWriter.<a href="depgraph/GraphWriter/GraphWriter.html" title="class in depgraph.GraphWriter">GraphWriter</a></dt>
 <dd>
 <div class="block">Helper function to consistently create a node definition from a Node object.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="depgraph/ImageRenderer/ImageRenderer.html#createRunString(java.lang.String,java.lang.String)">createRunString(String, String)</a></span> - Method in class depgraph.ImageRenderer.<a href="depgraph/ImageRenderer/ImageRenderer.html" title="class in depgraph.ImageRenderer">ImageRenderer</a></dt>
+<dd>
+<div class="block">Creates a run string from the format of the image and nmae of the output
+ file.</div>
 </dd>
 </dl>
 <a id="I:D">
@@ -128,6 +135,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="depgraph/Configurator/package-summary.html">depgraph.Configurator</a> - package depgraph.Configurator</dt>
 <dd>&nbsp;</dd>
 <dt><a href="depgraph/GraphWriter/package-summary.html">depgraph.GraphWriter</a> - package depgraph.GraphWriter</dt>
+<dd>&nbsp;</dd>
+<dt><a href="depgraph/ImageRenderer/package-summary.html">depgraph.ImageRenderer</a> - package depgraph.ImageRenderer</dt>
 <dd>&nbsp;</dd>
 <dt><a href="depgraph/Parser/package-summary.html">depgraph.Parser</a> - package depgraph.Parser</dt>
 <dd>&nbsp;</dd>
@@ -186,6 +195,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Used for some statements where the attribute string may have been omitted
  in the Token value.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="depgraph/Parser/Parser.html#existsInEdgeList(depgraph.Parser.Node,depgraph.Parser.Node)">existsInEdgeList(Node, Node)</a></span> - Method in class depgraph.Parser.<a href="depgraph/Parser/Parser.html" title="class in depgraph.Parser">Parser</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="depgraph/Parser/Parser.html#existsInNodeList(java.lang.String)">existsInNodeList(String)</a></span> - Method in class depgraph.Parser.<a href="depgraph/Parser/Parser.html" title="class in depgraph.Parser">Parser</a></dt>
 <dd>
 <div class="block">Helper function to scan the "global" list of nodes and check if there is a
@@ -198,6 +209,8 @@ loadScripts(document, 'script');</script>
 <h2 class="title">F</h2>
 <dl>
 <dt><span class="memberNameLink"><a href="depgraph/Configurator/ConfigType.html#FILE">FILE</a></span> - depgraph.Configurator.<a href="depgraph/Configurator/ConfigType.html" title="enum in depgraph.Configurator">ConfigType</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="depgraph/Configurator/Configurator.html#fileHandler">fileHandler</a></span> - Static variable in class depgraph.Configurator.<a href="depgraph/Configurator/Configurator.html" title="class in depgraph.Configurator">Configurator</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a id="I:G">
@@ -226,6 +239,11 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><span class="memberNameLink"><a href="depgraph/Configurator/Configurator.html#getFileName()">getFileName()</a></span> - Method in class depgraph.Configurator.<a href="depgraph/Configurator/Configurator.html" title="class in depgraph.Configurator">Configurator</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="depgraph/ImageRenderer/ImageRenderer.html#getFormatFromFileExtension(java.lang.String)">getFormatFromFileExtension(String)</a></span> - Method in class depgraph.ImageRenderer.<a href="depgraph/ImageRenderer/ImageRenderer.html" title="class in depgraph.ImageRenderer">ImageRenderer</a></dt>
+<dd>
+<div class="block">Checks if the file extension specified in the output file name is a valid by
+ checking if it exists in the OUTPUT_TYPES class attribute.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="depgraph/Parser/Parser.html#getGlobalNodeFromNodeLabel(java.lang.String)">getGlobalNodeFromNodeLabel(String)</a></span> - Method in class depgraph.Parser.<a href="depgraph/Parser/Parser.html" title="class in depgraph.Parser">Parser</a></dt>
 <dd>
 <div class="block">Returns the global Node object that corresponds to a given node label</div>
@@ -292,6 +310,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="depgraph/Parser/Parser.html#getNodes()">getNodes()</a></span> - Method in class depgraph.Parser.<a href="depgraph/Parser/Parser.html" title="class in depgraph.Parser">Parser</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="depgraph/Configurator/Configurator.html#getOutputPath()">getOutputPath()</a></span> - Method in class depgraph.Configurator.<a href="depgraph/Configurator/Configurator.html" title="class in depgraph.Configurator">Configurator</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="depgraph/GraphWriter/GraphWriter.html#getOutterSubgraphTemplate()">getOutterSubgraphTemplate()</a></span> - Method in class depgraph.GraphWriter.<a href="depgraph/GraphWriter/GraphWriter.html" title="class in depgraph.GraphWriter">GraphWriter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="depgraph/GraphWriter/GraphWriter.html#getOutterSubgraphTemplatePath()">getOutterSubgraphTemplatePath()</a></span> - Method in class depgraph.GraphWriter.<a href="depgraph/GraphWriter/GraphWriter.html" title="class in depgraph.GraphWriter">GraphWriter</a></dt>
@@ -341,10 +361,8 @@ loadScripts(document, 'script');</script>
 </a>
 <h2 class="title">H</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="depgraph/Configurator/Configurator.html#help()">help()</a></span> - Method in class depgraph.Configurator.<a href="depgraph/Configurator/Configurator.html" title="class in depgraph.Configurator">Configurator</a></dt>
-<dd>
-<div class="block">Prints help menu to stdout.</div>
-</dd>
+<dt><span class="memberNameLink"><a href="depgraph/Configurator/Configurator.html#handlers">handlers</a></span> - Static variable in class depgraph.Configurator.<a href="depgraph/Configurator/Configurator.html" title="class in depgraph.Configurator">Configurator</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <a id="I:I">
 <!--   -->
@@ -357,6 +375,18 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="depgraph/Parser/TokenType.html#IGNORED">IGNORED</a></span> - depgraph.Parser.<a href="depgraph/Parser/TokenType.html" title="enum in depgraph.Parser">TokenType</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="depgraph/ImageRenderer/ImageRenderer.html" title="class in depgraph.ImageRenderer"><span class="typeNameLink">ImageRenderer</span></a> - Class in <a href="depgraph/ImageRenderer/package-summary.html">depgraph.ImageRenderer</a></dt>
+<dd>
+<div class="block">Relatively simple class.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="depgraph/ImageRenderer/ImageRenderer.html#%3Cinit%3E()">ImageRenderer()</a></span> - Constructor for class depgraph.ImageRenderer.<a href="depgraph/ImageRenderer/ImageRenderer.html" title="class in depgraph.ImageRenderer">ImageRenderer</a></dt>
+<dd>
+<div class="block">No-arg constructor.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="depgraph/Manager.html#initLogger()">initLogger()</a></span> - Static method in class depgraph.<a href="depgraph/Manager.html" title="class in depgraph">Manager</a></dt>
+<dd>
+<div class="block">Initializes our project logger named depgraph.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="depgraph/GraphWriter/GraphWriter.html#innerSubgraphTemplate">innerSubgraphTemplate</a></span> - Variable in class depgraph.GraphWriter.<a href="depgraph/GraphWriter/GraphWriter.html" title="class in depgraph.GraphWriter">GraphWriter</a></dt>
 <dd>
 <div class="block">Contents of teh inner-most subgraph template file for reference throughout
@@ -402,7 +432,9 @@ loadScripts(document, 'script');</script>
 <dt><span class="memberNameLink"><a href="depgraph/Parser/TokenType.html#L_BRACE">L_BRACE</a></span> - depgraph.Parser.<a href="depgraph/Parser/TokenType.html" title="enum in depgraph.Parser">TokenType</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="depgraph/Parser/Parser.html#lastNodeId">lastNodeId</a></span> - Variable in class depgraph.Parser.<a href="depgraph/Parser/Parser.html" title="class in depgraph.Parser">Parser</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Counter used to create nodeIds that are unique.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="depgraph/Parser/Parser.html#lexer">lexer</a></span> - Variable in class depgraph.Parser.<a href="depgraph/Parser/Parser.html" title="class in depgraph.Parser">Parser</a></dt>
 <dd>
 <div class="block">Lexer class that the Parser uses to determine what type of statement is
@@ -419,6 +451,16 @@ loadScripts(document, 'script');</script>
 <div class="block">Constructor that initializes identifier regex patterns and EOL attribute
  to null.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="depgraph/Configurator/Configurator.html#logger">logger</a></span> - Static variable in class depgraph.Configurator.<a href="depgraph/Configurator/Configurator.html" title="class in depgraph.Configurator">Configurator</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="depgraph/Manager.html#logger">logger</a></span> - Static variable in class depgraph.<a href="depgraph/Manager.html" title="class in depgraph">Manager</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="depgraph/Parser/Parser.html#logger">logger</a></span> - Static variable in class depgraph.Parser.<a href="depgraph/Parser/Parser.html" title="class in depgraph.Parser">Parser</a></dt>
+<dd>
+<div class="block">Logger used with levels SEVERE, WARNING, INFO, and FINE.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="depgraph/Reader/Reader.html#logger">logger</a></span> - Static variable in class depgraph.Reader.<a href="depgraph/Reader/Reader.html" title="class in depgraph.Reader">Reader</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="depgraph/Parser/Lexer.html#lookAhead(char%5B%5D)">lookAhead(char[])</a></span> - Method in class depgraph.Parser.<a href="depgraph/Parser/Lexer.html" title="class in depgraph.Parser">Lexer</a></dt>
 <dd>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
@@ -496,7 +538,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><span class="memberNameLink"><a href="depgraph/Parser/Node.html#nodeLabel">nodeLabel</a></span> - Variable in class depgraph.Parser.<a href="depgraph/Parser/Node.html" title="class in depgraph.Parser">Node</a></dt>
 <dd>
-<div class="block">Node label appears as the first attribute in autogenerated attribute
+<div class="block">Node label appears as the first attribute in auto-generated attribute
  lists.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="depgraph/Parser/Lexer.html#nodePattern">nodePattern</a></span> - Variable in class depgraph.Parser.<a href="depgraph/Parser/Lexer.html" title="class in depgraph.Parser">Lexer</a></dt>
@@ -526,6 +568,10 @@ loadScripts(document, 'script');</script>
 </a>
 <h2 class="title">O</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="depgraph/ImageRenderer/ImageRenderer.html#OUTPUT_TYPES">OUTPUT_TYPES</a></span> - Variable in class depgraph.ImageRenderer.<a href="depgraph/ImageRenderer/ImageRenderer.html" title="class in depgraph.ImageRenderer">ImageRenderer</a></dt>
+<dd>
+<div class="block">List of supported image types that dot can generate.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="depgraph/GraphWriter/GraphWriter.html#outterSubgraphTemplate">outterSubgraphTemplate</a></span> - Variable in class depgraph.GraphWriter.<a href="depgraph/GraphWriter/GraphWriter.html" title="class in depgraph.GraphWriter">GraphWriter</a></dt>
 <dd>
 <div class="block">Contents of the outter-most subgraph template file for reference throughout
@@ -559,6 +605,17 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">No-arg constructor.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="depgraph/Configurator/Configurator.html#pathForOutputGraph">pathForOutputGraph</a></span> - Static variable in class depgraph.Configurator.<a href="depgraph/Configurator/Configurator.html" title="class in depgraph.Configurator">Configurator</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="depgraph/Configurator/Configurator.html#printHelp()">printHelp()</a></span> - Method in class depgraph.Configurator.<a href="depgraph/Configurator/Configurator.html" title="class in depgraph.Configurator">Configurator</a></dt>
+<dd>
+<div class="block">Prints help menu to stdout.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="depgraph/ImageRenderer/ImageRenderer.html#process">process</a></span> - Variable in class depgraph.ImageRenderer.<a href="depgraph/ImageRenderer/ImageRenderer.html" title="class in depgraph.ImageRenderer">ImageRenderer</a></dt>
+<dd>
+<div class="block">Used to keep track of the command line process until it has finished
+ executing.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="depgraph/Configurator/Configurator.html#processDirectory(java.lang.String)">processDirectory(String)</a></span> - Method in class depgraph.Configurator.<a href="depgraph/Configurator/Configurator.html" title="class in depgraph.Configurator">Configurator</a></dt>
 <dd>
 <div class="block">Checks if the passed directory exists and sets the class attribute if it
@@ -568,6 +625,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Checks if the passed file exists and sets the class attribute if it does.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="depgraph/Configurator/Configurator.html#processVerbosity(int)">processVerbosity(int)</a></span> - Method in class depgraph.Configurator.<a href="depgraph/Configurator/Configurator.html" title="class in depgraph.Configurator">Configurator</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <a id="I:R">
 <!--   -->
@@ -603,6 +662,24 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Reads graph and subgraph templates from the graphTemplatePath and
  subgraphTemplatePath.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="depgraph/Manager.html#renderer">renderer</a></span> - Static variable in class depgraph.<a href="depgraph/Manager.html" title="class in depgraph">Manager</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="depgraph/ImageRenderer/ImageRenderer.html#renderImage()">renderImage()</a></span> - Method in class depgraph.ImageRenderer.<a href="depgraph/ImageRenderer/ImageRenderer.html" title="class in depgraph.ImageRenderer">ImageRenderer</a></dt>
+<dd>
+<div class="block">Default render option.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="depgraph/ImageRenderer/ImageRenderer.html#renderImage(java.lang.String)">renderImage(String)</a></span> - Method in class depgraph.ImageRenderer.<a href="depgraph/ImageRenderer/ImageRenderer.html" title="class in depgraph.ImageRenderer">ImageRenderer</a></dt>
+<dd>
+<div class="block">Renders the graph as a pdf with the specified file name.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="depgraph/ImageRenderer/ImageRenderer.html#renderImage(java.lang.String,java.lang.String)">renderImage(String, String)</a></span> - Method in class depgraph.ImageRenderer.<a href="depgraph/ImageRenderer/ImageRenderer.html" title="class in depgraph.ImageRenderer">ImageRenderer</a></dt>
+<dd>
+<div class="block">Renders the graph image by creating a dot run string.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="depgraph/ImageRenderer/ImageRenderer.html#runtime">runtime</a></span> - Variable in class depgraph.ImageRenderer.<a href="depgraph/ImageRenderer/ImageRenderer.html" title="class in depgraph.ImageRenderer">ImageRenderer</a></dt>
+<dd>
+<div class="block">Runtime instace.</div>
 </dd>
 </dl>
 <a id="I:S">

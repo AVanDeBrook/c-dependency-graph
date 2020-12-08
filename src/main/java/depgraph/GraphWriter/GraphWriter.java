@@ -137,7 +137,7 @@ public class GraphWriter {
 	 * @throws Exception when there is an error creating the output file.
 	 */
 	public void writeGraph() throws Exception {
-		writeGraph("out.dot");
+		writeGraph("out");
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class GraphWriter {
 		graph = graph.replaceAll("%graph.subgraph_cluster%", moduleCluster.stream().collect(Collectors.joining()));
 		graph = graph.replaceAll("%graph.edge_defs%", nodeDefs.stream().collect(Collectors.joining()));
 
-		writeToFile(fileName, graph);
+		writeToFile(fileName + ".dot", graph);
 	}
 
 	/**

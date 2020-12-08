@@ -14,6 +14,7 @@ import depgraph.Parser.Module;
 import depgraph.Parser.Parser;
 import depgraph.Reader.Reader;
 import depgraph.GraphWriter.GraphWriter;
+import depgraph.ImageRenderer.ImageRenderer;
 
 public class Manager {
 
@@ -23,6 +24,7 @@ public class Manager {
 	private static GraphWriter writer;
 	private static Logger logger;
 	private static ConsoleHandler consoleHandler;
+	private static ImageRenderer renderer;
 
 	public static void main(String[] args) {
 
@@ -32,6 +34,7 @@ public class Manager {
 		reader = new Reader();
 		parser = new Parser();
 		writer = new GraphWriter();
+		renderer = new ImageRenderer();
 
 		try {
 			start(args);
@@ -121,9 +124,21 @@ public class Manager {
 		writer.setModules(parser.getModules());
 		writer.setEdges(parser.getEdges());
 		writer.readTemplates();
-		writer.writeGraph();
 
-		// TODO Call DOT runner
+		System.out.println("Output path: " + configurator.getOutputPath());
+
+		if (!configurator.getOutputPath().equals("")) {
+			String outFile = configurator.getOutputPath();
+			if (outFile.contains(".")) {
+				writer.writeGraph(outFile.split("\\.")[0]);
+				renderer.renderImage(outFile);
+			} else {
+				System.out.println("Error: Output file must have a file extension.");
+			}
+		} else {
+			writer.writeGraph();
+			renderer.renderImage();
+		}
 
 		logger.info("Program end");
 	}

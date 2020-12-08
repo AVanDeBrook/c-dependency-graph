@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -100,6 +100,9 @@ extends java.lang.Object</pre>
  - s DOT file to process
  - d directory of DOT files to process.
  - h print help menu
+ - v verbosity of logger
+ - L specify output file used by the logger
+ - o specify output file for final graph
 
  Run in gradle using (replace ... with desired arguments): gradle run --args="..."
 
@@ -125,18 +128,38 @@ extends java.lang.Object</pre>
 </thead>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code>private static java.util.logging.FileHandler</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fileHandler">fileHandler</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private static java.util.logging.Handler[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handlers">handlers</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private static java.util.logging.Logger</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#logger">logger</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#nameOfDirectory">nameOfDirectory</a></span></code></th>
 <td class="colLast">
 <div class="block">Name of a directory, if the passed argument is a directory.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#nameOfFile">nameOfFile</a></span></code></th>
 <td class="colLast">
 <div class="block">Name of file, if the passed argument is a single file.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pathForOutputGraph">pathForOutputGraph</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -199,11 +222,9 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor" id="i2">
-<td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#help()">help</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Prints help menu to stdout.</div>
-</td>
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputPath()">getOutputPath</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code><a href="ConfigType.html" title="enum in depgraph.Configurator">ConfigType</a></code></td>
@@ -213,6 +234,13 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="altColor" id="i4">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#printHelp()">printHelp</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Prints help menu to stdout.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>private boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processDirectory(java.lang.String)">processDirectory</a></span>&#8203;(java.lang.String&nbsp;directoryName)</code></th>
 <td class="colLast">
@@ -220,12 +248,17 @@ extends java.lang.Object</pre>
  does.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>private boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processSingleFile(java.lang.String)">processSingleFile</a></span>&#8203;(java.lang.String&nbsp;fileName)</code></th>
 <td class="colLast">
 <div class="block">Checks if the passed file exists and sets the class attribute if it does.</div>
 </td>
+</tr>
+<tr class="rowColor" id="i7">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processVerbosity(int)">processVerbosity</a></span>&#8203;(int&nbsp;levelofVerbosity)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -249,6 +282,30 @@ extends java.lang.Object</pre>
 </a>
 <h2>Field Details</h2>
 <ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="logger">logger</a></h3>
+<div class="memberSignature"><span class="modifiers">private static</span>&nbsp;<span class="returnType">java.util.logging.Logger</span>&nbsp;<span class="memberName">logger</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="handlers">handlers</a></h3>
+<div class="memberSignature"><span class="modifiers">private static</span>&nbsp;<span class="returnType">java.util.logging.Handler[]</span>&nbsp;<span class="memberName">handlers</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="fileHandler">fileHandler</a></h3>
+<div class="memberSignature"><span class="modifiers">private static</span>&nbsp;<span class="returnType">java.util.logging.FileHandler</span>&nbsp;<span class="memberName">fileHandler</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="pathForOutputGraph">pathForOutputGraph</a></h3>
+<div class="memberSignature"><span class="modifiers">private static</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">pathForOutputGraph</span></div>
+</section>
+</li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="nameOfFile">nameOfFile</a></h3>
@@ -305,8 +362,14 @@ extends java.lang.Object</pre>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="help()">help</a></h3>
-<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">help</span>()</div>
+<h3><a id="processVerbosity(int)">processVerbosity</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">processVerbosity</span>&#8203;(<span class="arguments">int&nbsp;levelofVerbosity)</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="printHelp()">printHelp</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">printHelp</span>()</div>
 <div class="block">Prints help menu to stdout.</div>
 </section>
 </li>
@@ -319,8 +382,8 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>fileName</code> - name of the file.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if param was an existing file and class attribute was set,
- false otherwise.</dd>
+<dd>True if param was an existing file and class attribute was set, false
+         otherwise.</dd>
 </dl>
 </section>
 </li>
@@ -334,8 +397,8 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>directoryName</code> - name of the directory.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if param was an existing directory and class attribute was
- set, false otherwise.</dd>
+<dd>True if param was an existing directory and class attribute was set,
+         false otherwise.</dd>
 </dl>
 </section>
 </li>
@@ -349,6 +412,12 @@ extends java.lang.Object</pre>
 <section class="detail">
 <h3><a id="getDirectoryName()">getDirectoryName</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">getDirectoryName</span>()</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getOutputPath()">getOutputPath</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">getOutputPath</span>()</div>
 </section>
 </li>
 </ul>

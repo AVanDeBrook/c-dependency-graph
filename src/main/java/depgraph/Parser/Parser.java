@@ -199,18 +199,20 @@ public class Parser {
 				e.setDestinationNodeObject(getNodeObjectFromId(nodeCollection, e.getDestinationNodeId()));
 		}
 
+		ArrayList<Edge> removeEdgeCollection = new ArrayList<Edge>();
 		for (Edge edge : edgeCollection)
 			if (edge.getSourceNodeObject().getNodeLabel().equals("__attribute__")
 					|| edge.getDestinationNodeObject().getNodeLabel().equals("__attribute__"))
-				edgeRemovalList.add(edge);
+				removeEdgeCollection.add(edge);
 
-		edgeCollection.removeAll(edgeRemovalList);
+		edgeCollection.removeAll(removeEdgeCollection);
 
+		ArrayList<Node> removeNodeCollection = new ArrayList<Node>();
 		for (Node node : nodeCollection)
 			if (node.getNodeLabel().equals("__attribute__"))
-				nodeRemovalList.add(node);
+				removeNodeCollection.add(node);
 
-		nodeCollection.removeAll(nodeRemovalList);
+		nodeCollection.removeAll(removeNodeCollection);
 
 		nodeCollection = cleanUpNodeCollection(nodeCollection);
 		nodes.addAll(nodeCollection);

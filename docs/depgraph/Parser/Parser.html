@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -136,7 +136,9 @@ extends java.lang.Object</pre>
 <tr class="rowColor">
 <td class="colFirst"><code>private int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lastNodeId">lastNodeId</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Counter used to create nodeIds that are unique.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private <a href="Lexer.html" title="class in depgraph.Parser">Lexer</a></code></td>
@@ -147,6 +149,13 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>private static java.util.logging.Logger</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#logger">logger</a></span></code></th>
+<td class="colLast">
+<div class="block">Logger used with levels SEVERE, WARNING, INFO, and FINE.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>private java.util.ArrayList&lt;<a href="Module.html" title="class in depgraph.Parser">Module</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modules">modules</a></span></code></th>
 <td class="colLast">
@@ -154,7 +163,7 @@ extends java.lang.Object</pre>
  the nodes are created.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private java.util.ArrayList&lt;<a href="Node.html" title="class in depgraph.Parser">Node</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#nodes">nodes</a></span></code></th>
 <td class="colLast">
@@ -229,32 +238,38 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><code>private boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#existsInEdgeList(depgraph.Parser.Node,depgraph.Parser.Node)">existsInEdgeList</a></span>&#8203;(<a href="Node.html" title="class in depgraph.Parser">Node</a>&nbsp;src,
+<a href="Node.html" title="class in depgraph.Parser">Node</a>&nbsp;dst)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor" id="i3">
+<td class="colFirst"><code>private boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#existsInNodeList(java.lang.String)">existsInNodeList</a></span>&#8203;(java.lang.String&nbsp;nodeLabel)</code></th>
 <td class="colLast">
 <div class="block">Helper function to scan the "global" list of nodes and check if there is a
  duplicate of the given node label.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDestinationNodeIdFromString(java.lang.String)">getDestinationNodeIdFromString</a></span>&#8203;(java.lang.String&nbsp;valueString)</code></th>
 <td class="colLast">
 <div class="block">Determines the destination node from an edge_stmt.</div>
 </td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="Edge.html" title="class in depgraph.Parser">Edge</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEdges()">getEdges</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>private <a href="Node.html" title="class in depgraph.Parser">Node</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGlobalNodeFromNodeLabel(java.lang.String)">getGlobalNodeFromNodeLabel</a></span>&#8203;(java.lang.String&nbsp;nodeLabel)</code></th>
 <td class="colLast">
 <div class="block">Returns the global Node object that corresponds to a given node label</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>private java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsPublicFromNodeLabel(java.lang.String)">getIsPublicFromNodeLabel</a></span>&#8203;(java.lang.String&nbsp;nodeLabel)</code></th>
 <td class="colLast">
@@ -262,7 +277,7 @@ extends java.lang.Object</pre>
  capitalization.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="altColor" id="i8">
 <td class="colFirst"><code>private <a href="Module.html" title="class in depgraph.Parser">Module</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getModuleFromModulePrefix(java.lang.String)">getModuleFromModulePrefix</a></span>&#8203;(java.lang.String&nbsp;modulePrefix)</code></th>
 <td class="colLast">
@@ -270,26 +285,26 @@ extends java.lang.Object</pre>
  matching module prefix.</div>
 </td>
 </tr>
-<tr class="altColor" id="i8">
+<tr class="rowColor" id="i9">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getModulePrefixFromNodeLabel(java.lang.String)">getModulePrefixFromNodeLabel</a></span>&#8203;(java.lang.String&nbsp;nodeLabel)</code></th>
 <td class="colLast">
 <div class="block">Determines the module prefix of a function from the node label.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i9">
+<tr class="altColor" id="i10">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="Module.html" title="class in depgraph.Parser">Module</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getModules()">getModules</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor" id="i10">
+<tr class="rowColor" id="i11">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNodeIdFromString(java.lang.String)">getNodeIdFromString</a></span>&#8203;(java.lang.String&nbsp;valueString)</code></th>
 <td class="colLast">
 <div class="block">Determines the node_id from a node_stmt.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i11">
+<tr class="altColor" id="i12">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNodeLabelFromString(java.lang.String)">getNodeLabelFromString</a></span>&#8203;(java.lang.String&nbsp;valueString)</code></th>
 <td class="colLast">
@@ -297,7 +312,7 @@ extends java.lang.Object</pre>
  first attribute in a node_stmt).</div>
 </td>
 </tr>
-<tr class="altColor" id="i12">
+<tr class="rowColor" id="i13">
 <td class="colFirst"><code>private <a href="Node.html" title="class in depgraph.Parser">Node</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNodeObjectFromId(java.util.ArrayList,java.lang.String)">getNodeObjectFromId</a></span>&#8203;(java.util.ArrayList&lt;<a href="Node.html" title="class in depgraph.Parser">Node</a>&gt;&nbsp;nodeCollection,
 java.lang.String&nbsp;nodeId)</code></th>
@@ -306,26 +321,26 @@ java.lang.String&nbsp;nodeId)</code></th>
  a list.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i13">
+<tr class="altColor" id="i14">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="Node.html" title="class in depgraph.Parser">Node</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNodes()">getNodes</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor" id="i14">
+<tr class="rowColor" id="i15">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceNodeIdFromString(java.lang.String)">getSourceNodeIdFromString</a></span>&#8203;(java.lang.String&nbsp;valueString)</code></th>
 <td class="colLast">
 <div class="block">Determines source node from an edge_stmt.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i15">
+<tr class="altColor" id="i16">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(java.lang.String)">parse</a></span>&#8203;(java.lang.String&nbsp;fileContents)</code></th>
 <td class="colLast">
 <div class="block">Handles a single file's contents.</div>
 </td>
 </tr>
-<tr class="altColor" id="i16">
+<tr class="rowColor" id="i17">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(java.util.List)">parse</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;fileContents)</code></th>
 <td class="colLast">
@@ -390,6 +405,14 @@ java.lang.String&nbsp;nodeId)</code></th>
 <section class="detail">
 <h3><a id="lastNodeId">lastNodeId</a></h3>
 <div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">int</span>&nbsp;<span class="memberName">lastNodeId</span></div>
+<div class="block">Counter used to create nodeIds that are unique.</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="logger">logger</a></h3>
+<div class="memberSignature"><span class="modifiers">private static</span>&nbsp;<span class="returnType">java.util.logging.Logger</span>&nbsp;<span class="memberName">logger</span></div>
+<div class="block">Logger used with levels SEVERE, WARNING, INFO, and FINE.</div>
 </section>
 </li>
 </ul>
@@ -468,6 +491,13 @@ java.lang.String&nbsp;nodeId)</code></th>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>newCollection The list of Edges after updating their Nodes</dd>
 </dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="existsInEdgeList(depgraph.Parser.Node,depgraph.Parser.Node)">existsInEdgeList</a></h3>
+<div class="memberSignature"><span class="modifiers">private</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">existsInEdgeList</span>&#8203;(<span class="arguments"><a href="Node.html" title="class in depgraph.Parser">Node</a>&nbsp;src,
+<a href="Node.html" title="class in depgraph.Parser">Node</a>&nbsp;dst)</span></div>
 </section>
 </li>
 <li class="blockList">

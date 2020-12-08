@@ -1,5 +1,6 @@
 depgraph
 depgraph.Configurator
 depgraph.GraphWriter
+depgraph.ImageRenderer
 depgraph.Parser
 depgraph.Reader

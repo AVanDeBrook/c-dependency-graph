@@ -191,7 +191,8 @@ public class GraphWriter {
 	 *         grammar.
 	 */
 	private String createEdgeDefString(Edge edge) {
-		return String.format("%s -> %s;", edge.getSourceNodeId(), edge.getDestinationNodeId());
+		return String.format("%s -> %s;", edge.getSourceNodeId(), edge.getDestinationNodeId(),
+				edge.getSourceNodeObject().getNodeLabel());
 	}
 
 	/**

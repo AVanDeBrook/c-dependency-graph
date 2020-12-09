@@ -1,6 +1,9 @@
 digraph {
     rankdir="LR";
-    compound=true;
+    fontname="Monospace";
+    compund=true;
+    node [shape=record,fontname="Monospace",fixedsize=true,width=3.5,height=0.5,fontsize=12];
+    edge [style=solid];
     %graph.subgraph_cluster%
 	%graph.edge_defs%
 }

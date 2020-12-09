@@ -193,9 +193,8 @@ public class Configurator {
 			break;
 		default:
 			for (Handler handy : logger.getHandlers()) {
-				handy.setLevel(Level.INFO);
+				handy.setLevel(Level.OFF);
 			}
-			System.out.println("Verbosity defaulted to INFO");
 			break;
 		}
 

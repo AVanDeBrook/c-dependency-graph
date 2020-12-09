@@ -29,7 +29,6 @@ public class Manager {
 	public static void main(String[] args) {
 
 		initLogger();
-		logger.info("Program start, logger initialized");
 		configurator = new Configurator();
 		reader = new Reader();
 		parser = new Parser();
@@ -68,8 +67,11 @@ public class Manager {
 		logger = Logger.getLogger("depgraph");
 		consoleHandler = new ConsoleHandler();
 		logger.addHandler(consoleHandler);
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.INFO);
 		consoleHandler.setLevel(Level.INFO);
+
+		for (Handler handler : logger.getHandlers())
+			handler.setLevel(Level.OFF);
 	}
 
 	private static void start(String[] args) throws Exception {
@@ -88,28 +90,13 @@ public class Manager {
 			files = reader.readSingleFile(configurator.getFileName());
 		}
 
-		if (configurator.isFiltered()) {
-			System.out.println("Source Filter List:");
-			for (String s : configurator.getSourceFilterList()) {
-				for (char c : s.toCharArray()) {
-					System.out.printf("'%c' ", c);
-				}
-				System.out.println();
-			}
-			System.out.println("Destination Filter List:");
-			for (String s : configurator.getDestinationFilterList()) {
-				for (char c : s.toCharArray()) {
-					System.out.printf("'%c' ", c);
-				}
-				System.out.println();
-			}
-		}
-
 		if (files != null)
 			if (configurator.isFiltered())
 				parser.parse(files, configurator.getSourceFilterList(), configurator.getDestinationFilterList());
 			else
 				parser.parse(files);
+		else
+			return;
 
 		for (Node node : parser.getNodes()) {
 			logger.fine(node.toString());
@@ -124,8 +111,6 @@ public class Manager {
 		writer.setModules(parser.getModules());
 		writer.setEdges(parser.getEdges());
 		writer.readTemplates();
-
-		System.out.println("Output path: " + configurator.getOutputPath());
 
 		if (!configurator.getOutputPath().equals("")) {
 			String outFile = configurator.getOutputPath();

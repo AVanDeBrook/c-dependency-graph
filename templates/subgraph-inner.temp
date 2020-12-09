@@ -1,4 +1,5 @@
 subgraph cluster_%subgraph.visibility%_%subgraph.modulePrefix% {
     label="%subgraph.visibility%";
+	fontsize=16;
     %subgraph.node_defs%
 }
